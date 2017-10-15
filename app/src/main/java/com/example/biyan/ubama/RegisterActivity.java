@@ -65,7 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
                 if(!txtPassword.getText().toString().equals(txtPasswordConfirm.getText().toString())){
-                    Toast.makeText(getApplicationContext(), "Password tidak sama dengan Konfirmasi Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Konfirmasi Password tidak sama dengan Password", Toast.LENGTH_SHORT).show();
                     txtPassword.requestFocus();
                     return;
                 }
