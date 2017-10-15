@@ -51,6 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         txtPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         txtPasswordConfirm = (EditText) findViewById(R.id.txtPasswordConfirm);
         txtPasswordConfirm.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
         loadingRegister = (ProgressBar) findViewById(R.id.loading_register);
         queue = Volley.newRequestQueue(this);
         btnRegister = (Button) findViewById(R.id.btnRegister);
@@ -59,6 +60,10 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(txtNamaLengkap.getText().toString().equals("") || txtTelepon.getText().toString().equals("") || txtAlamat.getText().toString().equals("") || txtEmail.getText().toString().equals("") ){
+                    Toast.makeText(getApplicationContext(),"Harap isi data dengan lengkap",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if(!txtPassword.getText().toString().equals(txtPasswordConfirm.getText().toString())){
                     Toast.makeText(getApplicationContext(), "Password tidak sama dengan Konfirmasi Password", Toast.LENGTH_SHORT).show();
                     txtPassword.requestFocus();
@@ -73,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
                     jenis_kelamin=1;
                 }
                 loadingRegister.setVisibility(View.VISIBLE);
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("name",txtNamaLengkap.getText().toString());
                 params.put("email", txtEmail.getText().toString());
                 params.put("password", txtPassword.getText().toString());
@@ -87,7 +92,7 @@ public class RegisterActivity extends AppCompatActivity {
                         loadingRegister.setVisibility(View.GONE);
                         try {
                             if(!response.isNull("message")){
-                                Toast.makeText(getApplicationContext(),response.getString("message").toString(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),response.getString("message"), Toast.LENGTH_SHORT).show();
                             }
                             if(!response.isNull("back")){
                                 if(response.getBoolean("back")){
