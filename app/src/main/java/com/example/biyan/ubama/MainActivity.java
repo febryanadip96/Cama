@@ -1,14 +1,18 @@
 package com.example.biyan.ubama;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -68,18 +72,41 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_beranda) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_favorit) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_notifikasi) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_keranjang) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_pesanan) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_toko) {
 
+        } else if (id == R.id.nav_logout) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setMessage("Anda yakin ingin keluar?")
+                    .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            TokenSaver.setToken(getApplicationContext(),"");
+                            if(TokenSaver.getToken(getApplicationContext()).equals("")) {
+                                Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
+                                startActivity(welcomeIntent);
+                                finish();
+                            }
+                            else{
+                                Toast.makeText(getApplicationContext(), "Logout gagal", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    })
+                    .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
