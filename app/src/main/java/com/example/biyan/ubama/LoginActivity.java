@@ -64,9 +64,9 @@ public class LoginActivity extends AppCompatActivity {
                             if(!response.isNull("message")){
                                 Toast.makeText(getApplicationContext(),response.getString("message"), Toast.LENGTH_SHORT).show();
                             }
-                            else if(!(response.isNull("access_token") && response.isNull("token_type"))){
-                                TokenSaver.setToken(getApplicationContext(),response.getString("token_type")+" "+response.getString("access_token"));
-                                if(!TokenSaver.getToken(getApplicationContext()).equals("")){
+                            else if(!(response.isNull("access_token") || response.isNull("token_type"))){
+                                UserToken.setToken(getApplicationContext(),response.getString("token_type")+" "+response.getString("access_token"));
+                                if(!UserToken.getToken(getApplicationContext()).equals("")){
                                     Toast.makeText(getApplicationContext(), "Login sukses", Toast.LENGTH_SHORT).show();
                                     Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
                                     startActivity(mainIntent);

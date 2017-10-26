@@ -12,10 +12,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    TextView txtNama;
+    TextView txtEmail;
+    RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +53,60 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = navigationView.getHeaderView(0);
+
+        txtNama= (TextView) headerView.findViewById(R.id.txtNama);
+        txtEmail = (TextView) headerView.findViewById(R.id.txtEmail);
+        queue = Volley.newRequestQueue(this);
+        IsiHeaderUser();
+
+    }
+
+    private void IsiHeaderUser() {
+        if(UserToken.getEmail(getApplicationContext()).equals("") || UserToken.getNama(getApplicationContext()).equals("")){
+            //get data user
+            String url = UrlUbama.User;
+            JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        //Toast.makeText(getApplicationContext(),response.getString("name")+" "+response.getString("email"), Toast.LENGTH_SHORT).show();
+                        if(!(response.isNull("name") || response.isNull("email"))){
+                            UserToken.setNama(getApplicationContext(),response.getString("name"));
+                            UserToken.setEmail(getApplicationContext(),response.getString("email"));
+                            txtNama.setText(UserToken.getNama(getApplicationContext()).toString());
+                            txtEmail.setText(UserToken.getEmail(getApplicationContext()).toString());
+                        }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(),"Gagal memperoleh data pengguna", Toast.LENGTH_SHORT).show();
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Authorization", UserToken.getToken(getApplicationContext()));
+                    return params;
+                }
+            };
+            queue.add(loginRequest);
+        }
+        else {
+            txtNama.setText(UserToken.getNama(getApplicationContext()).toString());
+            txtEmail.setText(UserToken.getEmail(getApplicationContext()).toString());
+        }
     }
 
     @Override
@@ -89,8 +164,8 @@ public class MainActivity extends AppCompatActivity
             builder.setMessage("Anda yakin ingin keluar?")
                     .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            TokenSaver.setToken(getApplicationContext(),"");
-                            if(TokenSaver.getToken(getApplicationContext()).equals("")) {
+                            UserToken.setToken(getApplicationContext(),"");
+                            if(UserToken.getToken(getApplicationContext()).equals("")) {
                                 Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
                                 startActivity(welcomeIntent);
                                 finish();

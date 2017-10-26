@@ -14,7 +14,7 @@ public class SplashActivity extends AppCompatActivity {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                if(!TokenSaver.getToken(getApplicationContext()).equals("")){
+                if(!UserToken.getToken(getApplicationContext()).equals("")){
                     Intent mainIntent =new Intent(SplashActivity.this,MainActivity.class);
                     startActivity(mainIntent);
                     finish();
