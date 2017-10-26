@@ -4,7 +4,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -37,6 +39,9 @@ public class MainActivity extends AppCompatActivity
     TextView txtNama;
     TextView txtEmail;
     RequestQueue queue;
+    ViewPager mainPager;
+    TabLayout tabs;
+    MainPagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,15 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        adapter=new MainPagerAdapter(getSupportFragmentManager());
+
+        mainPager =(ViewPager) findViewById(R.id.mainPager);
+        mainPager.setAdapter(adapter);
+        mainPager.setOffscreenPageLimit(adapter.getCount());
+
+        tabs = (TabLayout) findViewById(R.id.tabs);
+        tabs.setupWithViewPager(mainPager);
 
         View headerView = navigationView.getHeaderView(0);
 
@@ -108,6 +122,13 @@ public class MainActivity extends AppCompatActivity
             txtEmail.setText(UserToken.getEmail(getApplicationContext()).toString());
         }
     }
+
+
+
+
+
+
+
 
     @Override
     public void onBackPressed() {

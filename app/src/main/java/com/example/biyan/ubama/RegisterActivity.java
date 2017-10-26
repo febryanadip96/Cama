@@ -35,6 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
     Button btnRegister;
     ProgressBar loadingRegister;
     RequestQueue queue;
+    int jenis_kelamin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,60 +61,68 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(txtNamaLengkap.getText().toString().equals("") || txtTelepon.getText().toString().equals("") || txtAlamat.getText().toString().equals("") || txtEmail.getText().toString().equals("") ){
-                    Toast.makeText(getApplicationContext(),"Harap isi data dengan lengkap",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(!txtPassword.getText().toString().equals(txtPasswordConfirm.getText().toString())){
-                    Toast.makeText(getApplicationContext(), "Konfirmasi Password tidak sama dengan Password", Toast.LENGTH_SHORT).show();
-                    txtPassword.requestFocus();
-                    return;
-                }
-                int jenis_kelamin=0;
-                int checkedRadioButtonId = rdoGrpJenisKelamin.getCheckedRadioButtonId();
-                if (checkedRadioButtonId == R.id.rdoLakiLaki) {
-                    jenis_kelamin=0;
-                }
-                else if (checkedRadioButtonId == R.id.rdoPerempuan) {
-                    jenis_kelamin=1;
-                }
-                loadingRegister.setVisibility(View.VISIBLE);
-                Map<String, String> params = new HashMap<>();
-                params.put("name",txtNamaLengkap.getText().toString());
-                params.put("email", txtEmail.getText().toString());
-                params.put("password", txtPassword.getText().toString());
-                params.put("jenis_kelamin", jenis_kelamin+"");
-                params.put("telepon", txtTelepon.getText().toString());
-                params.put("alamat",txtAlamat.getText().toString());
-                String url = UrlUbama.Register;
-                JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        loadingRegister.setVisibility(View.GONE);
-                        try {
-                            if(!response.isNull("message")){
-                                Toast.makeText(getApplicationContext(),response.getString("message"), Toast.LENGTH_SHORT).show();
-                            }
-                            if(!response.isNull("back")){
-                                if(response.getBoolean("back")){
-                                    RegisterActivity.this.finish();
-                                }
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        loadingRegister.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-                queue.add(loginRequest);
+                CekDataRegister();
             }
         });
+    }
+
+    private void CekDataRegister(){
+        if(txtNamaLengkap.getText().toString().equals("") || txtTelepon.getText().toString().equals("") || txtAlamat.getText().toString().equals("") || txtEmail.getText().toString().equals("") ){
+            Toast.makeText(getApplicationContext(),"Harap isi data dengan lengkap",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(!txtPassword.getText().toString().equals(txtPasswordConfirm.getText().toString())){
+            Toast.makeText(getApplicationContext(), "Konfirmasi Password tidak sama dengan Password", Toast.LENGTH_SHORT).show();
+            txtPassword.requestFocus();
+            return;
+        }
+        jenis_kelamin=0;
+        int checkedRadioButtonId = rdoGrpJenisKelamin.getCheckedRadioButtonId();
+        if (checkedRadioButtonId == R.id.rdoLakiLaki) {
+            jenis_kelamin=0;
+        }
+        else if (checkedRadioButtonId == R.id.rdoPerempuan) {
+            jenis_kelamin=1;
+        }
+        ProsesRegister();
+    }
+
+    private void ProsesRegister(){
+        loadingRegister.setVisibility(View.VISIBLE);
+        Map<String, String> params = new HashMap<>();
+        params.put("name",txtNamaLengkap.getText().toString());
+        params.put("email", txtEmail.getText().toString());
+        params.put("password", txtPassword.getText().toString());
+        params.put("jenis_kelamin", jenis_kelamin+"");
+        params.put("telepon", txtTelepon.getText().toString());
+        params.put("alamat",txtAlamat.getText().toString());
+        String url = UrlUbama.Register;
+        JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                loadingRegister.setVisibility(View.GONE);
+                try {
+                    if(!response.isNull("message")){
+                        Toast.makeText(getApplicationContext(),response.getString("message"), Toast.LENGTH_SHORT).show();
+                    }
+                    if(!response.isNull("back")){
+                        if(response.getBoolean("back")){
+                            RegisterActivity.this.finish();
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingRegister.setVisibility(View.GONE);
+                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        queue.add(loginRequest);
     }
 }

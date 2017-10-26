@@ -47,51 +47,59 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(txtEmail.getText().toString().equals("") || txtPassword.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(),"Harap masukkan email dan password Anda", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                loadingLogin.setVisibility(View.VISIBLE);
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("email", txtEmail.getText().toString());
-                params.put("password", txtPassword.getText().toString());
-                String url = UrlUbama.login;
-                JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        loadingLogin.setVisibility(View.GONE);
-                        try {
-                            if(!response.isNull("message")){
-                                Toast.makeText(getApplicationContext(),response.getString("message"), Toast.LENGTH_SHORT).show();
-                            }
-                            else if(!(response.isNull("access_token") || response.isNull("token_type"))){
-                                UserToken.setToken(getApplicationContext(),response.getString("token_type")+" "+response.getString("access_token"));
-                                if(!UserToken.getToken(getApplicationContext()).equals("")){
-                                    Toast.makeText(getApplicationContext(), "Login sukses", Toast.LENGTH_SHORT).show();
-                                    Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(mainIntent);
-                                    finish();
-                                }
-                                else{
-                                    Toast.makeText(getApplicationContext(), "Login gagal", Toast.LENGTH_SHORT).show();
-                                }
+                CekDataLogin();
+            }
+        });
+    }
 
-                            }
+    private void CekDataLogin(){
+        if(txtEmail.getText().toString().equals("") || txtPassword.getText().toString().equals("")){
+            Toast.makeText(getApplicationContext(),"Harap masukkan email dan password Anda", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        ProsesLogin();
+    }
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+    private void ProsesLogin(){
+        loadingLogin.setVisibility(View.VISIBLE);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("email", txtEmail.getText().toString());
+        params.put("password", txtPassword.getText().toString());
+        String url = UrlUbama.login;
+        JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                loadingLogin.setVisibility(View.GONE);
+                try {
+                    if(!response.isNull("message")){
+                        Toast.makeText(getApplicationContext(),response.getString("message"), Toast.LENGTH_SHORT).show();
+                    }
+                    else if(!(response.isNull("access_token") || response.isNull("token_type"))){
+                        UserToken.setToken(getApplicationContext(),response.getString("token_type")+" "+response.getString("access_token"));
+                        if(!UserToken.getToken(getApplicationContext()).equals("")){
+                            Toast.makeText(getApplicationContext(), "Login sukses", Toast.LENGTH_SHORT).show();
+                            Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(mainIntent);
+                            finish();
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(), "Login gagal", Toast.LENGTH_SHORT).show();
                         }
 
                     }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        loadingLogin.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-                queue.add(loginRequest);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingLogin.setVisibility(View.GONE);
+                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
+        queue.add(loginRequest);
     }
 }
