@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 public class UserToken {
     private final static String SHARED_DATA = "com.example.biyan.ubama.SHARED_DATA";
     private final static String TOKEN_KEY = "com.example.biyan.TOKEN_KEY";
-    private final static String USER = "com.example.biyan.USER";
 
     public static String getToken(Context c) {
         SharedPreferences prefs = c.getSharedPreferences(SHARED_DATA, Context.MODE_PRIVATE);
