@@ -13,6 +13,8 @@ public final class UrlUbama {
 
     public final static String login = URL_API+"login";
 
+    public final static String logout = URL_API+"logout";
+
     public final static String Register = URL_API+"register";
 
     public final static String User = URL_API+"user";

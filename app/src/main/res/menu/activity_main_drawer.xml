@@ -7,12 +7,8 @@
             android:icon="@drawable/ic_menu_home"
             android:title="Beranda" />
         <item
-            android:id="@+id/nav_favorit"
-            android:icon="@drawable/ic_menu_favorite"
-            android:title="Favorit" />
-        <item
             android:id="@+id/nav_notifikasi"
-            android:icon="@drawable/ic_menu_message"
+            android:icon="@drawable/ic_menu_notification"
             android:title="Notifikasi" />
         <item
             android:id="@+id/nav_keranjang"

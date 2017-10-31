@@ -78,57 +78,83 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void IsiHeaderUser() {
-        if(UserToken.getEmail(getApplicationContext()).equals("") || UserToken.getNama(getApplicationContext()).equals("")){
-            //get data user
-            String url = UrlUbama.User;
-            JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        //Toast.makeText(getApplicationContext(),response.getString("name")+" "+response.getString("email"), Toast.LENGTH_SHORT).show();
-                        if(!(response.isNull("name") || response.isNull("email"))){
-                            UserToken.setNama(getApplicationContext(),response.getString("name"));
-                            UserToken.setEmail(getApplicationContext(),response.getString("email"));
-                            txtNama.setText(UserToken.getNama(getApplicationContext()).toString());
-                            txtEmail.setText(UserToken.getEmail(getApplicationContext()).toString());
-                        }
-                        else
-                        {
-                            Toast.makeText(getApplicationContext(),"Gagal memperoleh data pengguna", Toast.LENGTH_SHORT).show();
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+        //get data user
+        String url = UrlUbama.User;
+        JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    //Toast.makeText(getApplicationContext(),response.getString("name")+" "+response.getString("email"), Toast.LENGTH_SHORT).show();
+                    if(!(response.isNull("name") || response.isNull("email"))){
+                        txtNama.setText(response.getString("name"));
+                        txtEmail.setText(response.getString("email"));
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(),"Gagal memperoleh data pengguna", Toast.LENGTH_SHORT).show();
+                        Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
+                        startActivity(welcomeIntent);
+                        finish();
                     }
 
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }){
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("Authorization", UserToken.getToken(getApplicationContext()));
-                    return params;
-                }
-            };
-            queue.add(loginRequest);
-        }
-        else {
-            txtNama.setText(UserToken.getNama(getApplicationContext()).toString());
-            txtEmail.setText(UserToken.getEmail(getApplicationContext()).toString());
-        }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+                Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
+                startActivity(welcomeIntent);
+                finish();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", UserToken.getToken(getApplicationContext()));
+                params.put("Accept", "application/json");
+                return params;
+            }
+        };
+        queue.add(loginRequest);
     }
 
+    private void Logout(){
+        String url = UrlUbama.logout;
+        JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Toast.makeText(getApplicationContext(),response.getString("message"), Toast.LENGTH_SHORT).show();
+                    UserToken.setToken(getApplicationContext(),"");
+                    Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
+                    startActivity(welcomeIntent);
+                    finish();
 
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-
-
-
-
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Logout gagal", Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", UserToken.getToken(getApplicationContext()));
+                params.put("Accept", "application/json");
+                return params;
+            }
+        };
+        queue.add(loginRequest);
+    }
 
     @Override
     public void onBackPressed() {
@@ -170,8 +196,6 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_beranda) {
             // Handle the camera action
-        } else if (id == R.id.nav_favorit) {
-
         } else if (id == R.id.nav_notifikasi) {
 
         } else if (id == R.id.nav_keranjang) {
@@ -185,20 +209,12 @@ public class MainActivity extends AppCompatActivity
             builder.setMessage("Anda yakin ingin keluar?")
                     .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            UserToken.setToken(getApplicationContext(),"");
-                            if(UserToken.getToken(getApplicationContext()).equals("")) {
-                                Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
-                                startActivity(welcomeIntent);
-                                finish();
-                            }
-                            else{
-                                Toast.makeText(getApplicationContext(), "Logout gagal", Toast.LENGTH_SHORT).show();
-                            }
+                        Logout();
                         }
                     })
                     .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
+                        dialog.dismiss();
                         }
                     });
             AlertDialog alert = builder.create();

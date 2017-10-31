@@ -18,20 +18,24 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         if (position == 0) {
             return BerandaFragment.newInstance();
-        } else {
+        } else if(position ==1) {
+            return FeedFragment.newInstance();
+        }else {
             return FavoritFragment.newInstance();
         }
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
         if (position == 0) {
             return "Beranda";
+        }  else if(position == 1) {
+            return "Feed";
         } else {
             return "Favorit";
         }
