@@ -14,9 +14,9 @@ import android.view.ViewGroup;
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends Fragment {
-    ViewPager mainPager;
+    ViewPager homePager;
     TabLayout tabs;
-    MainPagerAdapter adapter;
+    HomePagerAdapter adapter;
 
     public static HomeFragment newInstance() {
         // Required empty public constructor
@@ -30,14 +30,15 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_home, container, false);
-        adapter=new MainPagerAdapter(getChildFragmentManager());
+        adapter=new HomePagerAdapter(getChildFragmentManager());
 
-        mainPager =(ViewPager) rootView.findViewById(R.id.mainPager);
-        mainPager.setAdapter(adapter);
-        mainPager.setOffscreenPageLimit(adapter.getCount());
+        homePager =(ViewPager) rootView.findViewById(R.id.homePager);
+        homePager.setAdapter(adapter);
+        homePager.setOffscreenPageLimit(adapter.getCount());
 
         tabs = (TabLayout) getActivity().findViewById(R.id.tabs);
-        tabs.setupWithViewPager(mainPager);
+        tabs.setupWithViewPager(homePager);
+        tabs.setVisibility(View.VISIBLE);
         return rootView;
     }
 

@@ -17,12 +17,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +43,6 @@ public class BerandaFragment extends Fragment {
     RequestQueue queue;
 
     public static BerandaFragment newInstance() {
-        // Required empty public constructor
         BerandaFragment berandaFragment = new BerandaFragment();
         return berandaFragment;
     }
@@ -72,19 +70,7 @@ public class BerandaFragment extends Fragment {
         JsonArrayRequest berandaKategoriRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                    try {
-                        kategoriList = new ArrayList<Kategori>();
-                        for (int i = 0; i < response.length(); i++) {
-                            JSONObject kategori_item = response.getJSONObject(i);
-                            //
-                            int id = kategori_item.getInt("id");
-                            String nama = kategori_item.getString("nama");
-                            String url = kategori_item.getString("url_gambar");
-                            kategoriList.add(new Kategori(id, nama, url));
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    kategoriList = new Gson().fromJson(response.toString(), new TypeToken<List<Kategori>>() {}.getType());
                     mLayoutManagerKategori = new GridLayoutManager(getActivity(),2);
                     mRecyclerViewKategori.setLayoutManager(mLayoutManagerKategori);
                     mAdapterKategori = new KategoriAdapter(kategoriList);
@@ -113,20 +99,8 @@ public class BerandaFragment extends Fragment {
         JsonArrayRequest berandaFakultasRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                try {
-                    fakultasList = new ArrayList<Fakultas>();
-                    for (int i = 0; i < response.length(); i++) {
-                        JSONObject fakultas_item = response.getJSONObject(i);
-                        //
-                        int id = fakultas_item.getInt("id");
-                        String nama = fakultas_item.getString("nama");
-                        String url_gambar = fakultas_item.getString("url_gambar");
-                        fakultasList.add(new Fakultas(id, nama, url_gambar));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                mLayoutManagerFakultas = new GridLayoutManager(getActivity(),3);
+                fakultasList = new Gson().fromJson(response.toString(), new TypeToken<List<Fakultas>>() {}.getType());
+                mLayoutManagerFakultas = new GridLayoutManager(getActivity(),2);
                 mRecyclerViewFakultas.setLayoutManager(mLayoutManagerFakultas);
                 mAdapterFakultas = new FakultasAdapter(fakultasList);
                 mRecyclerViewFakultas.setAdapter(mAdapterFakultas);

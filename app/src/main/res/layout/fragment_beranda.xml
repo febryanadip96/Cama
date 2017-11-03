@@ -89,15 +89,6 @@
                         android:layout_height="wrap_content"
                         android:textColor="@android:color/black"
                         android:text="Fakultas"/>
-
-                    <TextView
-                        android:id="@+id/link_lihat_semua_fakultas"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentTop="true"
-                        android:textColor="@color/colorPrimary"
-                        android:text="Lihat Semua" />
                 </RelativeLayout>
 
 

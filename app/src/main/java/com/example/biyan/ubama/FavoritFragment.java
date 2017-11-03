@@ -17,12 +17,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,30 +61,8 @@ public class FavoritFragment extends Fragment {
         JsonArrayRequest feedRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                //Toast.makeText(getActivity().getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
-                try {
-                    barangJasaList = new ArrayList<BarangJasa>();
-                    for (int i = 0; i < response.length(); i++) {
-                        JSONObject barang_jasa_item = response.getJSONObject(i);
-                        BarangJasa barangJasa = new BarangJasa();
-                        barangJasa.setId(barang_jasa_item.getInt("id"));
-                        barangJasa.setNama(barang_jasa_item.getString("nama"));
-                        barangJasa.setHarga(barang_jasa_item.getInt("harga"));
-                        Toko toko = new Toko();
-                        toko.setNama(barang_jasa_item.getJSONObject("toko").getString("nama"));
-                        barangJasa.setToko(toko);
-                        JSONArray gambar = barang_jasa_item.getJSONArray("gambar");
-                        List<String> url_gambar = new ArrayList<String>();
-                        for(int j =0; j < gambar.length(); j++){
-                            JSONObject gambar_item = gambar.getJSONObject(j);
-                            url_gambar.add(gambar_item.getString("url_gambar"));
-                        }
-                        barangJasa.setUrl_gambar(url_gambar);
-                        barangJasaList.add(barangJasa);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                barangJasaList = new Gson().fromJson(response.toString(), new TypeToken<List<BarangJasa>>() {
+                }.getType());
                 mLayoutManagerFavorit = new GridLayoutManager(getActivity(),2);
                 mRecyclerViewFavorit.setLayoutManager(mLayoutManagerFavorit);
                 mAdapterFavorit = new FavoritAdapter(barangJasaList);

@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity
 
     TextView txtNama;
     TextView txtEmail;
+    TabLayout tabs;
     RequestQueue queue;
 
     @Override
@@ -157,12 +159,15 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         Fragment fragment = null;
+        tabs = (TabLayout) findViewById(R.id.tabs);
+        tabs.setupWithViewPager(null);
+        tabs.setVisibility(View.GONE);
         if (id == R.id.nav_home) {
             fragment = new HomeFragment();
         } else if (id == R.id.nav_kotak_masuk) {
-
+            fragment = new KotakMasukFragment();
         } else if (id == R.id.nav_keranjang) {
-
+            fragment = new KeranjangFragment();
         } else if (id == R.id.nav_pesanan) {
 
         } else if (id == R.id.nav_toko) {
@@ -213,6 +218,7 @@ public class MainActivity extends AppCompatActivity
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(getApplicationContext(), "Logout gagal", Toast.LENGTH_SHORT).show();
             }
         }){

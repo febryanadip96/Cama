@@ -42,14 +42,14 @@ public class FavoritAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView namaBarang = (TextView) holder.itemView.findViewById(R.id.nama_barang);
         TextView hargaBarang = (TextView) holder.itemView.findViewById(R.id.harga_barang);
         TextView namaToko = (TextView) holder.itemView.findViewById(R.id.nama_toko);
-        if(barangJasaList.get(position).getUrl_gambar() != null){
-            if(barangJasaList.get(position).getUrl_gambar().size() > 0){
-                Picasso.with(context).load(UrlUbama.URL_IMAGE+barangJasaList.get(position).getUrl_gambar().get(0)).into(imageBarang);
+        if(barangJasaList.get(position).gambar != null){
+            if(barangJasaList.get(position).gambar.size() > 0){
+                Picasso.with(context).load(UrlUbama.URL_IMAGE+barangJasaList.get(position).gambar.get(0).url_gambar).into(imageBarang);
             }
         }
-        namaBarang.setText(barangJasaList.get(position).getNama().toString());
-        hargaBarang.setText(barangJasaList.get(position).getHarga()+"");
-        namaToko.setText(barangJasaList.get(position).getToko().getNama().toString());
+        namaBarang.setText(barangJasaList.get(position).nama.toString());
+        hargaBarang.setText(barangJasaList.get(position).harga+"");
+        namaToko.setText(barangJasaList.get(position).toko.nama.toString());
     }
 
     @Override
