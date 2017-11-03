@@ -6,9 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -42,9 +41,6 @@ public class MainActivity extends AppCompatActivity
     TextView txtNama;
     TextView txtEmail;
     RequestQueue queue;
-    ViewPager mainPager;
-    TabLayout tabs;
-    MainPagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,23 +57,14 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        adapter=new MainPagerAdapter(getSupportFragmentManager());
-
-        mainPager =(ViewPager) findViewById(R.id.mainPager);
-        mainPager.setAdapter(adapter);
-        mainPager.setOffscreenPageLimit(adapter.getCount());
-
-        tabs = (TabLayout) findViewById(R.id.tabs);
-        tabs.setupWithViewPager(mainPager);
+        navigationView.getMenu().getItem(0).setChecked(true);
+        onNavigationItemSelected(navigationView.getMenu().getItem(0));
 
         View headerView = navigationView.getHeaderView(0);
-
         txtNama= (TextView) headerView.findViewById(R.id.txtNama);
         txtEmail = (TextView) headerView.findViewById(R.id.txtEmail);
         queue = Volley.newRequestQueue(this);
         IsiHeaderUser();
-
     }
 
     private void IsiHeaderUser() {
@@ -112,40 +99,6 @@ public class MainActivity extends AppCompatActivity
                 Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
                 startActivity(welcomeIntent);
                 finish();
-            }
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Authorization", UserToken.getToken(getApplicationContext()));
-                params.put("Accept", "application/json");
-                return params;
-            }
-        };
-        queue.add(loginRequest);
-    }
-
-    private void Logout(){
-        String url = UrlUbama.logout;
-        JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    Toast.makeText(getApplicationContext(),response.getString("message"), Toast.LENGTH_SHORT).show();
-                    UserToken.setToken(getApplicationContext(),"");
-                    Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
-                    startActivity(welcomeIntent);
-                    finish();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "Logout gagal", Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
@@ -203,9 +156,9 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_beranda) {
-            // Handle the camera action
+        Fragment fragment = null;
+        if (id == R.id.nav_home) {
+            fragment = new HomeFragment();
         } else if (id == R.id.nav_kotak_masuk) {
 
         } else if (id == R.id.nav_keranjang) {
@@ -231,8 +184,46 @@ public class MainActivity extends AppCompatActivity
             alert.show();
         }
 
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, fragment).commit();
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void Logout(){
+        String url = UrlUbama.logout;
+        JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Toast.makeText(getApplicationContext(),response.getString("message"), Toast.LENGTH_SHORT).show();
+                    UserToken.setToken(getApplicationContext(),"");
+                    Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
+                    startActivity(welcomeIntent);
+                    finish();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Logout gagal", Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", UserToken.getToken(getApplicationContext()));
+                params.put("Accept", "application/json");
+                return params;
+            }
+        };
+        queue.add(loginRequest);
     }
 }

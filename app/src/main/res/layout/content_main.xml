@@ -8,9 +8,9 @@
     tools:context="com.example.biyan.ubama.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <android.support.v4.view.ViewPager
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/mainPager"
+    <FrameLayout
+        android:id="@+id/frame_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
