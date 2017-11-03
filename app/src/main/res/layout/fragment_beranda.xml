@@ -44,10 +44,16 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/colorPrimary"
                         android:text="Lihat Semua" />
 
                 </RelativeLayout>
+
+                <View
+                    android:layout_marginTop="5dp"
+                    android:layout_width="30dp"
+                    android:layout_height="3dp"
+                    android:background="@android:color/holo_red_light"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_kategori"
@@ -90,11 +96,16 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/colorPrimary"
                         android:text="Lihat Semua" />
                 </RelativeLayout>
 
 
+                <View
+                    android:layout_marginTop="5dp"
+                    android:layout_width="30dp"
+                    android:layout_height="3dp"
+                    android:background="@android:color/holo_red_light"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_fakultas"

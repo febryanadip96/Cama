@@ -58,10 +58,10 @@ public class BerandaFragment extends Fragment {
                 R.layout.fragment_beranda, container, false);
 
         queue = Volley.newRequestQueue(getActivity());
-        getKategori();
-        getFakultas();
         mRecyclerViewKategori = (RecyclerView) rootView.findViewById(R.id.recycler_kategori);
         mRecyclerViewFakultas = (RecyclerView) rootView.findViewById(R.id.recycler_fakultas);
+        getKategori();
+        getFakultas();
 
         return rootView;
     }
@@ -120,7 +120,8 @@ public class BerandaFragment extends Fragment {
                         //
                         int id = fakultas_item.getInt("id");
                         String nama = fakultas_item.getString("nama");
-                        fakultasList.add(new Fakultas(id, nama));
+                        String url_gambar = fakultas_item.getString("url_gambar");
+                        fakultasList.add(new Fakultas(id, nama, url_gambar));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

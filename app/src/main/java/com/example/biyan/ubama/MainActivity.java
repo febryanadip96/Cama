@@ -206,7 +206,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_beranda) {
             // Handle the camera action
-        } else if (id == R.id.nav_notifikasi) {
+        } else if (id == R.id.nav_kotak_masuk) {
 
         } else if (id == R.id.nav_keranjang) {
 

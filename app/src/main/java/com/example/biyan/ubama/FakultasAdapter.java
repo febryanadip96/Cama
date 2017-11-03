@@ -5,7 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -35,7 +38,9 @@ public class FakultasAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        ImageView imageFakultas = (ImageView) holder.itemView.findViewById(R.id.image_fakultas);
         TextView namaFakultas = (TextView) holder.itemView.findViewById(R.id.nama_fakultas);
+        Picasso.with(context).load(UrlUbama.URL_IMAGE+fakultasList.get(position).getUrl_gambar()).into(imageFakultas);
         namaFakultas.setText(fakultasList.get(position).getNama());
     }
 

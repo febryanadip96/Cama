@@ -7,10 +7,12 @@ package com.example.biyan.ubama;
 public class Fakultas {
     private int id;
     private String nama;
+    private String url_gambar;
 
-    public Fakultas(int id, String nama){
+    public Fakultas(int id, String nama, String url_gambar){
         this.id = id;
         this.nama = nama;
+        this.url_gambar = url_gambar;
     }
 
 
@@ -20,5 +22,9 @@ public class Fakultas {
 
     public String getNama() {
         return nama;
+    }
+
+    public String getUrl_gambar() {
+        return url_gambar;
     }
 }

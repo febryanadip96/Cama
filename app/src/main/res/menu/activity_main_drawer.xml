@@ -6,10 +6,12 @@
             android:id="@+id/nav_beranda"
             android:icon="@drawable/ic_menu_beranda"
             android:title="Beranda" />
+
         <item
-            android:id="@+id/nav_notifikasi"
-            android:icon="@drawable/ic_menu_notifikasi"
-            android:title="Notifikasi" />
+            android:id="@+id/nav_kotak_masuk"
+            android:icon="@drawable/ic_menu_kotak_masuk"
+            android:title="Kotak Masuk"/>
+
         <item
             android:id="@+id/nav_keranjang"
             android:icon="@drawable/ic_menu_keranjang"
