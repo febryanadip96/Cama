@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
     tools:context="com.example.biyan.ubama.BerandaFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -12,14 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/card_view_kategori"
-            cardElevation="2dp"
-            cardUseCompatPadding="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -37,20 +28,11 @@
                         android:textColor="@android:color/black"
                         android:text="Kategori" />
 
-                    <TextView
-                        android:id="@+id/link_lihat_semua_kategori"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentTop="true"
-                        android:textColor="@color/colorPrimary"
-                        android:text="Lihat Semua" />
-
                 </RelativeLayout>
 
                 <View
                     android:layout_marginTop="5dp"
-                    android:layout_width="30dp"
+                    android:layout_width="40dp"
                     android:layout_height="3dp"
                     android:background="@android:color/holo_red_light"/>
 
@@ -65,15 +47,6 @@
 
 
             </LinearLayout>
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/card_view_fakultas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            cardElevation="2dp"
-            cardUseCompatPadding="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -94,7 +67,7 @@
 
                 <View
                     android:layout_marginTop="5dp"
-                    android:layout_width="30dp"
+                    android:layout_width="40dp"
                     android:layout_height="3dp"
                     android:background="@android:color/holo_red_light"/>
 
@@ -106,7 +79,6 @@
                     android:layout_height="match_parent"/>
 
             </LinearLayout>
-        </android.support.v7.widget.CardView>
 
     </LinearLayout>
 

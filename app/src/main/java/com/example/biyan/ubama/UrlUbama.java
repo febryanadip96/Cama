@@ -23,8 +23,6 @@ public final class UrlUbama {
 
     public final static String BerandaFakultas = URL_API+"beranda/fakultas";
 
-    public final static String UserFavoritToko = URL_API+"user/favoritToko";
-
     public final static String UserFeed = URL_API+"user/feed";
 
     public final static String UserFavoritBarangJasa = URL_API+"user/favoritBarangJasa";

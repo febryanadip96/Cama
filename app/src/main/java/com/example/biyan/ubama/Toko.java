@@ -1,5 +1,7 @@
 package com.example.biyan.ubama;
 
+import java.util.List;
+
 /**
  * Created by Biyan on 11/3/2017.
  */
@@ -29,4 +31,6 @@ public class Toko {
     public String created_at;
     @com.google.gson.annotations.SerializedName("updated_at")
     public String updated_at;
+    @com.google.gson.annotations.SerializedName("barang_jasa")
+    public List<BarangJasa> barang_jasa;
 }

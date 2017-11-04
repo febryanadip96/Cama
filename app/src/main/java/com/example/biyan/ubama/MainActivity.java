@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity
         if(savedInstanceState==null){
             navigationView.getMenu().getItem(0).setChecked(true);
             onNavigationItemSelected(navigationView.getMenu().getItem(0));
+
         }
 
         View headerView = navigationView.getHeaderView(0);
@@ -184,7 +185,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         if (fragment != null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, fragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, fragment).addToBackStack(null).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

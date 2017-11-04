@@ -44,7 +44,6 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ImageView imageBarang = (ImageView) holder.itemView.findViewById(R.id.image_barang);
         TextView namaBarang = (TextView) holder.itemView.findViewById(R.id.nama_barang);
         TextView hargaBarang = (TextView) holder.itemView.findViewById(R.id.harga_barang);
-        TextView namaToko = (TextView) holder.itemView.findViewById(R.id.nama_toko);
         if(barangJasaList.get(position).gambar != null){
             if(barangJasaList.get(position).gambar.size() > 0){
                 Picasso.with(context).load(UrlUbama.URL_IMAGE+barangJasaList.get(position).gambar.get(0).url_gambar).into(imageBarang);
@@ -55,8 +54,6 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         Locale localeID = new Locale("in", "ID");
         NumberFormat currency  = NumberFormat.getCurrencyInstance(localeID);
         hargaBarang.setText(currency.format(barangJasaList.get(position).harga).toString());
-
-        namaToko.setText(barangJasaList.get(position).toko.nama.toString());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
