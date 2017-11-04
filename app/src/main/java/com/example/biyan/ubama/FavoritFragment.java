@@ -57,7 +57,7 @@ public class FavoritFragment extends Fragment {
 
     public void getFavorit(){
         queue = Volley.newRequestQueue(getActivity());
-        String url = UrlUbama.UserFavorit;
+        String url = UrlUbama.UserFavoritBarangJasa;
         JsonArrayRequest feedRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {

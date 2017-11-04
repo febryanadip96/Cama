@@ -14,6 +14,7 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
         super(fm);
     }
 
+
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {

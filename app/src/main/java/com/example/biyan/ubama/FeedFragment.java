@@ -4,6 +4,7 @@ package com.example.biyan.ubama;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,10 @@ public class FeedFragment extends Fragment {
     private RecyclerView mRecyclerViewFeed;
     private RecyclerView.Adapter mAdapterFeed;
     private RecyclerView.LayoutManager mLayoutManagerFeed;
+    private RecyclerView mRecyclerViewFavoritToko;
+    private RecyclerView.Adapter mAdapterFavoritToko;
+    private RecyclerView.LayoutManager mLayoutManagerFavoritToko;
+    private List<Toko> tokoList;
     private List<BarangJasa> barangJasaList;
     RequestQueue queue;
 
@@ -50,9 +55,41 @@ public class FeedFragment extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_feed, container, false);
         queue = Volley.newRequestQueue(getActivity());
+        mRecyclerViewFavoritToko = (RecyclerView) rootView.findViewById(R.id.recycler_favoritToko);
         mRecyclerViewFeed = (RecyclerView) rootView.findViewById(R.id.recycler_feed);
+        getFavoritToko();
         getFeed();
         return rootView;
+    }
+
+    private void getFavoritToko(){
+        queue = Volley.newRequestQueue(getActivity());
+        String url = UrlUbama.UserFavoritToko;
+        JsonArrayRequest feedRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                tokoList = new Gson().fromJson(response.toString(), new TypeToken<List<Toko>>() {
+                }.getType());
+                mLayoutManagerFavoritToko = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+                mRecyclerViewFavoritToko.setLayoutManager(mLayoutManagerFavoritToko);
+                mAdapterFavoritToko = new FavoritTokoAdapter(tokoList);
+                mRecyclerViewFavoritToko.setAdapter(mAdapterFavoritToko);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", UserToken.getToken(getContext()));
+                params.put("Accept", "application/json");
+                return params;
+            }
+        };
+        queue.add(feedRequest);
     }
 
     private void getFeed(){
@@ -84,5 +121,6 @@ public class FeedFragment extends Fragment {
         };
         queue.add(feedRequest);
     }
+
 
 }

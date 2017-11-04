@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Biyan on 11/3/2017.
@@ -48,7 +50,9 @@ public class FavoritAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
         }
         namaBarang.setText(barangJasaList.get(position).nama.toString());
-        hargaBarang.setText(barangJasaList.get(position).harga+"");
+        Locale localeID = new Locale("in", "ID");
+        NumberFormat currency  = NumberFormat.getCurrencyInstance(localeID);
+        hargaBarang.setText(currency.format(barangJasaList.get(position).harga).toString());
         namaToko.setText(barangJasaList.get(position).toko.nama.toString());
     }
 

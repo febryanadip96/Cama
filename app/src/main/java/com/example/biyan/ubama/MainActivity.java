@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity
 
     TextView txtNama;
     TextView txtEmail;
+    ImageView imageProfile;
     TabLayout tabs;
     RequestQueue queue;
 
@@ -59,10 +62,13 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.getMenu().getItem(0).setChecked(true);
-        onNavigationItemSelected(navigationView.getMenu().getItem(0));
+        if(savedInstanceState==null){
+            navigationView.getMenu().getItem(0).setChecked(true);
+            onNavigationItemSelected(navigationView.getMenu().getItem(0));
+        }
 
         View headerView = navigationView.getHeaderView(0);
+        imageProfile = (ImageView) headerView.findViewById(R.id.imageProfile);
         txtNama= (TextView) headerView.findViewById(R.id.txtNama);
         txtEmail = (TextView) headerView.findViewById(R.id.txtEmail);
         queue = Volley.newRequestQueue(this);
@@ -78,12 +84,13 @@ public class MainActivity extends AppCompatActivity
                 try {
                     //Toast.makeText(getApplicationContext(),response.getString("name")+" "+response.getString("email"), Toast.LENGTH_SHORT).show();
                     if(!(response.isNull("name") || response.isNull("email"))){
+                        Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE+response.getJSONObject("pengguna").getString("url_profile")).into(imageProfile);
                         txtNama.setText(response.getString("name"));
                         txtEmail.setText(response.getString("email"));
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(),"Gagal memperoleh data pengguna", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),response.getString("message"), Toast.LENGTH_SHORT).show();
                         Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
                         startActivity(welcomeIntent);
                         finish();
@@ -97,9 +104,7 @@ public class MainActivity extends AppCompatActivity
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
-                Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
-                startActivity(welcomeIntent);
+                Toast.makeText(getApplicationContext(), "Kesalahan pada server. Coba lagi nanti", Toast.LENGTH_LONG).show();
                 finish();
             }
         }){
@@ -159,9 +164,11 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         Fragment fragment = null;
+        //hilangkan tabs
         tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.setupWithViewPager(null);
         tabs.setVisibility(View.GONE);
+
         if (id == R.id.nav_home) {
             fragment = new HomeFragment();
         } else if (id == R.id.nav_kotak_masuk) {
@@ -173,20 +180,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_toko) {
 
         } else if (id == R.id.nav_logout) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setMessage("Anda yakin ingin keluar?")
-                    .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                        Logout();
-                        }
-                    })
-                    .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                        }
-                    });
-            AlertDialog alert = builder.create();
-            alert.show();
+            AskLogout();
         }
 
         if (fragment != null) {
@@ -196,6 +190,23 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void AskLogout(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setMessage("Anda yakin ingin keluar?")
+                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Logout();
+                    }
+                })
+                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void Logout(){

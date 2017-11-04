@@ -21,6 +21,8 @@ public class Toko {
     public int total_rating;
     @com.google.gson.annotations.SerializedName("slogan")
     public String slogan;
+    @com.google.gson.annotations.SerializedName("url_profile")
+    public String url_profile;
     @com.google.gson.annotations.SerializedName("pengguna_id")
     public int pengguna_id;
     @com.google.gson.annotations.SerializedName("created_at")
