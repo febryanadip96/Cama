@@ -1,6 +1,7 @@
 package com.example.biyan.ubama;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +40,7 @@ public class FavoritAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ImageView imageBarang = (ImageView) holder.itemView.findViewById(R.id.image_barang);
         TextView namaBarang = (TextView) holder.itemView.findViewById(R.id.nama_barang);
         TextView hargaBarang = (TextView) holder.itemView.findViewById(R.id.harga_barang);
@@ -53,7 +54,17 @@ public class FavoritAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         Locale localeID = new Locale("in", "ID");
         NumberFormat currency  = NumberFormat.getCurrencyInstance(localeID);
         hargaBarang.setText(currency.format(barangJasaList.get(position).harga).toString());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toBarangJasa = new Intent(context, BarangJasaActivity.class);
+                toBarangJasa.putExtra("idBarangJasa", barangJasaList.get(position).id);
+                toBarangJasa.putExtra("namaBarangJasa", barangJasaList.get(position).nama);
+                context.startActivity(toBarangJasa);
+            }
+        });
         namaToko.setText(barangJasaList.get(position).toko.nama.toString());
+
     }
 
     @Override

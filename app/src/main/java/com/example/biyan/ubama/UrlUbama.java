@@ -27,6 +27,8 @@ public final class UrlUbama {
 
     public final static String UserFavoritBarangJasa = URL_API+"user/favoritBarangJasa";
 
+    public final static String UserPesanan = URL_API+"user/pesanan";
+
     public final static String BarangJasa = URL_API+"barangjasa/";
 
 }

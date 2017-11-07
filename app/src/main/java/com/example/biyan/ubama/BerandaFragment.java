@@ -57,8 +57,14 @@ public class BerandaFragment extends Fragment {
                 R.layout.fragment_beranda, container, false);
 
         queue = Volley.newRequestQueue(getActivity());
+
         mRecyclerViewKategori = (RecyclerView) rootView.findViewById(R.id.recycler_kategori);
+        mLayoutManagerKategori = new GridLayoutManager(getActivity(),3);
+        mRecyclerViewKategori.setLayoutManager(mLayoutManagerKategori);
         mRecyclerViewFakultas = (RecyclerView) rootView.findViewById(R.id.recycler_fakultas);
+        mLayoutManagerFakultas = new GridLayoutManager(getActivity(),3);
+        mRecyclerViewFakultas.setLayoutManager(mLayoutManagerFakultas);
+
         getKategori();
         getFakultas();
 
@@ -72,8 +78,6 @@ public class BerandaFragment extends Fragment {
             @Override
             public void onResponse(JSONArray response) {
                     kategoriList = new Gson().fromJson(response.toString(), new TypeToken<List<Kategori>>() {}.getType());
-                    mLayoutManagerKategori = new GridLayoutManager(getActivity(),2);
-                    mRecyclerViewKategori.setLayoutManager(mLayoutManagerKategori);
                     mAdapterKategori = new KategoriAdapter(kategoriList);
                     mRecyclerViewKategori.setAdapter(mAdapterKategori);
             }
@@ -101,8 +105,6 @@ public class BerandaFragment extends Fragment {
             @Override
             public void onResponse(JSONArray response) {
                 fakultasList = new Gson().fromJson(response.toString(), new TypeToken<List<Fakultas>>() {}.getType());
-                mLayoutManagerFakultas = new GridLayoutManager(getActivity(),2);
-                mRecyclerViewFakultas.setLayoutManager(mLayoutManagerFakultas);
                 mAdapterFakultas = new FakultasAdapter(fakultasList);
                 mRecyclerViewFakultas.setAdapter(mAdapterFakultas);
             }

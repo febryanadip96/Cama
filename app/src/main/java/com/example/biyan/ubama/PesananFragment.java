@@ -3,7 +3,7 @@ package com.example.biyan.ubama;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,16 +30,16 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FavoritFragment extends Fragment {
-    private RecyclerView mRecyclerViewFavorit;
-    private RecyclerView.Adapter mAdapterFavorit;
-    private RecyclerView.LayoutManager mLayoutManagerFavorit;
-    private List<BarangJasa> barangJasaList;
+public class PesananFragment extends Fragment {
+    private RecyclerView mRecyclerViewPesanan;
+    private RecyclerView.Adapter mAdapterPesanan;
+    private RecyclerView.LayoutManager mLayoutManagerPesanan;
+    private List<Pesanan> pesananList;
     RequestQueue queue;
 
-    public static FavoritFragment newInstance() {
-        FavoritFragment favoritFragment = new FavoritFragment();
-        return favoritFragment;
+    public static PesananFragment newInstance() {
+        PesananFragment pesananFragment = new PesananFragment();
+        return pesananFragment;
     }
 
 
@@ -47,27 +47,26 @@ public class FavoritFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_favorit, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_pesanan, container, false);
         queue = Volley.newRequestQueue(getActivity());
-
-        mRecyclerViewFavorit = (RecyclerView) rootView.findViewById(R.id.recycler_favorit);
-        mLayoutManagerFavorit = new GridLayoutManager(getActivity(),2);
-        mRecyclerViewFavorit.setLayoutManager(mLayoutManagerFavorit);
-
-        getFavorit();
+        getActivity().setTitle("Pesanan");
+        mRecyclerViewPesanan = (RecyclerView) rootView.findViewById(R.id.recycler_pesanan);
+        mLayoutManagerPesanan = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
+        mRecyclerViewPesanan.setLayoutManager(mLayoutManagerPesanan);
+        getPesanan();
         return rootView;
     }
 
-    public void getFavorit(){
+    private void getPesanan(){
         queue = Volley.newRequestQueue(getActivity());
-        String url = UrlUbama.UserFavoritBarangJasa;
+        String url = UrlUbama.UserPesanan;
         JsonArrayRequest feedRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                barangJasaList = new Gson().fromJson(response.toString(), new TypeToken<List<BarangJasa>>() {
+                pesananList = new Gson().fromJson(response.toString(), new TypeToken<List<Pesanan>>() {
                 }.getType());
-                mAdapterFavorit = new FavoritAdapter(barangJasaList);
-                mRecyclerViewFavorit.setAdapter(mAdapterFavorit);
+                mAdapterPesanan = new PesananAdapter(pesananList);
+                mRecyclerViewPesanan.setAdapter(mAdapterPesanan);
             }
         }, new Response.ErrorListener() {
             @Override

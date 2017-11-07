@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_keranjang) {
             fragment = new KeranjangFragment();
         } else if (id == R.id.nav_pesanan) {
-
+            fragment = new PesananFragment();
         } else if (id == R.id.nav_toko) {
 
         } else if (id == R.id.nav_logout) {
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         if (fragment != null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, fragment).addToBackStack(null).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, fragment).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

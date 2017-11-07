@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -31,25 +32,29 @@ public class FavoritTokoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_favorit_toko, parent, false);
-        context = parent.getContext();
         RecyclerView.ViewHolder vh = new RecyclerView.ViewHolder(v){
             @Override
             public String toString() {
                 return super.toString();
             }
         };
+
+        context = parent.getContext();
+        mLayoutManagerFeed = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
+
         return vh;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ImageView imageToko = (ImageView) holder.itemView.findViewById(R.id.image_toko);
+        TextView namaToko = (TextView) holder.itemView.findViewById(R.id.nama_toko);
         mRecyclerViewFeed = (RecyclerView) holder.itemView.findViewById(R.id.recycler_feed);
-        mLayoutManagerFeed = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
         mRecyclerViewFeed.setLayoutManager(mLayoutManagerFeed);
         mAdapterFeed = new FeedAdapter(tokoList.get(position).barang_jasa);
         mRecyclerViewFeed.setAdapter(mAdapterFeed);
         Picasso.with(context).load(UrlUbama.URL_IMAGE+tokoList.get(position).url_profile).into(imageToko);
+        namaToko.setText(tokoList.get(position).nama);
     }
 
     @Override

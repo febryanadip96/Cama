@@ -50,7 +50,11 @@ public class FeedFragment extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_feed, container, false);
         queue = Volley.newRequestQueue(getActivity());
+
         mRecyclerViewFavoritToko = (RecyclerView) rootView.findViewById(R.id.recycler_favoritToko);
+        mLayoutManagerFavoritToko = new GridLayoutManager(getActivity(),1);
+        mRecyclerViewFavoritToko.setLayoutManager(mLayoutManagerFavoritToko);
+
         getFeed();
         return rootView;
     }
@@ -63,8 +67,6 @@ public class FeedFragment extends Fragment {
             public void onResponse(JSONArray response) {
                 tokoList = new Gson().fromJson(response.toString(), new TypeToken<List<Toko>>() {
                 }.getType());
-                mLayoutManagerFavoritToko = new GridLayoutManager(getActivity(),1);
-                mRecyclerViewFavoritToko.setLayoutManager(mLayoutManagerFavoritToko);
                 mAdapterFavoritToko = new FavoritTokoAdapter(tokoList);
                 mRecyclerViewFavoritToko.setAdapter(mAdapterFavoritToko);
             }
