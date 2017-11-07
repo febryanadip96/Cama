@@ -12,22 +12,28 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-/**
- * Created by Biyan on 11/2/2017.
- */
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class FakultasAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    @BindView(R.id.image_fakultas)
+    ImageView imageFakultas;
+    @BindView(R.id.nama_fakultas)
+    TextView namaFakultas;
     private Context context;
     private List<Fakultas> fakultasList;
 
-    public FakultasAdapter(List<Fakultas> fakultasList){this.fakultasList = fakultasList;}
+    public FakultasAdapter(List<Fakultas> fakultasList) {
+        this.fakultasList = fakultasList;
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_fakultas, parent, false);
+        ButterKnife.bind(this, v);
         context = parent.getContext();
-        RecyclerView.ViewHolder vh = new RecyclerView.ViewHolder(v){
+        RecyclerView.ViewHolder vh = new RecyclerView.ViewHolder(v) {
             @Override
             public String toString() {
                 return super.toString();
@@ -38,9 +44,7 @@ public class FakultasAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ImageView imageFakultas = (ImageView) holder.itemView.findViewById(R.id.image_fakultas);
-        TextView namaFakultas = (TextView) holder.itemView.findViewById(R.id.nama_fakultas);
-        Picasso.with(context).load(UrlUbama.URL_IMAGE+fakultasList.get(position).url_gambar).into(imageFakultas);
+        Picasso.with(context).load(UrlUbama.URL_IMAGE + fakultasList.get(position).url_gambar).into(imageFakultas);
         namaFakultas.setText(fakultasList.get(position).nama);
     }
 

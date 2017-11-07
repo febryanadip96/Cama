@@ -6,33 +6,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class WelcomeActivity extends AppCompatActivity {
 
-    private Button btnMasuk;
-    private Button btnDaftar;
+    @BindView(R.id.btnMasuk)
+    Button btnMasuk;
+    @BindView(R.id.btnDaftar)
+    Button btnDaftar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        ButterKnife.bind(this);
+    }
 
-        btnMasuk = (Button) findViewById(R.id.btnMasuk);
-        btnDaftar = (Button) findViewById(R.id.btnDaftar);
-
-        btnMasuk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent masukActivity = new Intent(WelcomeActivity.this,LoginActivity.class);
+    @OnClick({R.id.btnMasuk, R.id.btnDaftar})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btnMasuk:
+                Intent masukActivity = new Intent(WelcomeActivity.this, LoginActivity.class);
                 startActivity(masukActivity);
-            }
-        });
-
-        btnDaftar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.btnDaftar:
                 Intent daftarActivity = new Intent(WelcomeActivity.this, RegisterActivity.class);
                 startActivity(daftarActivity);
-            }
-        });
+                break;
+        }
     }
 }

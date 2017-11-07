@@ -26,14 +26,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FavoritFragment extends Fragment {
-    private RecyclerView mRecyclerViewFavorit;
-    private RecyclerView.Adapter mAdapterFavorit;
-    private RecyclerView.LayoutManager mLayoutManagerFavorit;
+    @BindView(R.id.recycler_favorit)
+    RecyclerView recyclerFavorit;
+    Unbinder unbinder;
+    private RecyclerView.Adapter adapterFavorit;
+    private RecyclerView.LayoutManager layoutManagerFavorit;
     private List<BarangJasa> barangJasaList;
     RequestQueue queue;
 
@@ -48,17 +54,18 @@ public class FavoritFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_favorit, container, false);
+        unbinder = ButterKnife.bind(this, rootView);
         queue = Volley.newRequestQueue(getActivity());
 
-        mRecyclerViewFavorit = (RecyclerView) rootView.findViewById(R.id.recycler_favorit);
-        mLayoutManagerFavorit = new GridLayoutManager(getActivity(),2);
-        mRecyclerViewFavorit.setLayoutManager(mLayoutManagerFavorit);
+        layoutManagerFavorit = new GridLayoutManager(getActivity(), 2);
+        recyclerFavorit.setLayoutManager(layoutManagerFavorit);
 
         getFavorit();
+
         return rootView;
     }
 
-    public void getFavorit(){
+    public void getFavorit() {
         queue = Volley.newRequestQueue(getActivity());
         String url = UrlUbama.UserFavoritBarangJasa;
         JsonArrayRequest feedRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -66,15 +73,15 @@ public class FavoritFragment extends Fragment {
             public void onResponse(JSONArray response) {
                 barangJasaList = new Gson().fromJson(response.toString(), new TypeToken<List<BarangJasa>>() {
                 }.getType());
-                mAdapterFavorit = new FavoritAdapter(barangJasaList);
-                mRecyclerViewFavorit.setAdapter(mAdapterFavorit);
+                adapterFavorit = new FavoritAdapter(barangJasaList);
+                recyclerFavorit.setAdapter(adapterFavorit);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
@@ -86,4 +93,9 @@ public class FavoritFragment extends Fragment {
         queue.add(feedRequest);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 }

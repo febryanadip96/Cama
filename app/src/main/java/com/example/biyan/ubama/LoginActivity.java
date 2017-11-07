@@ -2,6 +2,7 @@ package com.example.biyan.ubama;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
@@ -26,37 +27,43 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginActivity extends AppCompatActivity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-    EditText txtEmail;
-    EditText txtPassword;
-    Button btnLogin;
+public class LoginActivity extends AppCompatActivity {
+    @BindView(R.id.email)
+    EditText email;
+    @BindView(R.id.password)
+    EditText password;
+    @BindView(R.id.login)
+    Button login;
+    @BindView(R.id.loading_login)
     ProgressBar loadingLogin;
-    RelativeLayout loginView;
     RequestQueue queue;
+    @BindView(R.id.loginView)
+    RelativeLayout loginView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        loginView = (RelativeLayout) findViewById(R.id.loginView);
-        txtEmail = (EditText) findViewById(R.id.txtEmail);
-        txtPassword = (EditText) findViewById(R.id.txtPassword);
-        txtPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        loadingLogin = (ProgressBar) findViewById(R.id.loading_login);
+        ButterKnife.bind(this);
         queue = Volley.newRequestQueue(this);
-        btnLogin = (Button) findViewById(R.id.btnLogin);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CekDataLogin();
-            }
-        });
+        password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
     }
 
-    private void CekDataLogin(){
-        if(txtEmail.getText().toString().equals("") || txtPassword.getText().toString().equals("")){
-            Toast.makeText(getApplicationContext(),"Harap masukkan email dan password Anda", Toast.LENGTH_SHORT).show();
+    @OnClick(R.id.login)
+    public void onViewClicked() {
+        CekDataLogin();
+    }
+
+    private void CekDataLogin() {
+        if (email.getText().toString().equals("") || password.getText().toString().equals("")) {
+            Snackbar snackbar = Snackbar
+                    .make(loginView, "Harap masukkan email dan password Anda", Snackbar.LENGTH_LONG);
+            snackbar.show();
+            //Toast.makeText(getApplicationContext(), "Harap masukkan email dan password Anda", Toast.LENGTH_SHORT).show();
             return;
         }
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
@@ -64,11 +71,11 @@ public class LoginActivity extends AppCompatActivity {
         ProsesLogin();
     }
 
-    private void ProsesLogin(){
+    private void ProsesLogin() {
         loadingLogin.setVisibility(View.VISIBLE);
         Map<String, String> params = new HashMap<String, String>();
-        params.put("email", txtEmail.getText().toString());
-        params.put("password", txtPassword.getText().toString());
+        params.put("email", email.getText().toString());
+        params.put("password", password.getText().toString());
         String url = UrlUbama.login;
         JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
@@ -76,19 +83,23 @@ public class LoginActivity extends AppCompatActivity {
                 loadingLogin.setVisibility(View.GONE);
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 try {
-                    if(!response.isNull("message")){
-                        Toast.makeText(getApplicationContext(),response.getString("message"), Toast.LENGTH_SHORT).show();
-                    }
-                    else if(!(response.isNull("access_token") || response.isNull("token_type"))){
-                        UserToken.setToken(getApplicationContext(),response.getString("token_type")+" "+response.getString("access_token"));
-                        if(!UserToken.getToken(getApplicationContext()).equals("")){
+                    if (!response.isNull("message")) {
+                        //Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar
+                                .make(loginView, response.getString("message"), Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    } else if (!(response.isNull("access_token") || response.isNull("token_type"))) {
+                        UserToken.setToken(getApplicationContext(), response.getString("token_type") + " " + response.getString("access_token"));
+                        if (!UserToken.getToken(getApplicationContext()).equals("")) {
                             Toast.makeText(getApplicationContext(), "Login sukses", Toast.LENGTH_SHORT).show();
                             Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(mainIntent);
                             finish();
-                        }
-                        else{
-                            Toast.makeText(getApplicationContext(), "Login gagal", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Snackbar snackbar = Snackbar
+                                    .make(loginView, "Login gagal", Snackbar.LENGTH_LONG);
+                            snackbar.show();
+                            //Toast.makeText(getApplicationContext(), "Login gagal", Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -105,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
@@ -115,4 +126,6 @@ public class LoginActivity extends AppCompatActivity {
         };
         queue.add(loginRequest);
     }
+
+
 }

@@ -26,34 +26,65 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class BarangJasaActivity extends AppCompatActivity {
+
+    @BindView(R.id.carousel_gambar)
+    CarouselView carouselGambar;
+    @BindView(R.id.nama_barang)
+    TextView namaBarang;
+    @BindView(R.id.harga_barang)
+    TextView hargaBarang;
+    @BindView(R.id.favorit_barang)
+    ImageView favoritBarang;
+    @BindView(R.id.star_barang_1)
+    ImageView starBarang1;
+    @BindView(R.id.star_barang_2)
+    ImageView starBarang2;
+    @BindView(R.id.star_barang_3)
+    ImageView starBarang3;
+    @BindView(R.id.star_barang_4)
+    ImageView starBarang4;
+    @BindView(R.id.star_barang_5)
+    ImageView starBarang5;
+    @BindView(R.id.rating_barang)
+    TextView ratingBarang;
+    @BindView(R.id.jumlah_faq)
+    TextView jumlahFaq;
+    @BindView(R.id.kondisi_barang)
+    TextView kondisiBarang;
+    @BindView(R.id.image_toko)
+    CircleImageView imageToko;
+    @BindView(R.id.nama_toko)
+    TextView namaToko;
 
     private int idBarangJasa;
     BarangJasa barangJasa;
-    CarouselView carouselGambar;
-    TextView namaBarang;
-    TextView hargaBarang;
     RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_barang_jasa);
+        ButterKnife.bind(this);
         Intent intent = getIntent();
         setTitle(intent.getStringExtra("namaBarangJasa"));
-        idBarangJasa = intent.getIntExtra("idBarangJasa",0);
+        idBarangJasa = intent.getIntExtra("idBarangJasa", 0);
+
         barangJasa = new BarangJasa();
         carouselGambar = (CarouselView) findViewById(R.id.carousel_gambar);
         carouselGambar.setPageCount(0);
         carouselGambar.setImageListener(imageListener);
-        namaBarang = (TextView) findViewById(R.id.nama_barang);
-        hargaBarang = (TextView) findViewById(R.id.harga_barang);
+
         getDetailBarangJasa();
     }
 
-    private void getDetailBarangJasa(){
+    private void getDetailBarangJasa() {
         queue = Volley.newRequestQueue(this);
-        String url = UrlUbama.BarangJasa+idBarangJasa;
+        String url = UrlUbama.BarangJasa + idBarangJasa;
         JsonObjectRequest barangJasaRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -63,15 +94,17 @@ public class BarangJasaActivity extends AppCompatActivity {
                 carouselGambar.setImageListener(imageListener);
                 namaBarang.setText(barangJasa.nama);
                 Locale localeID = new Locale("in", "ID");
-                NumberFormat currency  = NumberFormat.getCurrencyInstance(localeID);
+                NumberFormat currency = NumberFormat.getCurrencyInstance(localeID);
                 hargaBarang.setText(currency.format(barangJasa.harga).toString());
+                kondisiBarang.setText(barangJasa.baruBekas);
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
@@ -86,7 +119,7 @@ public class BarangJasaActivity extends AppCompatActivity {
     ImageListener imageListener = new ImageListener() {
         @Override
         public void setImageForPosition(int position, ImageView imageView) {
-            if(barangJasa.gambar.size()>0){
+            if (barangJasa.gambar.size() > 0) {
                 Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(position).url_gambar).fit().into(imageView);
             }
         }

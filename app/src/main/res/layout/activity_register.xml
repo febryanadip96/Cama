@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,32 +16,34 @@
             android:padding="20dp">
 
             <TextView
+                android:labelFor="@id/namaLengkap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nama Lengkap"/>
 
             <EditText
-                android:id="@+id/txtNamaLengkap"
+                android:id="@+id/namaLengkap"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <TextView
+                android:labelFor="@id/jenisKelamin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Jenis Kelamin"/>
 
             <RadioGroup
-                android:id="@+id/rdoGrpJenisKelamin"
+                android:id="@+id/jenisKelamin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <RadioButton
-                    android:id="@+id/rdoLakiLaki"
+                    android:id="@+id/lakiLaki"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Laki-laki" />
                 <RadioButton
-                    android:id="@+id/rdoPerempuan"
+                    android:id="@+id/perempuan"
                     android:layout_marginLeft="30dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -50,59 +51,64 @@
             </RadioGroup>
 
             <TextView
+                android:labelFor="@id/telepon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nomor Telepon"/>
 
             <EditText
-                android:id="@+id/txtTelepon"
+                android:id="@+id/telepon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"/>
 
             <TextView
+                android:labelFor="@id/alamat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Alamat"/>
 
             <EditText
-                android:id="@+id/txtAlamat"
+                android:id="@+id/alamat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lines="3"/>
 
             <TextView
+                android:labelFor="@id/email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Email"/>
 
             <EditText
-                android:id="@+id/txtEmail"
+                android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <TextView
+                android:labelFor="@id/password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Password"/>
 
             <EditText
-                android:id="@+id/txtPassword"
+                android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <TextView
+                android:labelFor="@id/passwordConfirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Konfirmasi Password"/>
 
             <EditText
-                android:id="@+id/txtPasswordConfirm"
+                android:id="@+id/passwordConfirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <Button
-                android:id="@+id/btnRegister"
+                android:id="@+id/register"
                 android:layout_marginTop="20dp"
                 android:background="@color/colorPrimary"
                 android:textColor="@android:color/white"
@@ -115,7 +121,7 @@
     </ScrollView>
 
     <ProgressBar
-        android:id="@+id/loading_register"
+        android:id="@+id/loading"
         style="@style/Widget.AppCompat.ProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

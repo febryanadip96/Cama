@@ -26,18 +26,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class BerandaFragment extends Fragment {
 
-    private RecyclerView mRecyclerViewKategori;
-    private RecyclerView.Adapter mAdapterKategori;
-    private RecyclerView.LayoutManager mLayoutManagerKategori;
-    private RecyclerView mRecyclerViewFakultas;
-    private RecyclerView.Adapter mAdapterFakultas;
-    private RecyclerView.LayoutManager mLayoutManagerFakultas;
+    @BindView(R.id.recycler_kategori)
+    RecyclerView recyclerKategori;
+    @BindView(R.id.recycler_fakultas)
+    RecyclerView recyclerFakultas;
+    Unbinder unbinder;
+    private RecyclerView.Adapter adapterKategori;
+    private RecyclerView.LayoutManager layoutManagerKategori;
+    private RecyclerView.Adapter adapterFakultas;
+    private RecyclerView.LayoutManager layoutManagerFakultas;
     private List<Kategori> kategoriList;
     private List<Fakultas> fakultasList;
     RequestQueue queue;
@@ -55,15 +62,14 @@ public class BerandaFragment extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_beranda, container, false);
+        unbinder = ButterKnife.bind(this, rootView);
 
         queue = Volley.newRequestQueue(getActivity());
 
-        mRecyclerViewKategori = (RecyclerView) rootView.findViewById(R.id.recycler_kategori);
-        mLayoutManagerKategori = new GridLayoutManager(getActivity(),3);
-        mRecyclerViewKategori.setLayoutManager(mLayoutManagerKategori);
-        mRecyclerViewFakultas = (RecyclerView) rootView.findViewById(R.id.recycler_fakultas);
-        mLayoutManagerFakultas = new GridLayoutManager(getActivity(),3);
-        mRecyclerViewFakultas.setLayoutManager(mLayoutManagerFakultas);
+        layoutManagerKategori = new GridLayoutManager(getActivity(), 3);
+        recyclerKategori.setLayoutManager(layoutManagerKategori);
+        layoutManagerFakultas = new GridLayoutManager(getActivity(), 3);
+        recyclerFakultas.setLayoutManager(layoutManagerFakultas);
 
         getKategori();
         getFakultas();
@@ -71,22 +77,23 @@ public class BerandaFragment extends Fragment {
         return rootView;
     }
 
-    private void getKategori(){
+    private void getKategori() {
         queue = Volley.newRequestQueue(getActivity());
         String url = UrlUbama.BerandaKategori;
         JsonArrayRequest berandaKategoriRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                    kategoriList = new Gson().fromJson(response.toString(), new TypeToken<List<Kategori>>() {}.getType());
-                    mAdapterKategori = new KategoriAdapter(kategoriList);
-                    mRecyclerViewKategori.setAdapter(mAdapterKategori);
+                kategoriList = new Gson().fromJson(response.toString(), new TypeToken<List<Kategori>>() {
+                }.getType());
+                adapterKategori = new KategoriAdapter(kategoriList);
+                recyclerKategori.setAdapter(adapterKategori);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
@@ -98,22 +105,23 @@ public class BerandaFragment extends Fragment {
         queue.add(berandaKategoriRequest);
     }
 
-    private void getFakultas(){
+    private void getFakultas() {
         queue = Volley.newRequestQueue(getActivity());
         String url = UrlUbama.BerandaFakultas;
         JsonArrayRequest berandaFakultasRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                fakultasList = new Gson().fromJson(response.toString(), new TypeToken<List<Fakultas>>() {}.getType());
-                mAdapterFakultas = new FakultasAdapter(fakultasList);
-                mRecyclerViewFakultas.setAdapter(mAdapterFakultas);
+                fakultasList = new Gson().fromJson(response.toString(), new TypeToken<List<Fakultas>>() {
+                }.getType());
+                adapterFakultas = new FakultasAdapter(fakultasList);
+                recyclerFakultas.setAdapter(adapterFakultas);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
@@ -125,4 +133,9 @@ public class BerandaFragment extends Fragment {
         queue.add(berandaFakultasRequest);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 }

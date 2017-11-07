@@ -41,8 +41,8 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView txtNama;
-    TextView txtEmail;
+    TextView nama;
+    TextView email;
     ImageView imageProfile;
     TabLayout tabs;
     RequestQueue queue;
@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity
 
         View headerView = navigationView.getHeaderView(0);
         imageProfile = (ImageView) headerView.findViewById(R.id.imageProfile);
-        txtNama= (TextView) headerView.findViewById(R.id.txtNama);
-        txtEmail = (TextView) headerView.findViewById(R.id.txtEmail);
+        nama = (TextView) headerView.findViewById(R.id.nama);
+        email = (TextView) headerView.findViewById(R.id.email);
         queue = Volley.newRequestQueue(this);
         IsiHeaderUser();
     }
@@ -86,8 +86,8 @@ public class MainActivity extends AppCompatActivity
                     //Toast.makeText(getApplicationContext(),response.getString("name")+" "+response.getString("email"), Toast.LENGTH_SHORT).show();
                     if(!(response.isNull("name") || response.isNull("email"))){
                         Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE+response.getJSONObject("pengguna").getString("url_profile")).into(imageProfile);
-                        txtNama.setText(response.getString("name"));
-                        txtEmail.setText(response.getString("email"));
+                        nama.setText(response.getString("name"));
+                        email.setText(response.getString("email"));
                     }
                     else
                     {

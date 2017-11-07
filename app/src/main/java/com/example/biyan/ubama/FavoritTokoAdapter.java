@@ -6,25 +6,30 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-/**
- * Created by Biyan on 11/5/2017.
- */
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
-public class FavoritTokoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
+
+public class FavoritTokoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    @BindView(R.id.image_toko)
+    CircleImageView imageToko;
+    @BindView(R.id.nama_toko)
+    TextView namaToko;
+    @BindView(R.id.recycler_feed)
+    RecyclerView recyclerFeed;
     private Context context;
     private List<Toko> tokoList;
-    private RecyclerView mRecyclerViewFeed;
-    private RecyclerView.Adapter mAdapterFeed;
-    private RecyclerView.LayoutManager mLayoutManagerFeed;
+    private RecyclerView.Adapter adapterFeed;
+    private RecyclerView.LayoutManager layoutManagerFeed;
 
-    public  FavoritTokoAdapter(List<Toko> tokoList){
+    public FavoritTokoAdapter(List<Toko> tokoList) {
         this.tokoList = tokoList;
     }
 
@@ -32,7 +37,8 @@ public class FavoritTokoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_favorit_toko, parent, false);
-        RecyclerView.ViewHolder vh = new RecyclerView.ViewHolder(v){
+        ButterKnife.bind(this, v);
+        RecyclerView.ViewHolder vh = new RecyclerView.ViewHolder(v) {
             @Override
             public String toString() {
                 return super.toString();
@@ -40,20 +46,17 @@ public class FavoritTokoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         };
 
         context = parent.getContext();
-        mLayoutManagerFeed = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
+        layoutManagerFeed = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
 
         return vh;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ImageView imageToko = (ImageView) holder.itemView.findViewById(R.id.image_toko);
-        TextView namaToko = (TextView) holder.itemView.findViewById(R.id.nama_toko);
-        mRecyclerViewFeed = (RecyclerView) holder.itemView.findViewById(R.id.recycler_feed);
-        mRecyclerViewFeed.setLayoutManager(mLayoutManagerFeed);
-        mAdapterFeed = new FeedAdapter(tokoList.get(position).barang_jasa);
-        mRecyclerViewFeed.setAdapter(mAdapterFeed);
-        Picasso.with(context).load(UrlUbama.URL_IMAGE+tokoList.get(position).url_profile).into(imageToko);
+        recyclerFeed.setLayoutManager(layoutManagerFeed);
+        adapterFeed = new FeedAdapter(tokoList.get(position).barang_jasa);
+        recyclerFeed.setAdapter(adapterFeed);
+        Picasso.with(context).load(UrlUbama.URL_IMAGE + tokoList.get(position).url_profile).into(imageToko);
         namaToko.setText(tokoList.get(position).nama);
     }
 

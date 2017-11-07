@@ -26,11 +26,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FeedFragment extends Fragment {
+    @BindView(R.id.recycler_favoritToko)
+    RecyclerView recyclerFavoritToko;
+    Unbinder unbinder;
     private RecyclerView mRecyclerViewFavoritToko;
     private RecyclerView.Adapter mAdapterFavoritToko;
     private RecyclerView.LayoutManager mLayoutManagerFavoritToko;
@@ -49,17 +56,18 @@ public class FeedFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_feed, container, false);
+        unbinder = ButterKnife.bind(this, rootView);
         queue = Volley.newRequestQueue(getActivity());
 
         mRecyclerViewFavoritToko = (RecyclerView) rootView.findViewById(R.id.recycler_favoritToko);
-        mLayoutManagerFavoritToko = new GridLayoutManager(getActivity(),1);
+        mLayoutManagerFavoritToko = new GridLayoutManager(getActivity(), 1);
         mRecyclerViewFavoritToko.setLayoutManager(mLayoutManagerFavoritToko);
 
         getFeed();
         return rootView;
     }
 
-    private void getFeed(){
+    private void getFeed() {
         queue = Volley.newRequestQueue(getActivity());
         String url = UrlUbama.UserFeed;
         JsonArrayRequest feedRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -75,7 +83,7 @@ public class FeedFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
@@ -87,5 +95,9 @@ public class FeedFragment extends Fragment {
         queue.add(feedRequest);
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 }

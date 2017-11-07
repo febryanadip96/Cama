@@ -12,23 +12,29 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-/**
- * Created by Biyan on 11/2/2017.
- */
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class KategoriAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    @BindView(R.id.image_kategori)
+    ImageView imageKategori;
+    @BindView(R.id.nama_kategori)
+    TextView namaKategori;
     private Context context;
     private List<Kategori> kategoriList;
 
-    public KategoriAdapter(List<Kategori> kategoriList){this.kategoriList = kategoriList;}
+    public KategoriAdapter(List<Kategori> kategoriList) {
+        this.kategoriList = kategoriList;
+    }
 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_kategori, parent, false);
+        ButterKnife.bind(this, v);
         context = parent.getContext();
-        RecyclerView.ViewHolder vh = new RecyclerView.ViewHolder(v){
+        RecyclerView.ViewHolder vh = new RecyclerView.ViewHolder(v) {
             @Override
             public String toString() {
                 return super.toString();
@@ -39,9 +45,7 @@ public class KategoriAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ImageView imageKategori = (ImageView) holder.itemView.findViewById(R.id.image_kategori);
-        TextView namaKategori = (TextView) holder.itemView.findViewById(R.id.nama_kategori);
-        Picasso.with(context).load(UrlUbama.URL_IMAGE+kategoriList.get(position).url_gambar).into(imageKategori);
+        Picasso.with(context).load(UrlUbama.URL_IMAGE + kategoriList.get(position).url_gambar).into(imageKategori);
         namaKategori.setText(kategoriList.get(position).nama);
     }
 

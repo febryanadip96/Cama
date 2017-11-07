@@ -26,14 +26,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class PesananFragment extends Fragment {
-    private RecyclerView mRecyclerViewPesanan;
-    private RecyclerView.Adapter mAdapterPesanan;
-    private RecyclerView.LayoutManager mLayoutManagerPesanan;
+    @BindView(R.id.recycler_pesanan)
+    RecyclerView recyclerPesanan;
+    Unbinder unbinder;
+    private RecyclerView.Adapter adapterPesanan;
+    private RecyclerView.LayoutManager layoutManagerPesanan;
     private List<Pesanan> pesananList;
     RequestQueue queue;
 
@@ -48,16 +54,16 @@ public class PesananFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_pesanan, container, false);
+        unbinder = ButterKnife.bind(this, rootView);
         queue = Volley.newRequestQueue(getActivity());
         getActivity().setTitle("Pesanan");
-        mRecyclerViewPesanan = (RecyclerView) rootView.findViewById(R.id.recycler_pesanan);
-        mLayoutManagerPesanan = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
-        mRecyclerViewPesanan.setLayoutManager(mLayoutManagerPesanan);
+        layoutManagerPesanan = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerPesanan.setLayoutManager(layoutManagerPesanan);
         getPesanan();
         return rootView;
     }
 
-    private void getPesanan(){
+    private void getPesanan() {
         queue = Volley.newRequestQueue(getActivity());
         String url = UrlUbama.UserPesanan;
         JsonArrayRequest feedRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -65,15 +71,15 @@ public class PesananFragment extends Fragment {
             public void onResponse(JSONArray response) {
                 pesananList = new Gson().fromJson(response.toString(), new TypeToken<List<Pesanan>>() {
                 }.getType());
-                mAdapterPesanan = new PesananAdapter(pesananList);
-                mRecyclerViewPesanan.setAdapter(mAdapterPesanan);
+                adapterPesanan = new PesananAdapter(pesananList);
+                recyclerPesanan.setAdapter(adapterPesanan);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
@@ -85,4 +91,9 @@ public class PesananFragment extends Fragment {
         queue.add(feedRequest);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 }

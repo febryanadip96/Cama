@@ -9,12 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends Fragment {
+    @BindView(R.id.homePager)
     ViewPager homePager;
+    Unbinder unbinder;
     TabLayout tabs;
     HomePagerAdapter adapter;
 
@@ -30,9 +36,10 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_home, container, false);
-        adapter=new HomePagerAdapter(getChildFragmentManager());
+        unbinder = ButterKnife.bind(this, rootView);
+        adapter = new HomePagerAdapter(getChildFragmentManager());
 
-        homePager =(ViewPager) rootView.findViewById(R.id.homePager);
+        homePager = (ViewPager) rootView.findViewById(R.id.homePager);
         homePager.setAdapter(adapter);
         homePager.setOffscreenPageLimit(adapter.getCount());
 
@@ -42,4 +49,9 @@ public class HomeFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 }

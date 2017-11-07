@@ -35,7 +35,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp">
+                android:layout_height="70dp">
 
                 <LinearLayout
                     android:padding="10dp"
@@ -62,23 +62,13 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/kategori"
-                    android:layout_margin="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
-                    android:text="Kategori"/>
-
                 <ImageView
-                    android:id="@+id/image_favorit"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:id="@+id/favorit_barang"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="30dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
                     android:src="@drawable/ic_favorite_border_grey"/>
 
             </RelativeLayout>
@@ -107,26 +97,27 @@
                         android:gravity="center">
 
                         <ImageView
+                            android:id="@+id/star_barang_1"
                             android:layout_width="16dp"
                             android:layout_height="16dp"
                             android:src="@drawable/ic_star_grey" />
                         <ImageView
+                            android:id="@+id/star_barang_2"
                             android:layout_width="16dp"
                             android:layout_height="16dp"
                             android:src="@drawable/ic_star_grey" />
                         <ImageView
+                            android:id="@+id/star_barang_3"
                             android:layout_width="16dp"
                             android:layout_height="16dp"
                             android:src="@drawable/ic_star_grey" />
                         <ImageView
+                            android:id="@+id/star_barang_4"
                             android:layout_width="16dp"
                             android:layout_height="16dp"
                             android:src="@drawable/ic_star_grey" />
                         <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/ic_star_grey" />
-                        <ImageView
+                            android:id="@+id/star_barang_5"
                             android:layout_width="16dp"
                             android:layout_height="16dp"
                             android:src="@drawable/ic_star_grey" />
@@ -139,6 +130,7 @@
                         android:gravity="center">
 
                         <TextView
+                            android:id="@+id/rating_barang"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Rating"/>
@@ -160,11 +152,14 @@
                     android:padding="10dp"
                     android:gravity="center"
                     android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:src="@drawable/ic_faq"/>
+
                     <TextView
+                        android:id="@+id/jumlah_faq"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Jumlah FAQ"/>
@@ -188,6 +183,7 @@
                         android:text="Kondisi"/>
 
                     <TextView
+                        android:id="@+id/kondisi_barang"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Kondisi"/>
@@ -207,8 +203,7 @@
                 android:orientation="horizontal">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/profile_image"
+                    android:id="@+id/image_toko"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:src="@mipmap/ic_launcher"
@@ -216,6 +211,7 @@
                     app:civ_border_color="#56000000"/>
 
                 <TextView
+                    android:id="@+id/nama_toko"
                     android:layout_marginLeft="10dp"
                     android:layout_gravity="center"
                     android:layout_width="match_parent"

@@ -15,22 +15,34 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by Biyan on 11/3/2017.
- */
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+
 
 public class FavoritAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    @BindView(R.id.image_barang)
+    ImageView imageBarang;
+    @BindView(R.id.nama_barang)
+    TextView namaBarang;
+    @BindView(R.id.nama_toko)
+    TextView namaToko;
+    @BindView(R.id.harga_barang)
+    TextView hargaBarang;
     private Context context;
     private List<BarangJasa> barangJasaList;
 
-    public FavoritAdapter(List<BarangJasa> barangJasaList){this.barangJasaList = barangJasaList;}
+    public FavoritAdapter(List<BarangJasa> barangJasaList) {
+        this.barangJasaList = barangJasaList;
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_favorit, parent, false);
+        ButterKnife.bind(this, v);
         context = parent.getContext();
-        RecyclerView.ViewHolder vh = new RecyclerView.ViewHolder(v){
+        RecyclerView.ViewHolder vh = new RecyclerView.ViewHolder(v) {
             @Override
             public String toString() {
                 return super.toString();
@@ -41,18 +53,14 @@ public class FavoritAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        ImageView imageBarang = (ImageView) holder.itemView.findViewById(R.id.image_barang);
-        TextView namaBarang = (TextView) holder.itemView.findViewById(R.id.nama_barang);
-        TextView hargaBarang = (TextView) holder.itemView.findViewById(R.id.harga_barang);
-        TextView namaToko = (TextView) holder.itemView.findViewById(R.id.nama_toko);
-        if(barangJasaList.get(position).gambar != null){
-            if(barangJasaList.get(position).gambar.size() > 0){
-                Picasso.with(context).load(UrlUbama.URL_IMAGE+barangJasaList.get(position).gambar.get(0).url_gambar).into(imageBarang);
+        if (barangJasaList.get(position).gambar != null) {
+            if (barangJasaList.get(position).gambar.size() > 0) {
+                Picasso.with(context).load(UrlUbama.URL_IMAGE + barangJasaList.get(position).gambar.get(0).url_gambar).into(imageBarang);
             }
         }
         namaBarang.setText(barangJasaList.get(position).nama.toString());
         Locale localeID = new Locale("in", "ID");
-        NumberFormat currency  = NumberFormat.getCurrencyInstance(localeID);
+        NumberFormat currency = NumberFormat.getCurrencyInstance(localeID);
         hargaBarang.setText(currency.format(barangJasaList.get(position).harga).toString());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
