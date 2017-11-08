@@ -1,5 +1,7 @@
 package com.example.biyan.ubama;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -7,44 +9,59 @@ import java.util.List;
  */
 
 public class BarangJasa {
-    @com.google.gson.annotations.SerializedName("id")
+
+
+
+
+
+
+    @SerializedName("id")
     public int id;
-    @com.google.gson.annotations.SerializedName("nama")
+    @SerializedName("nama")
     public String nama;
-    @com.google.gson.annotations.SerializedName("deskripsi")
+    @SerializedName("deskripsi")
     public String deskripsi;
-    @com.google.gson.annotations.SerializedName("jenis")
+    @SerializedName("jenis")
     public String jenis;
-    @com.google.gson.annotations.SerializedName("harga")
+    @SerializedName("harga")
     public int harga;
-    @com.google.gson.annotations.SerializedName("baruBekas")
+    @SerializedName("baruBekas")
     public String baruBekas;
-    @com.google.gson.annotations.SerializedName("pengiriman")
+    @SerializedName("pengiriman")
     public String pengiriman;
-    @com.google.gson.annotations.SerializedName("catatan_penjual")
+    @SerializedName("catatan_penjual")
     public String catatan_penjual;
-    @com.google.gson.annotations.SerializedName("jumlah_dilihat")
+    @SerializedName("jumlah_dilihat")
     public int jumlah_dilihat;
-    @com.google.gson.annotations.SerializedName("jumlah_terjual")
+    @SerializedName("jumlah_terjual")
     public int jumlah_terjual;
-    @com.google.gson.annotations.SerializedName("jumlah_batal")
+    @SerializedName("jumlah_batal")
     public int jumlah_batal;
-    @com.google.gson.annotations.SerializedName("jumlah_stok")
+    @SerializedName("jumlah_stok")
     public int jumlah_stok;
-    @com.google.gson.annotations.SerializedName("total_rating")
+    @SerializedName("jumlah_komentar")
+    public int jumlah_komentar;
+    @SerializedName("jumlah_faq")
+    public int jumlah_faq;
+    @SerializedName("total_rating")
     public double total_rating;
-    @com.google.gson.annotations.SerializedName("min_pesan")
+    @SerializedName("min_pesan")
     public int min_pesan;
-    @com.google.gson.annotations.SerializedName("toko_id")
+    @SerializedName("toko_id")
     public int toko_id;
-    @com.google.gson.annotations.SerializedName("created_at")
+    @SerializedName("created_at")
     public String created_at;
-    @com.google.gson.annotations.SerializedName("updated_at")
+    @SerializedName("updated_at")
     public String updated_at;
-    @com.google.gson.annotations.SerializedName("deleted_at")
+    @SerializedName("deleted_at")
     public String deleted_at;
-    @com.google.gson.annotations.SerializedName("toko")
+    @SerializedName("toko")
     public Toko toko;
-    @com.google.gson.annotations.SerializedName("gambar")
+    @SerializedName("gambar")
     public List<Gambar> gambar;
+    @SerializedName("detail_pesanan")
+    public List<DetailPesanan> detail_pesanan;
+    @SerializedName("tanya_jawab")
+    public List<TanyaJawab> tanya_jawab;
+
 }

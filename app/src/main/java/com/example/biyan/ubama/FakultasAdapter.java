@@ -12,14 +12,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class FakultasAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    @BindView(R.id.image_fakultas)
-    ImageView imageFakultas;
-    @BindView(R.id.nama_fakultas)
-    TextView namaFakultas;
+    private ImageView imageFakultas;
+    private TextView namaFakultas;
     private Context context;
     private List<Fakultas> fakultasList;
 
@@ -31,7 +26,6 @@ public class FakultasAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_fakultas, parent, false);
-        ButterKnife.bind(this, v);
         context = parent.getContext();
         RecyclerView.ViewHolder vh = new RecyclerView.ViewHolder(v) {
             @Override
@@ -44,6 +38,8 @@ public class FakultasAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        imageFakultas = (ImageView) holder.itemView.findViewById(R.id.image_fakultas);
+        namaFakultas = (TextView) holder.itemView.findViewById(R.id.nama_fakultas);
         Picasso.with(context).load(UrlUbama.URL_IMAGE + fakultasList.get(position).url_gambar).into(imageFakultas);
         namaFakultas.setText(fakultasList.get(position).nama);
     }

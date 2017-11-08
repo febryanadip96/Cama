@@ -15,6 +15,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.picasso.Picasso;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
@@ -50,8 +51,8 @@ public class BarangJasaActivity extends AppCompatActivity {
     ImageView starBarang4;
     @BindView(R.id.star_barang_5)
     ImageView starBarang5;
-    @BindView(R.id.rating_barang)
-    TextView ratingBarang;
+    @BindView(R.id.jumlah_komentar)
+    TextView jumlahKomentar;
     @BindView(R.id.jumlah_faq)
     TextView jumlahFaq;
     @BindView(R.id.kondisi_barang)
@@ -60,6 +61,10 @@ public class BarangJasaActivity extends AppCompatActivity {
     CircleImageView imageToko;
     @BindView(R.id.nama_toko)
     TextView namaToko;
+    @BindView(R.id.deskripsi)
+    ExpandableTextView deskripsi;
+    @BindView(R.id.catatan_penjual)
+    ExpandableTextView catatanPenjual;
 
     private int idBarangJasa;
     BarangJasa barangJasa;
@@ -93,10 +98,46 @@ public class BarangJasaActivity extends AppCompatActivity {
                 carouselGambar.setPageCount((barangJasa.gambar.size()));
                 carouselGambar.setImageListener(imageListener);
                 namaBarang.setText(barangJasa.nama);
-                Locale localeID = new Locale("in", "ID");
-                NumberFormat currency = NumberFormat.getCurrencyInstance(localeID);
-                hargaBarang.setText(currency.format(barangJasa.harga).toString());
+                NumberFormat currency = NumberFormat.getInstance(Locale.GERMANY);
+                hargaBarang.setText("Rp. " + currency.format(barangJasa.harga).toString());
                 kondisiBarang.setText(barangJasa.baruBekas);
+                if (!barangJasa.toko.url_profile.isEmpty()) {
+                    Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE + barangJasa.toko.url_profile).into(imageToko);
+                }
+                int rating = (int) Math.floor(barangJasa.total_rating);
+                switch (rating) {
+                    case 1:
+                        starBarang1.setImageResource(R.drawable.ic_star_yellow);
+                        break;
+                    case 2:
+                        starBarang1.setImageResource(R.drawable.ic_star_yellow);
+                        starBarang2.setImageResource(R.drawable.ic_star_yellow);
+                        break;
+                    case 3:
+                        starBarang1.setImageResource(R.drawable.ic_star_yellow);
+                        starBarang2.setImageResource(R.drawable.ic_star_yellow);
+                        starBarang3.setImageResource(R.drawable.ic_star_yellow);
+                        break;
+                    case 4:
+                        starBarang1.setImageResource(R.drawable.ic_star_yellow);
+                        starBarang2.setImageResource(R.drawable.ic_star_yellow);
+                        starBarang3.setImageResource(R.drawable.ic_star_yellow);
+                        starBarang4.setImageResource(R.drawable.ic_star_yellow);
+                        break;
+                    case 5:
+                        starBarang1.setImageResource(R.drawable.ic_star_yellow);
+                        starBarang2.setImageResource(R.drawable.ic_star_yellow);
+                        starBarang3.setImageResource(R.drawable.ic_star_yellow);
+                        starBarang4.setImageResource(R.drawable.ic_star_yellow);
+                        starBarang5.setImageResource(R.drawable.ic_star_yellow);
+                        break;
+                    default:
+                        break;
+                }
+                jumlahKomentar.setText(barangJasa.jumlah_komentar+" Komentar");
+                jumlahFaq.setText(barangJasa.jumlah_faq+" FAQ");
+                deskripsi.setText(barangJasa.deskripsi);
+                catatanPenjual.setText(barangJasa.catatan_penjual);
 
             }
         }, new Response.ErrorListener() {
@@ -107,7 +148,7 @@ public class BarangJasaActivity extends AppCompatActivity {
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("Authorization", UserToken.getToken(getApplicationContext()));
                 params.put("Accept", "application/json");
                 return params;
@@ -124,4 +165,6 @@ public class BarangJasaActivity extends AppCompatActivity {
             }
         }
     };
+
+
 }

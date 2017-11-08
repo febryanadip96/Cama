@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         if(savedInstanceState==null){
-            navigationView.getMenu().getItem(0).setChecked(true);
+            //navigationView.getMenu().getItem(0).setChecked(true);
             onNavigationItemSelected(navigationView.getMenu().getItem(0));
 
         }
@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
+        return false;
     }
 
     private void AskLogout(){

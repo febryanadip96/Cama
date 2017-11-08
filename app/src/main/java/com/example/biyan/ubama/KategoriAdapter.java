@@ -12,14 +12,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class KategoriAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    @BindView(R.id.image_kategori)
-    ImageView imageKategori;
-    @BindView(R.id.nama_kategori)
-    TextView namaKategori;
+    private ImageView imageKategori;
+    private TextView namaKategori;
     private Context context;
     private List<Kategori> kategoriList;
 
@@ -45,6 +42,8 @@ public class KategoriAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        imageKategori = (ImageView) holder.itemView.findViewById(R.id.image_kategori);
+        namaKategori = (TextView) holder.itemView.findViewById(R.id.nama_kategori);
         Picasso.with(context).load(UrlUbama.URL_IMAGE + kategoriList.get(position).url_gambar).into(imageKategori);
         namaKategori.setText(kategoriList.get(position).nama);
     }

@@ -26,21 +26,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class BerandaFragment extends Fragment {
 
-    @BindView(R.id.recycler_kategori)
-    RecyclerView recyclerKategori;
-    @BindView(R.id.recycler_fakultas)
-    RecyclerView recyclerFakultas;
-    Unbinder unbinder;
+    private RecyclerView recyclerKategori;
+    private RecyclerView recyclerFakultas;
     private RecyclerView.Adapter adapterKategori;
     private RecyclerView.LayoutManager layoutManagerKategori;
     private RecyclerView.Adapter adapterFakultas;
@@ -62,13 +55,14 @@ public class BerandaFragment extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_beranda, container, false);
-        unbinder = ButterKnife.bind(this, rootView);
 
         queue = Volley.newRequestQueue(getActivity());
 
+        recyclerKategori = (RecyclerView) rootView.findViewById(R.id.recycler_kategori);
+        recyclerFakultas = (RecyclerView) rootView.findViewById(R.id.recycler_fakultas);
         layoutManagerKategori = new GridLayoutManager(getActivity(), 3);
-        recyclerKategori.setLayoutManager(layoutManagerKategori);
         layoutManagerFakultas = new GridLayoutManager(getActivity(), 3);
+        recyclerKategori.setLayoutManager(layoutManagerKategori);
         recyclerFakultas.setLayoutManager(layoutManagerFakultas);
 
         getKategori();
@@ -131,11 +125,5 @@ public class BerandaFragment extends Fragment {
             }
         };
         queue.add(berandaFakultasRequest);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 }

@@ -69,7 +69,9 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_favorite_border_grey"/>
+                    android:src="@drawable/ic_favorite_border_grey"
+                    android:clickable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"/>
 
             </RelativeLayout>
 
@@ -87,7 +89,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:padding="10dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:background="?attr/selectableItemBackground">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -130,10 +134,10 @@
                         android:gravity="center">
 
                         <TextView
-                            android:id="@+id/rating_barang"
+                            android:id="@+id/jumlah_komentar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Rating"/>
+                            android:text="Jumlah Komentar"/>
 
                     </LinearLayout>
 
@@ -151,7 +155,9 @@
                     android:layout_weight="1"
                     android:padding="10dp"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:background="?attr/selectableItemBackground">
 
                     <ImageView
                         android:layout_width="20dp"
@@ -175,7 +181,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:background="?attr/selectableItemBackground">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -189,6 +197,7 @@
                         android:text="Kondisi"/>
 
                 </LinearLayout>
+
             </LinearLayout>
 
             <View
@@ -200,7 +209,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:padding="10dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/image_toko"
@@ -220,6 +231,98 @@
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Deskripisi"/>
+
+                <com.ms.square.android.expandabletextview.ExpandableTextView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/deskripsi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    expandableTextView:maxCollapsedLines="3"
+                    expandableTextView:animDuration="200">
+
+                    <TextView
+                        android:id="@id/expandable_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
+
+                    <ImageButton
+                        android:id="@id/expand_collapse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:layout_gravity="right|bottom"
+                        android:background="@android:color/transparent"/>
+
+                </com.ms.square.android.expandabletextview.ExpandableTextView>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Catatan Penjual"/>
+
+                <com.ms.square.android.expandabletextview.ExpandableTextView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/catatan_penjual"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    expandableTextView:maxCollapsedLines="3"
+                    expandableTextView:animDuration="200">
+
+                    <TextView
+                        android:id="@id/expandable_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
+
+                    <ImageButton
+                        android:id="@id/expand_collapse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:layout_gravity="right|bottom"
+                        android:background="@android:color/transparent"/>
+
+                </com.ms.square.android.expandabletextview.ExpandableTextView>
+            </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>
@@ -227,7 +330,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackground">
 
         <Button
             android:layout_width="match_parent"

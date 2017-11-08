@@ -37,5 +37,6 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    compile 'com.ms-square:expandableTextView:0.1.4'
     testCompile 'junit:junit:4.12'
 }

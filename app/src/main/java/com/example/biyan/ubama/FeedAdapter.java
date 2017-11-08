@@ -15,17 +15,11 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 
 public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    @BindView(R.id.image_barang)
-    ImageView imageBarang;
-    @BindView(R.id.nama_barang)
-    TextView namaBarang;
-    @BindView(R.id.harga_barang)
-    TextView hargaBarang;
+    private ImageView imageBarang;
+    private TextView namaBarang;
+    private TextView hargaBarang;
     private Context context;
     private List<BarangJasa> barangJasaList;
 
@@ -37,7 +31,6 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_feed, parent, false);
-        ButterKnife.bind(this, v);
         context = parent.getContext();
         RecyclerView.ViewHolder vh = new RecyclerView.ViewHolder(v) {
             @Override
@@ -50,15 +43,19 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if (barangJasaList.get(position).gambar != null) {
-            if (barangJasaList.get(position).gambar.size() > 0) {
-                Picasso.with(context).load(UrlUbama.URL_IMAGE + barangJasaList.get(position).gambar.get(0).url_gambar).into(imageBarang);
-            }
+        imageBarang = (ImageView) holder.itemView.findViewById(R.id.image_barang);
+        namaBarang = (TextView) holder.itemView.findViewById(R.id.nama_barang);
+        hargaBarang = (TextView) holder.itemView.findViewById(R.id.harga_barang);
+
+        if (!barangJasaList.get(position).gambar.isEmpty()) {
+            Picasso.with(context).load(UrlUbama.URL_IMAGE + barangJasaList.get(position).gambar.get(0).url_gambar).fit().error(R.drawable.ic_error_image).into(imageBarang);
+        }
+        else{
+            imageBarang.setImageResource(R.drawable.ic_error_image);
         }
         namaBarang.setText(barangJasaList.get(position).nama.toString());
-        Locale localeID = new Locale("in", "ID");
-        NumberFormat currency = NumberFormat.getCurrencyInstance(localeID);
-        hargaBarang.setText(currency.format(barangJasaList.get(position).harga).toString());
+        NumberFormat currency = NumberFormat.getInstance(Locale.GERMANY);
+        hargaBarang.setText("Rp. "+currency.format(barangJasaList.get(position).harga).toString());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

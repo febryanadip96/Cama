@@ -26,18 +26,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class PesananFragment extends Fragment {
-    @BindView(R.id.recycler_pesanan)
-    RecyclerView recyclerPesanan;
-    Unbinder unbinder;
+    private RecyclerView recyclerPesanan;
     private RecyclerView.Adapter adapterPesanan;
     private RecyclerView.LayoutManager layoutManagerPesanan;
     private List<Pesanan> pesananList;
@@ -54,11 +48,13 @@ public class PesananFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_pesanan, container, false);
-        unbinder = ButterKnife.bind(this, rootView);
         queue = Volley.newRequestQueue(getActivity());
         getActivity().setTitle("Pesanan");
+
+        recyclerPesanan = (RecyclerView) rootView.findViewById(R.id.recycler_pesanan);
         layoutManagerPesanan = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerPesanan.setLayoutManager(layoutManagerPesanan);
+
         getPesanan();
         return rootView;
     }
@@ -89,11 +85,5 @@ public class PesananFragment extends Fragment {
             }
         };
         queue.add(feedRequest);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 }

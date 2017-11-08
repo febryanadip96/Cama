@@ -26,21 +26,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FeedFragment extends Fragment {
-    @BindView(R.id.recycler_favoritToko)
-    RecyclerView recyclerFavoritToko;
-    Unbinder unbinder;
-    private RecyclerView mRecyclerViewFavoritToko;
-    private RecyclerView.Adapter mAdapterFavoritToko;
-    private RecyclerView.LayoutManager mLayoutManagerFavoritToko;
+    private RecyclerView recyclerFavoritToko;
+    private RecyclerView.Adapter adapterFavoritToko;
+    private RecyclerView.LayoutManager layoutManagerFavoritToko;
     private List<Toko> tokoList;
     RequestQueue queue;
 
@@ -56,12 +49,11 @@ public class FeedFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_feed, container, false);
-        unbinder = ButterKnife.bind(this, rootView);
         queue = Volley.newRequestQueue(getActivity());
 
-        mRecyclerViewFavoritToko = (RecyclerView) rootView.findViewById(R.id.recycler_favoritToko);
-        mLayoutManagerFavoritToko = new GridLayoutManager(getActivity(), 1);
-        mRecyclerViewFavoritToko.setLayoutManager(mLayoutManagerFavoritToko);
+        recyclerFavoritToko = (RecyclerView) rootView.findViewById(R.id.recycler_favoritToko);
+        layoutManagerFavoritToko = new GridLayoutManager(getActivity(), 1);
+        recyclerFavoritToko.setLayoutManager(layoutManagerFavoritToko);
 
         getFeed();
         return rootView;
@@ -75,8 +67,8 @@ public class FeedFragment extends Fragment {
             public void onResponse(JSONArray response) {
                 tokoList = new Gson().fromJson(response.toString(), new TypeToken<List<Toko>>() {
                 }.getType());
-                mAdapterFavoritToko = new FavoritTokoAdapter(tokoList);
-                mRecyclerViewFavoritToko.setAdapter(mAdapterFavoritToko);
+                adapterFavoritToko = new FavoritTokoAdapter(tokoList);
+                recyclerFavoritToko.setAdapter(adapterFavoritToko);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -93,11 +85,5 @@ public class FeedFragment extends Fragment {
             }
         };
         queue.add(feedRequest);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 }

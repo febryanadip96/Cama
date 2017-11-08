@@ -27,4 +27,6 @@ public class DetailPesanan {
     public String updated_at;
     @SerializedName("barang_jasa")
     public BarangJasa barang_jasa;
+    @SerializedName("komentar")
+    public Komentar komentar;
 }

@@ -26,18 +26,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FavoritFragment extends Fragment {
-    @BindView(R.id.recycler_favorit)
-    RecyclerView recyclerFavorit;
-    Unbinder unbinder;
+    private RecyclerView recyclerFavorit;
     private RecyclerView.Adapter adapterFavorit;
     private RecyclerView.LayoutManager layoutManagerFavorit;
     private List<BarangJasa> barangJasaList;
@@ -54,9 +48,9 @@ public class FavoritFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_favorit, container, false);
-        unbinder = ButterKnife.bind(this, rootView);
         queue = Volley.newRequestQueue(getActivity());
 
+        recyclerFavorit = (RecyclerView) rootView.findViewById(R.id.recycler_favorit);
         layoutManagerFavorit = new GridLayoutManager(getActivity(), 2);
         recyclerFavorit.setLayoutManager(layoutManagerFavorit);
 
@@ -91,11 +85,5 @@ public class FavoritFragment extends Fragment {
             }
         };
         queue.add(feedRequest);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 }
