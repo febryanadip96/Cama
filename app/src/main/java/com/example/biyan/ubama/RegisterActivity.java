@@ -1,11 +1,10 @@
 package com.example.biyan.ubama;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -51,8 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText passwordConfirm;
     @BindView(R.id.register)
     Button register;
-    @BindView(R.id.loading)
-    ProgressBar loading;
+    ProgressDialog loadingRegister;
     private int jenis;
 
     @Override
@@ -89,7 +87,11 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void ProsesRegister() {
-        loading.setVisibility(View.VISIBLE);
+        loadingRegister = new ProgressDialog(this);
+        loadingRegister.setIndeterminate(true);
+        loadingRegister.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loadingRegister.setMessage("Proses Register");
+        loadingRegister.show();
         Map<String, String> params = new HashMap<>();
         params.put("name", namaLengkap.getText().toString());
         params.put("email", email.getText().toString());
@@ -101,7 +103,7 @@ public class RegisterActivity extends AppCompatActivity {
         JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                loading.setVisibility(View.GONE);
+                loadingRegister.dismiss();
                 try {
                     if (!response.isNull("message")) {
                         Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
@@ -120,7 +122,7 @@ public class RegisterActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                loading.setVisibility(View.GONE);
+                loadingRegister.dismiss();
                 Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
             }
         }) {

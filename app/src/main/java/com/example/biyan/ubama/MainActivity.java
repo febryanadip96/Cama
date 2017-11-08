@@ -7,8 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -41,11 +41,14 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView nama;
-    TextView email;
-    ImageView imageProfile;
-    TabLayout tabs;
-    RequestQueue queue;
+    private TextView nama;
+    private TextView email;
+    private ImageView imageProfile;
+    private TabLayout tabs;
+    private NavigationView navigationView;
+    private ViewPager pagerBeranda;
+    private BerandaPagerAdapter adapterBeranda;
+    private RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +63,15 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        if(savedInstanceState==null){
-            //navigationView.getMenu().getItem(0).setChecked(true);
-            onNavigationItemSelected(navigationView.getMenu().getItem(0));
 
-        }
+        pagerBeranda = (ViewPager) findViewById(R.id.pager_beranda);
+        adapterBeranda = new BerandaPagerAdapter(getSupportFragmentManager());
+        pagerBeranda.setAdapter(adapterBeranda);
+        pagerBeranda.setOffscreenPageLimit(adapterBeranda.getCount());
+        tabs = (TabLayout) findViewById(R.id.tabs);
+        tabs.setupWithViewPager(pagerBeranda);
 
         View headerView = navigationView.getHeaderView(0);
         imageProfile = (ImageView) headerView.findViewById(R.id.imageProfile);
@@ -138,8 +143,8 @@ public class MainActivity extends AppCompatActivity
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setQueryRefinementEnabled(false);
         searchView.setIconifiedByDefault(false);
+        searchView.requestFocus();
 
         return true;
     }
@@ -153,7 +158,8 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.keranjang) {
-            Toast.makeText(this,"Ini keranjang",Toast.LENGTH_LONG).show();
+            Intent keranjang = new Intent(this,KeranjangActivity.class);
+            startActivity(keranjang);
         }
 
         return super.onOptionsItemSelected(item);
@@ -164,28 +170,22 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Fragment fragment = null;
-        //hilangkan tabs
-        tabs = (TabLayout) findViewById(R.id.tabs);
-        tabs.setupWithViewPager(null);
-        tabs.setVisibility(View.GONE);
 
         if (id == R.id.nav_home) {
-            fragment = new HomeFragment();
+            //tidak ada
         } else if (id == R.id.nav_kotak_masuk) {
-            fragment = new KotakMasukFragment();
+            Intent kotakMasuk = new Intent(this,KotakMasukActivity.class);
+            startActivity(kotakMasuk);
         } else if (id == R.id.nav_keranjang) {
-            fragment = new KeranjangFragment();
+            Intent keranjang = new Intent(this,KeranjangActivity.class);
+            startActivity(keranjang);
         } else if (id == R.id.nav_pesanan) {
-            fragment = new PesananFragment();
+            Intent pesanan = new Intent(this, PesananActivity.class);
+            startActivity(pesanan);
         } else if (id == R.id.nav_toko) {
-
+            //
         } else if (id == R.id.nav_logout) {
             AskLogout();
-        }
-
-        if (fragment != null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, fragment).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

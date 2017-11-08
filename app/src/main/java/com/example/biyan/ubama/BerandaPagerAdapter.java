@@ -8,9 +8,9 @@ import android.support.v4.app.FragmentPagerAdapter;
  * Created by Biyan on 10/26/2017.
  */
 
-public class HomePagerAdapter extends FragmentPagerAdapter {
+public class BerandaPagerAdapter extends FragmentPagerAdapter {
 
-    public HomePagerAdapter(FragmentManager fm) {
+    public BerandaPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 

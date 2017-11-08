@@ -15,24 +15,26 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class FavoritAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class BarangJasaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ImageView imageBarang;
     private TextView namaBarang;
+    private CircleImageView imageToko;
     private TextView namaToko;
     private TextView hargaBarang;
     private Context context;
     private List<BarangJasa> barangJasaList;
 
-    public FavoritAdapter(List<BarangJasa> barangJasaList) {
+    public BarangJasaAdapter(List<BarangJasa> barangJasaList) {
         this.barangJasaList = barangJasaList;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_favorit, parent, false);
+                .inflate(R.layout.item_barang_jasa, parent, false);
         context = parent.getContext();
         RecyclerView.ViewHolder vh = new RecyclerView.ViewHolder(v) {
             @Override
@@ -48,17 +50,17 @@ public class FavoritAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         imageBarang = (ImageView) holder.itemView.findViewById(R.id.image_barang);
         namaBarang = (TextView) holder.itemView.findViewById(R.id.nama_barang);
         hargaBarang = (TextView) holder.itemView.findViewById(R.id.harga_barang);
+        imageToko = (CircleImageView) holder.itemView.findViewById(R.id.image_toko);
         namaToko = (TextView) holder.itemView.findViewById(R.id.nama_toko);
 
         if (barangJasaList.get(position).gambar.size() > 0) {
             Picasso.with(context).load(UrlUbama.URL_IMAGE + barangJasaList.get(position).gambar.get(0).url_gambar).fit().error(R.drawable.ic_error_image).into(imageBarang);
-        }
-        else{
+        } else {
             imageBarang.setImageResource(R.drawable.ic_error_image);
         }
         namaBarang.setText(barangJasaList.get(position).nama.toString());
         NumberFormat currency = NumberFormat.getInstance(Locale.GERMANY);
-        hargaBarang.setText("Rp. "+currency.format(barangJasaList.get(position).harga).toString());
+        hargaBarang.setText("Rp. " + currency.format(barangJasaList.get(position).harga).toString());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

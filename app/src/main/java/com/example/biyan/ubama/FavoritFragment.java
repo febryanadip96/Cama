@@ -60,14 +60,13 @@ public class FavoritFragment extends Fragment {
     }
 
     public void getFavorit() {
-        queue = Volley.newRequestQueue(getActivity());
         String url = UrlUbama.UserFavoritBarangJasa;
         JsonArrayRequest feedRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 barangJasaList = new Gson().fromJson(response.toString(), new TypeToken<List<BarangJasa>>() {
                 }.getType());
-                adapterFavorit = new FavoritAdapter(barangJasaList);
+                adapterFavorit = new BarangJasaAdapter(barangJasaList);
                 recyclerFavorit.setAdapter(adapterFavorit);
             }
         }, new Response.ErrorListener() {

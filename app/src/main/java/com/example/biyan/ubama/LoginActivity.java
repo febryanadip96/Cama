@@ -1,15 +1,14 @@
 package com.example.biyan.ubama;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -38,11 +37,10 @@ public class LoginActivity extends AppCompatActivity {
     EditText password;
     @BindView(R.id.login)
     Button login;
-    @BindView(R.id.loading_login)
-    ProgressBar loadingLogin;
     RequestQueue queue;
     @BindView(R.id.loginView)
     RelativeLayout loginView;
+    private ProgressDialog loadingLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +70,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void ProsesLogin() {
-        loadingLogin.setVisibility(View.VISIBLE);
+        loadingLogin = new ProgressDialog(this);
+        loadingLogin.setIndeterminate(true);
+        loadingLogin.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loadingLogin.setMessage("Proses Login");
+        loadingLogin.show();
         Map<String, String> params = new HashMap<String, String>();
         params.put("email", email.getText().toString());
         params.put("password", password.getText().toString());
@@ -80,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
         JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                loadingLogin.setVisibility(View.GONE);
+                loadingLogin.dismiss();
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 try {
                     if (!response.isNull("message")) {
@@ -112,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                loadingLogin.setVisibility(View.GONE);
+                loadingLogin.dismiss();
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
             }

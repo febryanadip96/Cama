@@ -1,13 +1,9 @@
 package com.example.biyan.ubama;
 
-
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -26,41 +22,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
-public class PesananFragment extends Fragment {
+public class PesananActivity extends AppCompatActivity {
     private RecyclerView recyclerPesanan;
     private RecyclerView.Adapter adapterPesanan;
     private RecyclerView.LayoutManager layoutManagerPesanan;
     private List<Pesanan> pesananList;
     RequestQueue queue;
 
-    public static PesananFragment newInstance() {
-        PesananFragment pesananFragment = new PesananFragment();
-        return pesananFragment;
-    }
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_pesanan, container, false);
-        queue = Volley.newRequestQueue(getActivity());
-        getActivity().setTitle("Pesanan");
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_pesanan);
+        queue = Volley.newRequestQueue(this);
+        this.setTitle("Pesanan");
 
-        recyclerPesanan = (RecyclerView) rootView.findViewById(R.id.recycler_pesanan);
-        layoutManagerPesanan = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerPesanan = (RecyclerView) findViewById(R.id.recycler_pesanan);
+        layoutManagerPesanan = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerPesanan.setLayoutManager(layoutManagerPesanan);
 
         getPesanan();
-        return rootView;
     }
 
     private void getPesanan() {
-        queue = Volley.newRequestQueue(getActivity());
         String url = UrlUbama.UserPesanan;
         JsonArrayRequest feedRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
@@ -73,13 +56,13 @@ public class PesananFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplication(), error.toString(), Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("Authorization", UserToken.getToken(getContext()));
+                params.put("Authorization", UserToken.getToken(getApplication()));
                 params.put("Accept", "application/json");
                 return params;
             }

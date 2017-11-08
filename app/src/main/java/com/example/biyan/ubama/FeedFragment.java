@@ -60,7 +60,6 @@ public class FeedFragment extends Fragment {
     }
 
     private void getFeed() {
-        queue = Volley.newRequestQueue(getActivity());
         String url = UrlUbama.UserFeed;
         JsonArrayRequest feedRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override

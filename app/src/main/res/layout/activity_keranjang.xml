@@ -4,15 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.biyan.ubama.MainActivity"
-    tools:showIn="@layout/app_bar_main">
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager_beranda"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </android.support.v4.view.ViewPager>
+    tools:context="com.example.biyan.ubama.KeranjangActivity">
 
 </android.support.constraint.ConstraintLayout>

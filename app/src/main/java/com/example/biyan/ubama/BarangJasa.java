@@ -55,6 +55,8 @@ public class BarangJasa {
     public String updated_at;
     @SerializedName("deleted_at")
     public String deleted_at;
+    @SerializedName("favorit")
+    public boolean favorit;
     @SerializedName("toko")
     public Toko toko;
     @SerializedName("gambar")

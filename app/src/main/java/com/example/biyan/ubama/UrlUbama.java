@@ -31,4 +31,6 @@ public final class UrlUbama {
 
     public final static String BarangJasa = URL_API+"barangjasa/";
 
+    public final static String Cari = URL_API+"cari/";
+
 }

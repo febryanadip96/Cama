@@ -1,5 +1,6 @@
 package com.example.biyan.ubama;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -66,6 +67,7 @@ public class BarangJasaActivity extends AppCompatActivity {
     @BindView(R.id.catatan_penjual)
     ExpandableTextView catatanPenjual;
 
+    private ProgressDialog loading;
     private int idBarangJasa;
     BarangJasa barangJasa;
     RequestQueue queue;
@@ -88,6 +90,11 @@ public class BarangJasaActivity extends AppCompatActivity {
     }
 
     private void getDetailBarangJasa() {
+        loading = new ProgressDialog(this);
+        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loading.setMessage("Mohon Menunggu");
+        loading.setIndeterminate(true);
+        loading.show();
         queue = Volley.newRequestQueue(this);
         String url = UrlUbama.BarangJasa + idBarangJasa;
         JsonObjectRequest barangJasaRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -100,6 +107,11 @@ public class BarangJasaActivity extends AppCompatActivity {
                 namaBarang.setText(barangJasa.nama);
                 NumberFormat currency = NumberFormat.getInstance(Locale.GERMANY);
                 hargaBarang.setText("Rp. " + currency.format(barangJasa.harga).toString());
+                if (barangJasa.favorit) {
+                    favoritBarang.setImageResource(R.drawable.ic_favorite_red);
+                } else {
+                    favoritBarang.setImageResource(R.drawable.ic_favorite_border_grey);
+                }
                 kondisiBarang.setText(barangJasa.baruBekas);
                 if (!barangJasa.toko.url_profile.isEmpty()) {
                     Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE + barangJasa.toko.url_profile).into(imageToko);
@@ -134,15 +146,17 @@ public class BarangJasaActivity extends AppCompatActivity {
                     default:
                         break;
                 }
-                jumlahKomentar.setText(barangJasa.jumlah_komentar+" Komentar");
-                jumlahFaq.setText(barangJasa.jumlah_faq+" FAQ");
+                jumlahKomentar.setText(barangJasa.jumlah_komentar + " Komentar");
+                jumlahFaq.setText(barangJasa.jumlah_faq + " FAQ");
                 deskripsi.setText(barangJasa.deskripsi);
                 catatanPenjual.setText(barangJasa.catatan_penjual);
 
+                loading.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                loading.dismiss();
                 Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
             }
         }) {

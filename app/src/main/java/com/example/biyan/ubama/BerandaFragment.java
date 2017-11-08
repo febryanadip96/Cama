@@ -72,7 +72,6 @@ public class BerandaFragment extends Fragment {
     }
 
     private void getKategori() {
-        queue = Volley.newRequestQueue(getActivity());
         String url = UrlUbama.BerandaKategori;
         JsonArrayRequest berandaKategoriRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
