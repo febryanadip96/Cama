@@ -44,7 +44,7 @@ public class HasilPencarianActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_results);
+        setContentView(R.layout.activity_hasil_pencarian);
         ButterKnife.bind(this);
         layoutManagerHasil = new GridLayoutManager(this, 2);
         recyclerHasil.setLayoutManager(layoutManagerHasil);

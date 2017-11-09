@@ -65,7 +65,8 @@
         </activity>
         <activity
             android:name=".BarangJasaActivity"
-            android:label="Detail Produk">
+            android:label="Detail Produk"
+            android:launchMode="singleTask">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -92,6 +93,13 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".PemesananActivity"
+            android:label="Pemesanan Produk">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".BarangJasaActivity" />
         </activity>
     </application>
 

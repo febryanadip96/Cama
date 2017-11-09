@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity
         pagerBeranda = (ViewPager) findViewById(R.id.pager_beranda);
         adapterBeranda = new BerandaPagerAdapter(getSupportFragmentManager());
         pagerBeranda.setAdapter(adapterBeranda);
-        pagerBeranda.setOffscreenPageLimit(adapterBeranda.getCount());
+        pagerBeranda.setOffscreenPageLimit(1);
         tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.setupWithViewPager(pagerBeranda);
 

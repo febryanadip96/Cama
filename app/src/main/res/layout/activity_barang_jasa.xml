@@ -218,7 +218,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:src="@mipmap/ic_launcher"
-                    app:civ_border_width="2dp"
+                    app:civ_border_width="1dp"
                     app:civ_border_color="#56000000"/>
 
                 <TextView
@@ -331,14 +331,15 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:clickable="true"
         android:background="?attr/selectableItemBackground">
 
         <Button
+            android:id="@+id/pesan"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorPrimary"
             android:textColor="@android:color/white"
+            android:clickable="true"
             android:text="Pesan"/>
 
     </LinearLayout>

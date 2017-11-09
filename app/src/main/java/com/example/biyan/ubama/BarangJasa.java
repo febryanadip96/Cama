@@ -35,10 +35,6 @@ public class BarangJasa {
     public int jumlah_dilihat;
     @SerializedName("jumlah_terjual")
     public int jumlah_terjual;
-    @SerializedName("jumlah_batal")
-    public int jumlah_batal;
-    @SerializedName("jumlah_stok")
-    public int jumlah_stok;
     @SerializedName("jumlah_komentar")
     public int jumlah_komentar;
     @SerializedName("jumlah_faq")

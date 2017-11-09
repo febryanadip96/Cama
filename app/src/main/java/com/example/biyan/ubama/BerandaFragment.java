@@ -60,8 +60,8 @@ public class BerandaFragment extends Fragment {
 
         recyclerKategori = (RecyclerView) rootView.findViewById(R.id.recycler_kategori);
         recyclerFakultas = (RecyclerView) rootView.findViewById(R.id.recycler_fakultas);
-        layoutManagerKategori = new GridLayoutManager(getActivity(), 3);
-        layoutManagerFakultas = new GridLayoutManager(getActivity(), 3);
+        layoutManagerKategori = new GridLayoutManager(getActivity(), 2);
+        layoutManagerFakultas = new GridLayoutManager(getActivity(), 2);
         recyclerKategori.setLayoutManager(layoutManagerKategori);
         recyclerFakultas.setLayoutManager(layoutManagerFakultas);
 

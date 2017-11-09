@@ -5,15 +5,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class FakultasAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ImageView imageFakultas;
+    private CircleImageView imageFakultas;
     private TextView namaFakultas;
     private Context context;
     private List<Fakultas> fakultasList;
@@ -38,9 +39,9 @@ public class FakultasAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        imageFakultas = (ImageView) holder.itemView.findViewById(R.id.image_fakultas);
+        imageFakultas = (CircleImageView) holder.itemView.findViewById(R.id.image_fakultas);
         namaFakultas = (TextView) holder.itemView.findViewById(R.id.nama_fakultas);
-        Picasso.with(context).load(UrlUbama.URL_IMAGE + fakultasList.get(position).url_gambar).into(imageFakultas);
+        Picasso.with(context).load(UrlUbama.URL_IMAGE + fakultasList.get(position).url_gambar).error(R.drawable.ic_error_image).fit().into(imageFakultas);
         namaFakultas.setText(fakultasList.get(position).nama);
     }
 

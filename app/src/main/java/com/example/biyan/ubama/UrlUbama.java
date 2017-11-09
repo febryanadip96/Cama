@@ -25,12 +25,19 @@ public final class UrlUbama {
 
     public final static String UserFeed = URL_API+"user/feed";
 
-    public final static String UserFavoritBarangJasa = URL_API+"user/favoritBarangJasa";
+    public final static String UserFavoritBarangJasa = URL_API+"user/favoritbarangjasa";
+
+    public final static String UserUbahFavoritBarangJasa = URL_API+"user/ubahfavoritbarangjasa/";
 
     public final static String UserPesanan = URL_API+"user/pesanan";
 
     public final static String BarangJasa = URL_API+"barangjasa/";
 
     public final static String Cari = URL_API+"cari/";
+
+    public final static String UserDataPemesanan = URL_API+"user/datapemesanan/";
+
+    public final static String UserMasukKeranjang = URL_API+"user/masukkeranjang";
+
 
 }

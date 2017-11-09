@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ import com.squareup.picasso.Picasso;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.NumberFormat;
@@ -30,6 +33,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class BarangJasaActivity extends AppCompatActivity {
@@ -66,6 +70,8 @@ public class BarangJasaActivity extends AppCompatActivity {
     ExpandableTextView deskripsi;
     @BindView(R.id.catatan_penjual)
     ExpandableTextView catatanPenjual;
+    @BindView(R.id.pesan)
+    Button pesan;
 
     private ProgressDialog loading;
     private int idBarangJasa;
@@ -180,5 +186,54 @@ public class BarangJasaActivity extends AppCompatActivity {
         }
     };
 
+    @OnClick({R.id.favorit_barang, R.id.pesan})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.favorit_barang:
+                ubahFavorit();
+                break;
+            case R.id.pesan:
+                masukkanPesan();
+                break;
+        }
+    }
 
+    private void masukkanPesan() {
+        Intent pesan = new Intent(this, PemesananActivity.class);
+        pesan.putExtra("idBarangJasa", idBarangJasa);
+        startActivity(pesan);
+    }
+
+    private void ubahFavorit() {
+        queue = Volley.newRequestQueue(this);
+        String url = UrlUbama.UserUbahFavoritBarangJasa + idBarangJasa;
+        JsonObjectRequest ubahFavoritRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    if (response.getBoolean("favorit")) {
+                        favoritBarang.setImageResource(R.drawable.ic_favorite_red);
+                    } else {
+                        favoritBarang.setImageResource(R.drawable.ic_favorite_border_grey);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", UserToken.getToken(getApplicationContext()));
+                params.put("Accept", "application/json");
+                return params;
+            }
+        };
+        queue.add(ubahFavoritRequest);
+    }
 }

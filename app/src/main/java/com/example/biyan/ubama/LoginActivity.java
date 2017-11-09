@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -52,11 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.login)
-    public void onViewClicked() {
-        CekDataLogin();
-    }
-
-    private void CekDataLogin() {
+    public void CekDataLogin() {
         if (email.getText().toString().equals("") || password.getText().toString().equals("")) {
             Snackbar snackbar = Snackbar
                     .make(loginView, "Harap masukkan email dan password Anda", Snackbar.LENGTH_LONG);
@@ -64,8 +59,6 @@ public class LoginActivity extends AppCompatActivity {
             //Toast.makeText(getApplicationContext(), "Harap masukkan email dan password Anda", Toast.LENGTH_SHORT).show();
             return;
         }
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         ProsesLogin();
     }
 
@@ -83,7 +76,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 loadingLogin.dismiss();
-                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 try {
                     if (!response.isNull("message")) {
                         //Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
@@ -115,7 +107,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingLogin.dismiss();
-                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
             }
         }) {
