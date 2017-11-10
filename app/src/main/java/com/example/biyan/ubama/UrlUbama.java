@@ -39,5 +39,13 @@ public final class UrlUbama {
 
     public final static String UserMasukKeranjang = URL_API+"user/masukkeranjang";
 
+    public final static String BarangJasaFakultas = URL_API+"barangjasafakultas/";
+
+    public final static String SubkateogirKategori = URL_API+"subkategorikategori/";
+
+    public final static String BarangJasaSubkategori = URL_API+"barangjasasubkategori/";
+
+    public final static String UserDetailPesanan = URL_API+"user/detailpesanan/";
+
 
 }

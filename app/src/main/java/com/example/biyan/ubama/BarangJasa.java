@@ -27,8 +27,6 @@ public class BarangJasa {
     public int harga;
     @SerializedName("baruBekas")
     public String baruBekas;
-    @SerializedName("pengiriman")
-    public String pengiriman;
     @SerializedName("catatan_penjual")
     public String catatan_penjual;
     @SerializedName("jumlah_dilihat")
@@ -43,8 +41,6 @@ public class BarangJasa {
     public double total_rating;
     @SerializedName("min_pesan")
     public int min_pesan;
-    @SerializedName("toko_id")
-    public int toko_id;
     @SerializedName("created_at")
     public String created_at;
     @SerializedName("updated_at")

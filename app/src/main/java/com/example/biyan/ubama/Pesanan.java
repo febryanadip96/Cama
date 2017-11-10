@@ -15,6 +15,8 @@ public class Pesanan {
     public int total_harga;
     @SerializedName("jumlah_barang")
     public int jumlah_barang;
+    @SerializedName("alamat")
+    public String alamat;
     @SerializedName("alasan_ditolak")
     public String alasan_ditolak;
     @SerializedName("status")
@@ -29,4 +31,6 @@ public class Pesanan {
     public String updated_at;
     @SerializedName("detail_pesanan")
     public List<DetailPesanan> detail_pesanan;
+    @SerializedName("log_pesanan")
+    public List<LogPesanan> log_pesanan;
 }

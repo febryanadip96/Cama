@@ -7,6 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -81,50 +84,6 @@ public class MainActivity extends AppCompatActivity
         IsiHeaderUser();
     }
 
-    private void IsiHeaderUser() {
-        //get data user
-        String url = UrlUbama.User;
-        JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    //Toast.makeText(getApplicationContext(),response.getString("name")+" "+response.getString("email"), Toast.LENGTH_SHORT).show();
-                    if(!(response.isNull("name") || response.isNull("email"))){
-                        Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE+response.getJSONObject("pengguna").getString("url_profile")).into(imageProfile);
-                        nama.setText(response.getString("name"));
-                        email.setText(response.getString("email"));
-                    }
-                    else
-                    {
-                        Toast.makeText(getApplicationContext(),response.getString("message"), Toast.LENGTH_SHORT).show();
-                        Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
-                        startActivity(welcomeIntent);
-                        finish();
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "Kesalahan pada server. Coba lagi nanti", Toast.LENGTH_LONG).show();
-                finish();
-            }
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Authorization", UserToken.getToken(getApplicationContext()));
-                params.put("Accept", "application/json");
-                return params;
-            }
-        };
-        queue.add(loginRequest);
-    }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -193,6 +152,50 @@ public class MainActivity extends AppCompatActivity
         return false;
     }
 
+    private void IsiHeaderUser() {
+        //get data user
+        String url = UrlUbama.User;
+        JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    //Toast.makeText(getApplicationContext(),response.getString("name")+" "+response.getString("email"), Toast.LENGTH_SHORT).show();
+                    if(!(response.isNull("name") || response.isNull("email"))){
+                        Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE+response.getJSONObject("pengguna").getString("url_profile")).into(imageProfile);
+                        nama.setText(response.getString("name"));
+                        email.setText(response.getString("email"));
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(),response.getString("message"), Toast.LENGTH_SHORT).show();
+                        Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
+                        startActivity(welcomeIntent);
+                        finish();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Kesalahan pada server. Coba lagi nanti", Toast.LENGTH_LONG).show();
+                finish();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", UserToken.getToken(getApplicationContext()));
+                params.put("Accept", "application/json");
+                return params;
+            }
+        };
+        queue.add(loginRequest);
+    }
+
     private void AskLogout(){
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setMessage("Anda yakin ingin keluar?")
@@ -243,5 +246,40 @@ public class MainActivity extends AppCompatActivity
             }
         };
         queue.add(loginRequest);
+    }
+
+    private class BerandaPagerAdapter extends FragmentPagerAdapter {
+
+        public BerandaPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+
+        @Override
+        public Fragment getItem(int position) {
+            if (position == 0) {
+                return BerandaFragment.newInstance();
+            } else if(position ==1) {
+                return FeedFragment.newInstance();
+            }else {
+                return FavoritFragment.newInstance();
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            if (position == 0) {
+                return "Beranda";
+            }  else if(position == 1) {
+                return "Feed";
+            } else {
+                return "Favorit";
+            }
+        }
     }
 }

@@ -5,10 +5,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -36,6 +37,7 @@ public class FavoritFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManagerFavorit;
     private List<BarangJasa> barangJasaList;
     RequestQueue queue;
+    private TextView empty;
 
     public static FavoritFragment newInstance() {
         FavoritFragment favoritFragment = new FavoritFragment();
@@ -50,6 +52,8 @@ public class FavoritFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_favorit, container, false);
         queue = Volley.newRequestQueue(getActivity());
 
+        empty = (TextView) rootView.findViewById(R.id.empty);
+
         recyclerFavorit = (RecyclerView) rootView.findViewById(R.id.recycler_favorit);
         layoutManagerFavorit = new GridLayoutManager(getActivity(), 2);
         recyclerFavorit.setLayoutManager(layoutManagerFavorit);
@@ -61,18 +65,22 @@ public class FavoritFragment extends Fragment {
 
     public void getFavorit() {
         String url = UrlUbama.UserFavoritBarangJasa;
-        JsonArrayRequest feedRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest favoritRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 barangJasaList = new Gson().fromJson(response.toString(), new TypeToken<List<BarangJasa>>() {
                 }.getType());
                 adapterFavorit = new BarangJasaAdapter(barangJasaList);
                 recyclerFavorit.setAdapter(adapterFavorit);
+                if(!(barangJasaList.size()>0)){
+                    empty.setVisibility(View.VISIBLE);
+                    recyclerFavorit.setVisibility(View.GONE);
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                Log.e("Error Volley ", error.toString());
             }
         }) {
             @Override
@@ -83,6 +91,6 @@ public class FavoritFragment extends Fragment {
                 return params;
             }
         };
-        queue.add(feedRequest);
+        queue.add(favoritRequest);
     }
 }

@@ -15,22 +15,24 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
-
-public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+/**
+ * Created by Biyan on 11/10/2017.
+ */
+public class FeedItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ImageView imageBarang;
     private TextView namaBarang;
     private TextView hargaBarang;
     private Context context;
     private List<BarangJasa> barangJasaList;
 
-    public FeedAdapter(List<BarangJasa> barangJasaList) {
+    public FeedItemAdapter(List<BarangJasa> barangJasaList) {
         this.barangJasaList = barangJasaList;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_feed, parent, false);
+                .inflate(R.layout.item_feed_item, parent, false);
         context = parent.getContext();
         RecyclerView.ViewHolder vh = new RecyclerView.ViewHolder(v) {
             @Override
@@ -49,13 +51,12 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         if (!barangJasaList.get(position).gambar.isEmpty()) {
             Picasso.with(context).load(UrlUbama.URL_IMAGE + barangJasaList.get(position).gambar.get(0).url_gambar).fit().error(R.drawable.ic_error_image).into(imageBarang);
-        }
-        else{
+        } else {
             imageBarang.setImageResource(R.drawable.ic_error_image);
         }
         namaBarang.setText(barangJasaList.get(position).nama.toString());
         NumberFormat currency = NumberFormat.getInstance(Locale.GERMANY);
-        hargaBarang.setText("Rp. "+currency.format(barangJasaList.get(position).harga).toString());
+        hargaBarang.setText("Rp. " + currency.format(barangJasaList.get(position).harga).toString());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +72,4 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public int getItemCount() {
         return barangJasaList.size();
     }
-
-
 }

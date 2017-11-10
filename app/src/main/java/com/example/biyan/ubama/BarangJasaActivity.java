@@ -4,11 +4,11 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -122,6 +122,7 @@ public class BarangJasaActivity extends AppCompatActivity {
                 if (!barangJasa.toko.url_profile.isEmpty()) {
                     Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE + barangJasa.toko.url_profile).into(imageToko);
                 }
+                namaToko.setText(barangJasa.toko.nama);
                 int rating = (int) Math.floor(barangJasa.total_rating);
                 switch (rating) {
                     case 1:
@@ -163,7 +164,8 @@ public class BarangJasaActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loading.dismiss();
-                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+                Log.e("Error Volley ", error.toString());
+                finish();
             }
         }) {
             @Override
@@ -223,7 +225,7 @@ public class BarangJasaActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+                Log.e("Error Volley", error.toString());
             }
         }) {
             @Override

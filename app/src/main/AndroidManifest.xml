@@ -89,7 +89,8 @@
         </activity>
         <activity
             android:name=".PesananActivity"
-            android:label="Pesanan">
+            android:label="Pesanan"
+            android:launchMode="singleTask">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -100,6 +101,40 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".BarangJasaActivity" />
+        </activity>
+        <activity
+            android:name=".HasilFakultasActivity"
+            android:label="Fakultas">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".SubkategoriActivity"
+            android:label="Kategori"
+            android:launchMode="singleTask">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".HasilSubkategoriActivity"
+            android:label="Subkategori">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SubkategoriActivity" />
+        </activity>
+        <activity android:name=".DetailPesananActivity"
+            android:label="Detail Pesanan">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PesananActivity" />
+        </activity>
+        <activity android:name=".TokoActivity"
+            android:label="Toko">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
     </application>
 

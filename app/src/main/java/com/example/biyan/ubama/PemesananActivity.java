@@ -1,8 +1,10 @@
 package com.example.biyan.ubama;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
@@ -72,6 +74,7 @@ public class PemesananActivity extends AppCompatActivity {
         Intent intent = getIntent();
         idBarangJasa = intent.getIntExtra("idBarangJasa", 0);
         getDetailBarangJasa();
+        catatanPembeli.hasFocus();
         jumlah.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -120,30 +123,7 @@ public class PemesananActivity extends AppCompatActivity {
                 hargaBarang.setText("Rp. " + currency.format(barangJasa.harga));
                 jumlah.setText(barangJasa.min_pesan + "");
                 totalHarga.setText("Rp. " + currency.format(barangJasa.harga * barangJasa.min_pesan));
-                switch (barangJasa.pengiriman) {
-                    case "Diantar":
-                        alamatTujuan.setText("Diantar di pembeli\n" +
-                                user.name + "\n" +
-                                user.pengguna.alamat + "\n" +
-                                user.pengguna.telepon + "\n"
-                        );
-                        break;
-                    case "Diambil":
-                        alamatTujuan.setText("Diambil di toko penjual\n" +
-                                barangJasa.toko.nama + "\n" +
-                                barangJasa.toko.pemilik.user.name + "\n" +
-                                barangJasa.toko.alamat + "\n" +
-                                barangJasa.toko.pemilik.telepon
-                        );
-                        break;
-                    case "Di Ubaya":
-                    default:
-                        alamatTujuan.setText("Bertemu di Ubaya\n" +
-                                barangJasa.toko.pemilik.user.name + "\n" +
-                                barangJasa.toko.pemilik.telepon
-                        );
-                        break;
-                }
+                alamatTujuan.setText(user.name + "\n" + user.pengguna.alamat + "\n" + user.pengguna.telepon + "\n");
                 loading.dismiss();
             }
         }, new Response.ErrorListener() {
@@ -203,6 +183,7 @@ public class PemesananActivity extends AppCompatActivity {
         params.put("jumlah", jumlah.getText().toString());
         params.put("catatan_pembeli", catatanPembeli.getText().toString());
         params.put("barang_jasa_id", idBarangJasa+"");
+        params.put("alamat", alamatTujuan.getText().toString());
         String url = UrlUbama.UserMasukKeranjang;
         JsonObjectRequest masukkanKeranjang = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
@@ -210,6 +191,22 @@ public class PemesananActivity extends AppCompatActivity {
                 try {
                     if(response.getBoolean("keranjang")){
                         loading.dismiss();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(PemesananActivity.this);
+                        builder.setMessage("Produk berhasil dimasukkan ke keranjang belanja")
+                                .setPositiveButton("Lanjut Belanja", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        finish();
+                                    }
+                                })
+                                .setNegativeButton("Lihat Keranjang", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        Intent keranjang = new Intent(PemesananActivity.this, KeranjangActivity.class);
+                                        startActivity(keranjang);
+                                        finish();
+                                    }
+                                });
+                        AlertDialog alert = builder.create();
+                        alert.show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

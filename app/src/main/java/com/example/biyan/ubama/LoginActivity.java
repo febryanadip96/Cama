@@ -88,12 +88,12 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Login sukses", Toast.LENGTH_SHORT).show();
                             Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(mainIntent);
+                            WelcomeActivity.welcome.finish();
                             finish();
                         } else {
                             Snackbar snackbar = Snackbar
                                     .make(loginView, "Login gagal", Snackbar.LENGTH_LONG);
                             snackbar.show();
-                            //Toast.makeText(getApplicationContext(), "Login gagal", Toast.LENGTH_SHORT).show();
                         }
 
                     }

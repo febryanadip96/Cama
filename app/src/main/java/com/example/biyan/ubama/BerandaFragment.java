@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +79,7 @@ public class BerandaFragment extends Fragment {
             public void onResponse(JSONArray response) {
                 kategoriList = new Gson().fromJson(response.toString(), new TypeToken<List<Kategori>>() {
                 }.getType());
-                adapterKategori = new KategoriAdapter(kategoriList);
+                adapterKategori = new BerandaKategoriAdapter(kategoriList);
                 recyclerKategori.setAdapter(adapterKategori);
             }
         }, new Response.ErrorListener() {
@@ -106,13 +107,13 @@ public class BerandaFragment extends Fragment {
             public void onResponse(JSONArray response) {
                 fakultasList = new Gson().fromJson(response.toString(), new TypeToken<List<Fakultas>>() {
                 }.getType());
-                adapterFakultas = new FakultasAdapter(fakultasList);
+                adapterFakultas = new BerandaFakultasAdapter(fakultasList);
                 recyclerFakultas.setAdapter(adapterFakultas);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                Log.e("Error Volley ", error.toString());
             }
         }) {
             @Override
@@ -125,4 +126,5 @@ public class BerandaFragment extends Fragment {
         };
         queue.add(berandaFakultasRequest);
     }
+
 }

@@ -14,8 +14,10 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
-public class FavoritTokoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+/**
+ * Created by Biyan on 11/10/2017.
+ */
+public class FeedTokoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private CircleImageView imageToko;
     private TextView namaToko;
     private RecyclerView recyclerFeed;
@@ -24,14 +26,14 @@ public class FavoritTokoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private RecyclerView.Adapter adapterFeed;
     private RecyclerView.LayoutManager layoutManagerFeed;
 
-    public FavoritTokoAdapter(List<Toko> tokoList) {
+    public FeedTokoAdapter(List<Toko> tokoList) {
         this.tokoList = tokoList;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_favorit_toko, parent, false);
+                .inflate(R.layout.item_feed_toko, parent, false);
         RecyclerView.ViewHolder vh = new RecyclerView.ViewHolder(v) {
             @Override
             public String toString() {
@@ -51,7 +53,7 @@ public class FavoritTokoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         namaToko = (TextView) holder.itemView.findViewById(R.id.nama_toko);
         recyclerFeed = (RecyclerView) holder.itemView.findViewById(R.id.recycler_feed);
         recyclerFeed.setLayoutManager(layoutManagerFeed);
-        adapterFeed = new FeedAdapter(tokoList.get(position).barang_jasa);
+        adapterFeed = new FeedItemAdapter(tokoList.get(position).barang_jasa);
         recyclerFeed.setAdapter(adapterFeed);
         Picasso.with(context).load(UrlUbama.URL_IMAGE + tokoList.get(position).url_profile).into(imageToko);
         namaToko.setText(tokoList.get(position).nama);

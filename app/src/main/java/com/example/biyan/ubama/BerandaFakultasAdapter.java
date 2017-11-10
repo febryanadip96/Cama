@@ -1,25 +1,28 @@
 package com.example.biyan.ubama;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
-public class FakultasAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private CircleImageView imageFakultas;
+/**
+ * Created by Biyan on 11/10/2017.
+ */
+public class BerandaFakultasAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private ImageView imageFakultas;
     private TextView namaFakultas;
     private Context context;
     private List<Fakultas> fakultasList;
 
-    public FakultasAdapter(List<Fakultas> fakultasList) {
+    public BerandaFakultasAdapter(List<Fakultas> fakultasList) {
         this.fakultasList = fakultasList;
     }
 
@@ -38,11 +41,20 @@ public class FakultasAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        imageFakultas = (CircleImageView) holder.itemView.findViewById(R.id.image_fakultas);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        imageFakultas = (ImageView) holder.itemView.findViewById(R.id.image_fakultas);
         namaFakultas = (TextView) holder.itemView.findViewById(R.id.nama_fakultas);
         Picasso.with(context).load(UrlUbama.URL_IMAGE + fakultasList.get(position).url_gambar).error(R.drawable.ic_error_image).fit().into(imageFakultas);
         namaFakultas.setText(fakultasList.get(position).nama);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent fakultas = new Intent(context, HasilFakultasActivity.class);
+                fakultas.putExtra("idFakultas", fakultasList.get(position).id);
+                fakultas.putExtra("namaFakultas", fakultasList.get(position).nama);
+                context.startActivity(fakultas);
+            }
+        });
     }
 
     @Override

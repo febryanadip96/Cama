@@ -5,10 +5,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -34,6 +35,7 @@ public class FeedFragment extends Fragment {
     private RecyclerView recyclerFavoritToko;
     private RecyclerView.Adapter adapterFavoritToko;
     private RecyclerView.LayoutManager layoutManagerFavoritToko;
+    private TextView empty;
     private List<Toko> tokoList;
     RequestQueue queue;
 
@@ -51,6 +53,8 @@ public class FeedFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_feed, container, false);
         queue = Volley.newRequestQueue(getActivity());
 
+        empty = (TextView) rootView.findViewById(R.id.empty);
+
         recyclerFavoritToko = (RecyclerView) rootView.findViewById(R.id.recycler_favoritToko);
         layoutManagerFavoritToko = new GridLayoutManager(getActivity(), 1);
         recyclerFavoritToko.setLayoutManager(layoutManagerFavoritToko);
@@ -66,13 +70,17 @@ public class FeedFragment extends Fragment {
             public void onResponse(JSONArray response) {
                 tokoList = new Gson().fromJson(response.toString(), new TypeToken<List<Toko>>() {
                 }.getType());
-                adapterFavoritToko = new FavoritTokoAdapter(tokoList);
+                adapterFavoritToko = new FeedTokoAdapter(tokoList);
                 recyclerFavoritToko.setAdapter(adapterFavoritToko);
+                if(!(tokoList.size()>0)){
+                    empty.setVisibility(View.VISIBLE);
+                    recyclerFavoritToko.setVisibility(View.GONE);
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                Log.e("Error Volley ", error.toString());
             }
         }) {
             @Override
