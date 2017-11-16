@@ -11,41 +11,45 @@ public final class UrlUbama {
 
     public final static String URL_IMAGE = IP;
 
-    public final static String login = URL_API+"login";
+    public final static String LOGIN = URL_API+"login";
 
-    public final static String logout = URL_API+"logout";
+    public final static String LOGOUT = URL_API+"logout";
 
-    public final static String Register = URL_API+"register";
+    public final static String REGISTER = URL_API+"register";
 
-    public final static String User = URL_API+"user";
+    public final static String USER = URL_API+"user";
 
-    public final static String BerandaKategori = URL_API+"beranda/kategori";
+    public final static String BERANDAKATEGORI = URL_API+"beranda/kategori";
 
-    public final static String BerandaFakultas = URL_API+"beranda/fakultas";
+    public final static String BERANDAFAKULTAS = URL_API+"beranda/fakultas";
 
-    public final static String UserFeed = URL_API+"user/feed";
+    public final static String USERFEED = URL_API+"user/feed";
 
-    public final static String UserFavoritBarangJasa = URL_API+"user/favoritbarangjasa";
+    public final static String USER_FAVORIT_BARANGJASA = URL_API+"user/favoritbarangjasa";
 
-    public final static String UserUbahFavoritBarangJasa = URL_API+"user/ubahfavoritbarangjasa/";
+    public final static String USER_UBAH_FAVORIT_BARANG_JADA = URL_API+"user/ubahfavoritbarangjasa/";
 
-    public final static String UserPesanan = URL_API+"user/pesanan";
+    public final static String USER_PESANAN = URL_API+"user/pesanan";
 
-    public final static String BarangJasa = URL_API+"barangjasa/";
+    public final static String BARANG_JASA = URL_API+"barangjasa/";
 
-    public final static String Cari = URL_API+"cari/";
+    public final static String CARI = URL_API+"cari/";
 
-    public final static String UserDataPemesanan = URL_API+"user/datapemesanan/";
+    public final static String USER_DATA_PESANAN = URL_API+"user/datapemesanan/";
 
-    public final static String UserMasukKeranjang = URL_API+"user/masukkeranjang";
+    public final static String USER_MASUK_KERANJANG = URL_API+"user/masukkeranjang";
 
-    public final static String BarangJasaFakultas = URL_API+"barangjasafakultas/";
+    public final static String BARANG_JASA_FAKULTAS = URL_API+"barangjasafakultas/";
 
-    public final static String SubkateogirKategori = URL_API+"subkategorikategori/";
+    public final static String SUBKATEGORI_KATEGORI = URL_API+"subkategorikategori/";
 
-    public final static String BarangJasaSubkategori = URL_API+"barangjasasubkategori/";
+    public final static String BARANG_JASA_SUBKATEGORI = URL_API+"barangjasasubkategori/";
 
-    public final static String UserDetailPesanan = URL_API+"user/detailpesanan/";
+    public final static String USER_DETAIL_PESANAN = URL_API+"user/detailpesanan/";
 
+    public final static String USERKERANJANG = URL_API+"user/keranjang";
 
+    public final static String HAPUS_BARANG_JASA_DI_KERANJANG = URL_API+"user/keranjang/";
+
+    public final static String CEK_TOKO = URL_API+"user/cektoko";
 }

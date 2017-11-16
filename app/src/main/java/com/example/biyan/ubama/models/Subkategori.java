@@ -1,4 +1,4 @@
-package com.example.biyan.ubama;
+package com.example.biyan.ubama.models;
 
 import com.google.gson.annotations.SerializedName;
 

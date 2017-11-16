@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.biyan.ubama.models.BarangJasa;
 import com.google.gson.Gson;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.picasso.Picasso;
@@ -75,8 +76,8 @@ public class BarangJasaActivity extends AppCompatActivity {
 
     private ProgressDialog loading;
     private int idBarangJasa;
-    BarangJasa barangJasa;
-    RequestQueue queue;
+    private BarangJasa barangJasa;
+    private RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +92,7 @@ public class BarangJasaActivity extends AppCompatActivity {
         carouselGambar = (CarouselView) findViewById(R.id.carousel_gambar);
         carouselGambar.setPageCount(0);
         carouselGambar.setImageListener(imageListener);
+        queue = Volley.newRequestQueue(this);
 
         getDetailBarangJasa();
     }
@@ -101,8 +103,7 @@ public class BarangJasaActivity extends AppCompatActivity {
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
-        queue = Volley.newRequestQueue(this);
-        String url = UrlUbama.BarangJasa + idBarangJasa;
+        String url = UrlUbama.BARANG_JASA + idBarangJasa;
         JsonObjectRequest barangJasaRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -153,7 +154,7 @@ public class BarangJasaActivity extends AppCompatActivity {
                     default:
                         break;
                 }
-                jumlahKomentar.setText(barangJasa.jumlah_komentar + " Komentar");
+                jumlahKomentar.setText(barangJasa.jumlah_komentar + " komentar");
                 jumlahFaq.setText(barangJasa.jumlah_faq + " FAQ");
                 deskripsi.setText(barangJasa.deskripsi);
                 catatanPenjual.setText(barangJasa.catatan_penjual);
@@ -164,7 +165,7 @@ public class BarangJasaActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loading.dismiss();
-                Log.e("Error Volley ", error.toString());
+                Log.e("Error Volley BarangJasaAcitivty", error.toString());
                 finish();
             }
         }) {
@@ -207,8 +208,7 @@ public class BarangJasaActivity extends AppCompatActivity {
     }
 
     private void ubahFavorit() {
-        queue = Volley.newRequestQueue(this);
-        String url = UrlUbama.UserUbahFavoritBarangJasa + idBarangJasa;
+        String url = UrlUbama.USER_UBAH_FAVORIT_BARANG_JADA + idBarangJasa;
         JsonObjectRequest ubahFavoritRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -225,7 +225,7 @@ public class BarangJasaActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Error Volley", error.toString());
+                Log.e("Error Volley Ubah Favorit", error.toString());
             }
         }) {
             @Override

@@ -18,6 +18,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.biyan.ubama.adapters.FeedTokoAdapter;
+import com.example.biyan.ubama.models.Feed;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -36,7 +38,7 @@ public class FeedFragment extends Fragment {
     private RecyclerView.Adapter adapterFavoritToko;
     private RecyclerView.LayoutManager layoutManagerFavoritToko;
     private TextView empty;
-    private List<Toko> tokoList;
+    private List<Feed> feedList;
     RequestQueue queue;
 
     public static FeedFragment newInstance() {
@@ -64,15 +66,15 @@ public class FeedFragment extends Fragment {
     }
 
     private void getFeed() {
-        String url = UrlUbama.UserFeed;
+        String url = UrlUbama.USERFEED;
         JsonArrayRequest feedRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                tokoList = new Gson().fromJson(response.toString(), new TypeToken<List<Toko>>() {
+                feedList = new Gson().fromJson(response.toString(), new TypeToken<List<Feed>>() {
                 }.getType());
-                adapterFavoritToko = new FeedTokoAdapter(tokoList);
+                adapterFavoritToko = new FeedTokoAdapter(feedList);
                 recyclerFavoritToko.setAdapter(adapterFavoritToko);
-                if(!(tokoList.size()>0)){
+                if(!(feedList.size()>0)){
                     empty.setVisibility(View.VISIBLE);
                     recyclerFavoritToko.setVisibility(View.GONE);
                 }
@@ -80,7 +82,8 @@ public class FeedFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Error Volley ", error.toString());
+                Log.e("Error Volley FeedFragment", error.toString());
+                return;
             }
         }) {
             @Override

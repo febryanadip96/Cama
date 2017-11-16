@@ -15,6 +15,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.biyan.ubama.adapters.SubkategoriAdapter;
+import com.example.biyan.ubama.models.Subkategori;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -50,7 +52,7 @@ public class SubkategoriActivity extends AppCompatActivity {
     }
 
     private void getSubkategoriKategori(){
-        String url = UrlUbama.SubkateogirKategori+idKategori;
+        String url = UrlUbama.SUBKATEGORI_KATEGORI+idKategori;
         JsonArrayRequest subkategoriRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {

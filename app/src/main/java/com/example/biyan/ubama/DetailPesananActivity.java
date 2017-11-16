@@ -4,10 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.Adapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -17,6 +16,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.biyan.ubama.adapters.DetailPesananItemAdapter;
+import com.example.biyan.ubama.models.Pesanan;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -42,8 +43,8 @@ public class DetailPesananActivity extends AppCompatActivity {
     TextView tanggalPesan;
     @BindView(R.id.nama_toko)
     TextView namaToko;
-    @BindView(R.id.list_barang_pesanan)
-    ListView listBarangPesanan;
+    @BindView(R.id.recycler_item_detail_pesanan)
+    RecyclerView recyclerItemDetailPesanan;
     @BindView(R.id.log_pesanan)
     TextView logPesanan;
     @BindView(R.id.alamat)
@@ -53,7 +54,8 @@ public class DetailPesananActivity extends AppCompatActivity {
     private int idPesanan;
     private Pesanan pesanan;
     private RequestQueue queue;
-    private Adapter barangJasaAdapter;
+    private RecyclerView.Adapter itemDetailPesananAdapter;
+    private RecyclerView.LayoutManager layoutManagerItemDetailPesanan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,8 @@ public class DetailPesananActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         idPesanan = intent.getIntExtra("idPesanan",0);
+        layoutManagerItemDetailPesanan = new LinearLayoutManager(this);
+        recyclerItemDetailPesanan.setLayoutManager(layoutManagerItemDetailPesanan);
         queue = Volley.newRequestQueue(this);
 
         getDetailPesanan();
@@ -75,7 +79,7 @@ public class DetailPesananActivity extends AppCompatActivity {
         loading.setIndeterminate(true);
         loading.show();
         queue = Volley.newRequestQueue(this);
-        String url = UrlUbama.UserDetailPesanan + idPesanan;
+        String url = UrlUbama.USER_DETAIL_PESANAN + idPesanan;
         JsonObjectRequest detailPesananRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -94,7 +98,7 @@ public class DetailPesananActivity extends AppCompatActivity {
                 tanggalPesan.setText(outputFormat.format(date));
                 namaToko.setText(pesanan.detail_pesanan.get(0).barang_jasa.toko.nama);
                 String isiLog="";
-                for (LogPesanan log:pesanan.log_pesanan) {
+                for (Pesanan.Log_pesanan log:pesanan.log_pesanan) {
                     try {
                         date = inputFormat.parse(log.created_at);
                     } catch (ParseException e) {
@@ -102,8 +106,8 @@ public class DetailPesananActivity extends AppCompatActivity {
                     }
                     isiLog += outputFormat.format(date)+"\n"+log.keterangan+"\n\n";
                 }
-                barangJasaAdapter = new DetailPesananItemAdapter(getApplicationContext(), pesanan.detail_pesanan);
-                listBarangPesanan.setAdapter((ListAdapter) barangJasaAdapter);
+                itemDetailPesananAdapter = new DetailPesananItemAdapter( pesanan.detail_pesanan);
+                recyclerItemDetailPesanan.setAdapter(itemDetailPesananAdapter);
                 logPesanan.setText(isiLog);
                 alamat.setText(pesanan.alamat);
                 loading.dismiss();
@@ -112,7 +116,7 @@ public class DetailPesananActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loading.dismiss();
-                Log.e("Error Volley", error.toString());
+                Log.e("Error Volley DetailPesananActivity", error.toString());
                 finish();
             }
         }) {

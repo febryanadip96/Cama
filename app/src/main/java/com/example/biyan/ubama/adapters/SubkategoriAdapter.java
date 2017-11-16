@@ -1,4 +1,4 @@
-package com.example.biyan.ubama;
+package com.example.biyan.ubama.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.example.biyan.ubama.HasilSubkategoriActivity;
+import com.example.biyan.ubama.R;
+import com.example.biyan.ubama.models.Subkategori;
 
 import java.util.List;
 

@@ -3,6 +3,7 @@ package com.example.biyan.ubama;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -10,6 +11,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -99,8 +101,8 @@ public class RegisterActivity extends AppCompatActivity {
         params.put("jenis_kelamin", jenis + "");
         params.put("telepon", telepon.getText().toString());
         params.put("alamat", alamat.getText().toString());
-        String url = UrlUbama.Register;
-        JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
+        String url = UrlUbama.REGISTER;
+        JsonObjectRequest registerRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 loadingRegister.dismiss();
@@ -110,7 +112,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                     if (!response.isNull("back")) {
                         if (response.getBoolean("back")) {
-                            RegisterActivity.this.finish();
+                            finish();
                         }
                     }
 
@@ -123,7 +125,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingRegister.dismiss();
-                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                Log.e("Error Volley Register",error.toString());
             }
         }) {
             @Override
@@ -133,7 +135,11 @@ public class RegisterActivity extends AppCompatActivity {
                 return params;
             }
         };
-        queue.add(loginRequest);
+        registerRequest.setRetryPolicy(new DefaultRetryPolicy(
+                30000,
+        0,  // maxNumRetries = 0 means no retry
+        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(registerRequest);
     }
 
 

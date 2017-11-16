@@ -4,12 +4,10 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -17,6 +15,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +31,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.biyan.ubama.adapters.BerandaPagerAdapter;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity
         pagerBeranda = (ViewPager) findViewById(R.id.pager_beranda);
         adapterBeranda = new BerandaPagerAdapter(getSupportFragmentManager());
         pagerBeranda.setAdapter(adapterBeranda);
-        pagerBeranda.setOffscreenPageLimit(1);
+        pagerBeranda.setOffscreenPageLimit(3);
         tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.setupWithViewPager(pagerBeranda);
 
@@ -82,6 +82,25 @@ public class MainActivity extends AppCompatActivity
         email = (TextView) headerView.findViewById(R.id.email);
         queue = Volley.newRequestQueue(this);
         IsiHeaderUser();
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        final SharedPreferences.Editor ed = getSharedPreferences("name",
+                android.content.Context.MODE_PRIVATE).edit();
+        ed.putInt("currentPage", pagerBeranda.getCurrentItem());
+        ed.commit();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        final SharedPreferences sp = getSharedPreferences("name",
+                android.content.Context.MODE_PRIVATE);
+        pagerBeranda.setCurrentItem(sp.getInt("currentPage", 0));
     }
 
     @Override
@@ -142,7 +161,7 @@ public class MainActivity extends AppCompatActivity
             Intent pesanan = new Intent(this, PesananActivity.class);
             startActivity(pesanan);
         } else if (id == R.id.nav_toko) {
-            //
+            CekToko();
         } else if (id == R.id.nav_logout) {
             AskLogout();
         }
@@ -153,8 +172,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void IsiHeaderUser() {
-        //get data user
-        String url = UrlUbama.User;
+        String url = UrlUbama.USER;
         JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -181,8 +199,17 @@ public class MainActivity extends AppCompatActivity
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "Kesalahan pada server. Coba lagi nanti", Toast.LENGTH_LONG).show();
-                finish();
+                Log.e("Error Volley ", error.toString());
+                try {
+                    if (error instanceof AuthFailureError) {
+                        //error
+                        finish();
+                    }
+
+
+                } catch (Exception e) {
+                    Log.e("Error Volley ", e.toString());
+                }
             }
         }){
             @Override
@@ -214,7 +241,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void Logout(){
-        String url = UrlUbama.logout;
+        String url = UrlUbama.LOGOUT;
         JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -233,8 +260,9 @@ public class MainActivity extends AppCompatActivity
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                Log.e("Error Volley ", error.toString());
                 Toast.makeText(getApplicationContext(), "Logout gagal", Toast.LENGTH_SHORT).show();
+                return;
             }
         }){
             @Override
@@ -248,38 +276,39 @@ public class MainActivity extends AppCompatActivity
         queue.add(loginRequest);
     }
 
-    private class BerandaPagerAdapter extends FragmentPagerAdapter {
-
-        public BerandaPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-
-        @Override
-        public Fragment getItem(int position) {
-            if (position == 0) {
-                return BerandaFragment.newInstance();
-            } else if(position ==1) {
-                return FeedFragment.newInstance();
-            }else {
-                return FavoritFragment.newInstance();
+    private void CekToko(){
+        String url = UrlUbama.CEK_TOKO;
+        JsonObjectRequest cekTokoRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    if (response.getBoolean("toko")) {
+                        Intent toko = new Intent(MainActivity.this, TokoActivity.class);
+                        startActivity(toko);
+                    } else {
+                        Intent buatToko = new Intent(MainActivity.this, BuatTokoActivity.class);
+                        startActivity(buatToko);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
-        }
-
-        @Override
-        public int getCount() {
-            return 3;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            if (position == 0) {
-                return "Beranda";
-            }  else if(position == 1) {
-                return "Feed";
-            } else {
-                return "Favorit";
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Error Volley Cek Toko", error.toString());
             }
-        }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", UserToken.getToken(getApplicationContext()));
+                params.put("Accept", "application/json");
+                return params;
+            }
+        };
+        queue.add(cekTokoRequest);
+
+
     }
 }

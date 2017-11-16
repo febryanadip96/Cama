@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -18,6 +17,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.biyan.ubama.adapters.BerandaFakultasAdapter;
+import com.example.biyan.ubama.adapters.BerandaKategoriAdapter;
+import com.example.biyan.ubama.models.Fakultas;
+import com.example.biyan.ubama.models.Kategori;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -73,7 +76,7 @@ public class BerandaFragment extends Fragment {
     }
 
     private void getKategori() {
-        String url = UrlUbama.BerandaKategori;
+        String url = UrlUbama.BERANDAKATEGORI;
         JsonArrayRequest berandaKategoriRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -85,7 +88,7 @@ public class BerandaFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
+                Log.e("Error Volley BerandaFragment", error.toString());
             }
         }) {
             @Override
@@ -101,7 +104,7 @@ public class BerandaFragment extends Fragment {
 
     private void getFakultas() {
         queue = Volley.newRequestQueue(getActivity());
-        String url = UrlUbama.BerandaFakultas;
+        String url = UrlUbama.BERANDAFAKULTAS;
         JsonArrayRequest berandaFakultasRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -114,6 +117,7 @@ public class BerandaFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("Error Volley ", error.toString());
+                return;
             }
         }) {
             @Override

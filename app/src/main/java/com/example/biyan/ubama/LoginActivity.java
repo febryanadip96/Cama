@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -71,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         Map<String, String> params = new HashMap<String, String>();
         params.put("email", email.getText().toString());
         params.put("password", password.getText().toString());
-        String url = UrlUbama.login;
+        String url = UrlUbama.LOGIN;
         JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -107,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingLogin.dismiss();
-                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                Log.e("Error Volley Login",error.toString());
             }
         }) {
             @Override

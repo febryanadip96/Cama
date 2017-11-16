@@ -1,4 +1,4 @@
-package com.example.biyan.ubama;
+package com.example.biyan.ubama.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,14 +9,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.biyan.ubama.DetailPesananActivity;
+import com.example.biyan.ubama.R;
+import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.models.Pesanan;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
-import butterknife.ButterKnife;
 
 /**
  * Created by Biyan on 11/10/2017.
@@ -38,7 +40,6 @@ public class PesananAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_pesanan, parent, false);
-        ButterKnife.bind(this, v);
         context = parent.getContext();
         RecyclerView.ViewHolder vh = new RecyclerView.ViewHolder(v) {
             @Override
@@ -70,7 +71,7 @@ public class PesananAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
         idPesanan.setText(pesananList.get(position).id+"");
         String itemBarang = "";
-        for (DetailPesanan itemDetailPesanan:pesananList.get(position).detail_pesanan) {
+        for (Pesanan.Detail_pesanan itemDetailPesanan:pesananList.get(position).detail_pesanan) {
             itemBarang += itemDetailPesanan.jumlah +"x "+itemDetailPesanan.barang_jasa.nama+"\n";
         }
         namaBarang.setText(itemBarang);

@@ -18,6 +18,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.biyan.ubama.adapters.FavoritAdapter;
+import com.example.biyan.ubama.models.Favorit;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -35,7 +37,7 @@ public class FavoritFragment extends Fragment {
     private RecyclerView recyclerFavorit;
     private RecyclerView.Adapter adapterFavorit;
     private RecyclerView.LayoutManager layoutManagerFavorit;
-    private List<BarangJasa> barangJasaList;
+    private List<Favorit> favoritList;
     RequestQueue queue;
     private TextView empty;
 
@@ -64,15 +66,15 @@ public class FavoritFragment extends Fragment {
     }
 
     public void getFavorit() {
-        String url = UrlUbama.UserFavoritBarangJasa;
-        JsonArrayRequest favoritRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        String url = UrlUbama.USER_FAVORIT_BARANGJASA;
+        JsonArrayRequest favoritBarangJasaRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                barangJasaList = new Gson().fromJson(response.toString(), new TypeToken<List<BarangJasa>>() {
+                favoritList = new Gson().fromJson(response.toString(), new TypeToken<List<Favorit>>() {
                 }.getType());
-                adapterFavorit = new BarangJasaAdapter(barangJasaList);
+                adapterFavorit = new FavoritAdapter(favoritList);
                 recyclerFavorit.setAdapter(adapterFavorit);
-                if(!(barangJasaList.size()>0)){
+                if(!(favoritList.size()>0)){
                     empty.setVisibility(View.VISIBLE);
                     recyclerFavorit.setVisibility(View.GONE);
                 }
@@ -80,7 +82,8 @@ public class FavoritFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Error Volley ", error.toString());
+                Log.e("Error Volley FavoritFragment", error.toString());
+                return;
             }
         }) {
             @Override
@@ -91,6 +94,6 @@ public class FavoritFragment extends Fragment {
                 return params;
             }
         };
-        queue.add(favoritRequest);
+        queue.add(favoritBarangJasaRequest);
     }
 }

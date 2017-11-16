@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -22,6 +22,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.biyan.ubama.models.BarangJasa;
+import com.example.biyan.ubama.models.User;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
@@ -104,7 +106,7 @@ public class PemesananActivity extends AppCompatActivity {
         loading.setIndeterminate(true);
         loading.show();
         queue = Volley.newRequestQueue(this);
-        String url = UrlUbama.UserDataPemesanan + idBarangJasa;
+        String url = UrlUbama.USER_DATA_PESANAN + idBarangJasa;
         JsonObjectRequest barangJasaRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -184,7 +186,7 @@ public class PemesananActivity extends AppCompatActivity {
         params.put("catatan_pembeli", catatanPembeli.getText().toString());
         params.put("barang_jasa_id", idBarangJasa+"");
         params.put("alamat", alamatTujuan.getText().toString());
-        String url = UrlUbama.UserMasukKeranjang;
+        String url = UrlUbama.USER_MASUK_KERANJANG;
         JsonObjectRequest masukkanKeranjang = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -217,8 +219,7 @@ public class PemesananActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loading.dismiss();
-                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                Log.e("Error Volley PemesananActivity", error.toString());
             }
         }) {
             @Override

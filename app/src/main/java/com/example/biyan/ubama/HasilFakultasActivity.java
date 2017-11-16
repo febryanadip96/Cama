@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -14,6 +14,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.biyan.ubama.adapters.BarangJasaAdapter;
+import com.example.biyan.ubama.models.BarangJasa;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -40,7 +42,7 @@ public class HasilFakultasActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fakultas);
+        setContentView(R.layout.activity_hasil_fakultas);
         ButterKnife.bind(this);
         Intent intent = getIntent();
         idFakultas = intent.getIntExtra("idFakultas", 0);
@@ -55,7 +57,7 @@ public class HasilFakultasActivity extends AppCompatActivity {
     }
 
     private void getBarangJasaFakultas(){
-        String url = UrlUbama.BarangJasaFakultas+idFakultas;
+        String url = UrlUbama.BARANG_JASA_FAKULTAS+idFakultas;
         JsonArrayRequest barangJasaFakultas = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -67,7 +69,7 @@ public class HasilFakultasActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+                Log.e("Error Volley", error.toString());
             }
         }) {
             @Override

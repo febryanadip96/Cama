@@ -23,7 +23,6 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.app.default_searchable"
@@ -124,13 +123,21 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SubkategoriActivity" />
         </activity>
-        <activity android:name=".DetailPesananActivity"
+        <activity
+            android:name=".DetailPesananActivity"
             android:label="Detail Pesanan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".PesananActivity" />
         </activity>
-        <activity android:name=".TokoActivity"
+        <activity
+            android:name=".TokoActivity"
+            android:label="Toko">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".BuatTokoActivity"
             android:label="Toko">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

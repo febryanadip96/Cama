@@ -1,4 +1,4 @@
-package com.example.biyan.ubama;
+package com.example.biyan.ubama.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.biyan.ubama.R;
+import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.models.Feed;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -22,12 +25,12 @@ public class FeedTokoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private TextView namaToko;
     private RecyclerView recyclerFeed;
     private Context context;
-    private List<Toko> tokoList;
+    private List<Feed> feedList;
     private RecyclerView.Adapter adapterFeed;
     private RecyclerView.LayoutManager layoutManagerFeed;
 
-    public FeedTokoAdapter(List<Toko> tokoList) {
-        this.tokoList = tokoList;
+    public FeedTokoAdapter(List<Feed> feedList) {
+        this.feedList = feedList;
     }
 
     @Override
@@ -53,14 +56,14 @@ public class FeedTokoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         namaToko = (TextView) holder.itemView.findViewById(R.id.nama_toko);
         recyclerFeed = (RecyclerView) holder.itemView.findViewById(R.id.recycler_feed);
         recyclerFeed.setLayoutManager(layoutManagerFeed);
-        adapterFeed = new FeedItemAdapter(tokoList.get(position).barang_jasa);
+        adapterFeed = new FeedItemAdapter(feedList.get(position).barang_jasa);
         recyclerFeed.setAdapter(adapterFeed);
-        Picasso.with(context).load(UrlUbama.URL_IMAGE + tokoList.get(position).url_profile).into(imageToko);
-        namaToko.setText(tokoList.get(position).nama);
+        Picasso.with(context).load(UrlUbama.URL_IMAGE + feedList.get(position).url_profile).into(imageToko);
+        namaToko.setText(feedList.get(position).nama);
     }
 
     @Override
     public int getItemCount() {
-        return tokoList.size();
+        return feedList.size();
     }
 }

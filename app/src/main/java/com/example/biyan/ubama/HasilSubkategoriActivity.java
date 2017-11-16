@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -16,6 +16,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.biyan.ubama.adapters.BarangJasaAdapter;
+import com.example.biyan.ubama.models.BarangJasa;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -44,7 +46,7 @@ public class HasilSubkategoriActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_subkategori);
+        setContentView(R.layout.activity_hasil_subkategori);
         ButterKnife.bind(this);
         Intent intent = getIntent();
         idSubkategori = intent.getIntExtra("idSubkategori", 0);
@@ -59,7 +61,7 @@ public class HasilSubkategoriActivity extends AppCompatActivity {
     }
 
     private void getBarangJasaSubkategori() {
-        String url = UrlUbama.BarangJasaSubkategori + idSubkategori;
+        String url = UrlUbama.BARANG_JASA_SUBKATEGORI + idSubkategori;
         JsonArrayRequest barangJasaSubkategori = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -75,7 +77,7 @@ public class HasilSubkategoriActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+                Log.e("Error Volley HasilSubkategoriActivity", error.toString());
             }
         }) {
             @Override
