@@ -2,6 +2,8 @@ package com.example.biyan.ubama.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by Biyan on 11/17/2017.
  */
@@ -122,5 +124,22 @@ public class TanyaJawab {
         public String deleted_at;
         @SerializedName("toko")
         public Toko toko;
+        @SerializedName("gambar")
+        public List<BarangJasa.Gambar> gambar;
+
+        public static class Gambar {
+            @com.google.gson.annotations.SerializedName("id")
+            public int id;
+            @com.google.gson.annotations.SerializedName("barang_jasa_id")
+            public int barang_jasa_id;
+            @com.google.gson.annotations.SerializedName("url_gambar")
+            public String url_gambar;
+            @com.google.gson.annotations.SerializedName("created_at")
+            public String created_at;
+            @com.google.gson.annotations.SerializedName("updated_at")
+            public String updated_at;
+            @com.google.gson.annotations.SerializedName("deleted_at")
+            public String deleted_at;
+        }
     }
 }

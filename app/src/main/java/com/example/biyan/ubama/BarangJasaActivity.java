@@ -18,7 +18,6 @@ import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-
 import com.example.biyan.ubama.models.BarangJasa;
 import com.google.gson.Gson;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
@@ -112,7 +111,7 @@ public class BarangJasaActivity extends AppCompatActivity {
         loading.setIndeterminate(true);
         loading.show();
         String url = UrlUbama.BARANG_JASA + idBarangJasa;
-        JsonObjectRequest barangJasaRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 barangJasa = new Gson().fromJson(response.toString(), BarangJasa.class);
@@ -208,7 +207,7 @@ public class BarangJasaActivity extends AppCompatActivity {
                 return params;
             }
         };
-        queue.add(barangJasaRequest);
+        queue.add(request);
     }
 
     ImageListener imageListener = new ImageListener() {
@@ -220,16 +219,10 @@ public class BarangJasaActivity extends AppCompatActivity {
         }
     };
 
-    @OnClick(R.id.pesan)
-    public void masukkanPesan() {
-        Intent pesan = new Intent(this, PemesananActivity.class);
-        pesan.putExtra("idBarangJasa", idBarangJasa);
-        startActivity(pesan);
-    }
     @OnClick(R.id.favorit_barang)
-    public void ubahFavorit() {
+    public void onFavoritBarangClicked() {
         String url = UrlUbama.USER_UBAH_FAVORIT + idBarangJasa;
-        JsonObjectRequest ubahFavoritBarangJasaRequest = new JsonObjectRequest(Request.Method.PUT, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest ubahFavoritBarangJasaRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -257,5 +250,12 @@ public class BarangJasaActivity extends AppCompatActivity {
             }
         };
         queue.add(ubahFavoritBarangJasaRequest);
+    }
+
+    @OnClick(R.id.pesan)
+    public void onPesanClicked() {
+        Intent pesan = new Intent(this, PemesananActivity.class);
+        pesan.putExtra("idBarangJasa", idBarangJasa);
+        startActivity(pesan);
     }
 }

@@ -54,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
     @BindView(R.id.register)
     Button register;
 
-    ProgressDialog loadingRegister;
+    ProgressDialog loading;
     int jenis;
 
     @Override
@@ -69,11 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.register)
-    public void onViewClicked() {
-        CekDataRegister();
-    }
-
-    private void CekDataRegister() {
+    public void CekDataRegister() {
         if (namaLengkap.getText().toString().equals("") || telepon.getText().toString().equals("") || alamat.getText().toString().equals("") || email.getText().toString().equals("")) {
             Toast.makeText(getApplicationContext(), "Harap isi data dengan lengkap", Toast.LENGTH_SHORT).show();
             return;
@@ -93,12 +89,12 @@ public class RegisterActivity extends AppCompatActivity {
         ProsesRegister();
     }
 
-    private void ProsesRegister() {
-        loadingRegister = new ProgressDialog(this);
-        loadingRegister.setIndeterminate(true);
-        loadingRegister.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        loadingRegister.setMessage("Proses Register");
-        loadingRegister.show();
+    public void ProsesRegister() {
+        loading = new ProgressDialog(this);
+        loading.setIndeterminate(true);
+        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loading.setMessage("Proses Register");
+        loading.show();
         Map<String, String> params = new HashMap<>();
         params.put("name", namaLengkap.getText().toString());
         params.put("email", email.getText().toString());
@@ -107,10 +103,10 @@ public class RegisterActivity extends AppCompatActivity {
         params.put("telepon", telepon.getText().toString());
         params.put("alamat", alamat.getText().toString());
         String url = UrlUbama.REGISTER;
-        JsonObjectRequest registerRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                loadingRegister.dismiss();
+                loading.dismiss();
                 try {
                     if (!response.isNull("message")) {
                         Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
@@ -129,7 +125,7 @@ public class RegisterActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                loadingRegister.dismiss();
+                loading.dismiss();
                 Log.e("Error Volley Register",error.toString());
             }
         }) {
@@ -140,11 +136,11 @@ public class RegisterActivity extends AppCompatActivity {
                 return params;
             }
         };
-        registerRequest.setRetryPolicy(new DefaultRetryPolicy(
+        request.setRetryPolicy(new DefaultRetryPolicy(
                 30000,
         0,  // maxNumRetries = 0 means no retry
         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        queue.add(registerRequest);
+        queue.add(request);
     }
 
 

@@ -36,10 +36,10 @@ import butterknife.ButterKnife;
 
 public class HasilPencarianActivity extends AppCompatActivity {
 
-    @BindView(R.id.recycler_hasil)
-    RecyclerView recyclerHasil;
-    private RecyclerView.Adapter adapterHasil;
-    RecyclerView.LayoutManager layoutManagerHasil;
+    @BindView(R.id.recycler)
+    RecyclerView recycler;
+    private RecyclerView.Adapter adapter;
+    RecyclerView.LayoutManager layoutManager;
     private List<BarangJasa> barangJasaList;
     RequestQueue queue;
 
@@ -48,8 +48,8 @@ public class HasilPencarianActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hasil_pencarian);
         ButterKnife.bind(this);
-        layoutManagerHasil = new GridLayoutManager(this, 2);
-        recyclerHasil.setLayoutManager(layoutManagerHasil);
+        layoutManager = new GridLayoutManager(this, 2);
+        recycler.setLayoutManager(layoutManager);
         queue = Volley.newRequestQueue(this);
         handleIntent(getIntent());
     }
@@ -102,15 +102,15 @@ public class HasilPencarianActivity extends AppCompatActivity {
         }
     }
 
-    private void Cari(String query){
-        String url = UrlUbama.CARI+query;
-        JsonArrayRequest feedRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+    public void Cari(String query){
+        String url = UrlUbama.CARI_BARANG_JASA+query;
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 barangJasaList = new Gson().fromJson(response.toString(), new TypeToken<List<BarangJasa>>() {
                 }.getType());
-                adapterHasil = new BarangJasaAdapter(barangJasaList);
-                recyclerHasil.setAdapter(adapterHasil);
+                adapter = new BarangJasaAdapter(barangJasaList);
+                recycler.setAdapter(adapter);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -126,6 +126,6 @@ public class HasilPencarianActivity extends AppCompatActivity {
                 return params;
             }
         };
-        queue.add(feedRequest);
+        queue.add(request);
     }
 }

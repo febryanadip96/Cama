@@ -2,10 +2,10 @@ package com.example.biyan.ubama.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.biyan.ubama.HasilSubkategoriActivity;
@@ -17,48 +17,47 @@ import java.util.List;
 /**
  * Created by Biyan on 11/11/2017.
  */
-public class SubkategoriAdapter extends BaseAdapter {
+public class SubkategoriAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Subkategori> subkategoriList;
-    private TextView namaSubkategori;
-    private Context context;
+    List<Subkategori> subkategoriList;
+    TextView namaSubkategori;
+    Context context;
 
-    public SubkategoriAdapter(Context context, List<Subkategori> subkategoriList) {
-        this.context = context;
+    public SubkategoriAdapter(List<Subkategori> subkategoriList) {
         this.subkategoriList = subkategoriList;
     }
 
     @Override
-    public int getCount() {
-        return subkategoriList.size();
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_subkategori, parent, false);
+        context = parent.getContext();
+        RecyclerView.ViewHolder vh = new RecyclerView.ViewHolder(v) {
+            @Override
+            public String toString() {
+                return super.toString();
+            }
+        };
+        return vh;
     }
 
     @Override
-    public Subkategori getItem(int position) {
-        return subkategoriList.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_subkategori, parent, false);
-        }
-        namaSubkategori = (TextView) convertView.findViewById(R.id.nama_subkategori);
-        namaSubkategori.setText(getItem(position).nama);
-        convertView.setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        namaSubkategori = (TextView) holder.itemView.findViewById(R.id.nama_subkategori);
+        namaSubkategori.setText(subkategoriList.get(position).nama);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent subkategori = new Intent(context, HasilSubkategoriActivity.class);
-                subkategori.putExtra("idSubkategori", getItem(position).id);
-                subkategori.putExtra("namaSubkategori", getItem(position).nama);
+                subkategori.putExtra("idSubkategori", subkategoriList.get(position).id);
+                subkategori.putExtra("namaSubkategori", subkategoriList.get(position).nama);
                 context.startActivity(subkategori);
             }
         });
-        return convertView;
+    }
+
+    @Override
+    public int getItemCount() {
+        return subkategoriList.size();
     }
 }

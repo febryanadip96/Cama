@@ -19,10 +19,6 @@ public class Toko {
     public String alamat;
     @SerializedName("catatan_toko")
     public String catatan_toko;
-    @SerializedName("open")
-    public int open;
-    @SerializedName("total_rating")
-    public int total_rating;
     @SerializedName("slogan")
     public String slogan;
     @SerializedName("url_profile")

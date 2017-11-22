@@ -3,9 +3,8 @@ package com.example.biyan.ubama;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Adapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -31,12 +30,13 @@ import butterknife.ButterKnife;
 
 public class SubkategoriActivity extends AppCompatActivity {
 
-    @BindView(R.id.list_subkategori_kategori)
-    ListView listSubkategoriKategori;
+    @BindView(R.id.recycler)
+    RecyclerView recycler;
 
+    RecyclerView.Adapter adapter;
+    RecyclerView.LayoutManager layoutManager;
     List<Subkategori> subkategoriList;
-    Adapter adapterSubkategori;
-    private int idKategori;
+    int idKategori;
     RequestQueue queue;
 
     @Override
@@ -45,21 +45,24 @@ public class SubkategoriActivity extends AppCompatActivity {
         setContentView(R.layout.activity_kategori);
         ButterKnife.bind(this);
         Intent intent = getIntent();
-        queue = Volley.newRequestQueue(this);
         idKategori = intent.getIntExtra("idKategori", 0);
         setTitle(intent.getStringExtra("namaKategori"));
+
+        queue = Volley.newRequestQueue(this);
+        layoutManager = new LinearLayoutManager(this);
+        recycler.setLayoutManager(layoutManager);
         getSubkategoriKategori();
     }
 
-    private void getSubkategoriKategori(){
-        String url = UrlUbama.SUBKATEGORI_KATEGORI+idKategori;
-        JsonArrayRequest subkategoriRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+    public void getSubkategoriKategori() {
+        String url = UrlUbama.KATEGORI_SUBKATEGORI + idKategori;
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 subkategoriList = new Gson().fromJson(response.toString(), new TypeToken<List<Subkategori>>() {
                 }.getType());
-                adapterSubkategori = new SubkategoriAdapter(getApplicationContext(),subkategoriList);
-                listSubkategoriKategori.setAdapter((ListAdapter) adapterSubkategori);
+                adapter = new SubkategoriAdapter(subkategoriList);
+                recycler.setAdapter(adapter);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -75,7 +78,7 @@ public class SubkategoriActivity extends AppCompatActivity {
                 return params;
             }
         };
-        queue.add(subkategoriRequest);
+        queue.add(request);
     }
 
 }

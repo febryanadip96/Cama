@@ -45,15 +45,15 @@ public class TokoActivity extends AppCompatActivity {
     ExpandableTextView deskripsiToko;
     @BindView(R.id.catatan_toko)
     ExpandableTextView catatanToko;
-    @BindView(R.id.recycler_barang_jasa_toko)
-    RecyclerView recyclerBarangJasaToko;
+    @BindView(R.id.recycler)
+    RecyclerView recycler;
 
-    private RequestQueue queue;
-    private RecyclerView.Adapter adapterBarangJasaToko;
-    private RecyclerView.LayoutManager layoutManagerBarangJasaToko;
+    RequestQueue queue;
+    RecyclerView.Adapter adapter;
+    RecyclerView.LayoutManager layoutManager;
 
-    private int idToko;
-    private Toko toko;
+    int idToko;
+    Toko toko;
 
 
     @Override
@@ -64,15 +64,14 @@ public class TokoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         idToko = intent.getIntExtra("idToko", 0);
         queue = Volley.newRequestQueue(this);
-        layoutManagerBarangJasaToko = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerBarangJasaToko.setLayoutManager(layoutManagerBarangJasaToko);
-
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recycler.setLayoutManager(layoutManager);
         getDataToko();
     }
 
-    private void getDataToko(){
-        String url = UrlUbama.DATA_TOKO+idToko;
-        JsonObjectRequest getDataToko = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+    public void getDataToko(){
+        String url = UrlUbama.TOKO+idToko;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 toko = new Gson().fromJson(response.toString(), Toko.class);
@@ -87,8 +86,8 @@ public class TokoActivity extends AppCompatActivity {
                 }
                 deskripsiToko.setText(toko.deskripsi);
                 catatanToko.setText(toko.catatan_toko);
-                adapterBarangJasaToko = new TokoBarangJasaAdapter(toko.barang_jasa);
-                recyclerBarangJasaToko.setAdapter(adapterBarangJasaToko);
+                adapter = new TokoBarangJasaAdapter(toko.barang_jasa);
+                recycler.setAdapter(adapter);
                 favoritToko.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -111,12 +110,12 @@ public class TokoActivity extends AppCompatActivity {
                 return params;
             }
         };
-        queue.add(getDataToko);
+        queue.add(request);
     }
 
-    private void UbahFavoritToko(){
-        String url = UrlUbama.UBAH_FAVORIT_TOKO + idToko;
-        JsonObjectRequest ubahFavoritTokoRequest = new JsonObjectRequest(Request.Method.PUT, url, null, new Response.Listener<JSONObject>() {
+    public void UbahFavoritToko(){
+        String url = UrlUbama.USER_UBAH_FAVORIT_TOKO + idToko;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -143,6 +142,6 @@ public class TokoActivity extends AppCompatActivity {
                 return params;
             }
         };
-        queue.add(ubahFavoritTokoRequest);
+        queue.add(request);
     }
 }

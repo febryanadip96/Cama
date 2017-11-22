@@ -32,16 +32,16 @@ import butterknife.ButterKnife;
 
 public class HasilSubkategoriActivity extends AppCompatActivity {
 
-    @BindView(R.id.recycler_barang_jasa_subkategori)
-    RecyclerView recyclerBarangJasaSubkategori;
+    @BindView(R.id.recycler)
+    RecyclerView recycler;
     @BindView(R.id.empty)
     TextView empty;
 
-    private RecyclerView.Adapter adapterBarangJasaSubkategori;
-    private RecyclerView.LayoutManager layoutManagerBarangJasaSubkategori;
-    private List<BarangJasa> barangJasaList;
+    RecyclerView.Adapter adapter;
+    RecyclerView.LayoutManager layoutManager;
+    List<BarangJasa> barangJasaList;
     RequestQueue queue;
-    private int idSubkategori;
+    int idSubkategori;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,24 +54,24 @@ public class HasilSubkategoriActivity extends AppCompatActivity {
 
         queue = Volley.newRequestQueue(this);
 
-        layoutManagerBarangJasaSubkategori = new GridLayoutManager(this, 2);
-        recyclerBarangJasaSubkategori.setLayoutManager(layoutManagerBarangJasaSubkategori);
+        layoutManager = new GridLayoutManager(this, 2);
+        recycler.setLayoutManager(layoutManager);
 
         getBarangJasaSubkategori();
     }
 
-    private void getBarangJasaSubkategori() {
-        String url = UrlUbama.BARANG_JASA_SUBKATEGORI + idSubkategori;
-        JsonArrayRequest barangJasaSubkategori = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+    public void getBarangJasaSubkategori() {
+        String url = UrlUbama.SUBKATEGORI_BARANG_JASA + idSubkategori;
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 barangJasaList = new Gson().fromJson(response.toString(), new TypeToken<List<BarangJasa>>() {
                 }.getType());
-                adapterBarangJasaSubkategori = new BarangJasaAdapter(barangJasaList);
-                recyclerBarangJasaSubkategori.setAdapter(adapterBarangJasaSubkategori);
+                adapter = new BarangJasaAdapter(barangJasaList);
+                recycler.setAdapter(adapter);
                 if (!(barangJasaList.size() > 0)) {
                     empty.setVisibility(View.VISIBLE);
-                    recyclerBarangJasaSubkategori.setVisibility(View.GONE);
+                    recycler.setVisibility(View.GONE);
                 }
             }
         }, new Response.ErrorListener() {
@@ -88,6 +88,6 @@ public class HasilSubkategoriActivity extends AppCompatActivity {
                 return params;
             }
         };
-        queue.add(barangJasaSubkategori);
+        queue.add(request);
     }
 }

@@ -30,13 +30,13 @@ import butterknife.ButterKnife;
 
 public class HasilFakultasActivity extends AppCompatActivity {
 
-    @BindView(R.id.recycler_barang_jasa_fakultas)
-    RecyclerView recyclerBarangJasaFakultas;
+    @BindView(R.id.recycler)
+    RecyclerView recycler;
 
-    private int idFakultas;
-    private RecyclerView.Adapter adapterBarangJasaFakultas;
-    private RecyclerView.LayoutManager layoutManagerBarangJasaFakultas;
-    private List<BarangJasa> barangJasaList;
+    int idFakultas;
+    RecyclerView.Adapter adapter;
+    RecyclerView.LayoutManager layoutManager;
+    List<BarangJasa> barangJasaList;
     RequestQueue queue;
 
     @Override
@@ -49,22 +49,21 @@ public class HasilFakultasActivity extends AppCompatActivity {
         setTitle(intent.getStringExtra("namaFakultas"));
 
         queue = Volley.newRequestQueue(this);
-
-        layoutManagerBarangJasaFakultas = new GridLayoutManager(this, 2);
-        recyclerBarangJasaFakultas.setLayoutManager(layoutManagerBarangJasaFakultas);
+        layoutManager = new GridLayoutManager(this, 2);
+        recycler.setLayoutManager(layoutManager);
 
         getBarangJasaFakultas();
     }
 
-    private void getBarangJasaFakultas(){
-        String url = UrlUbama.BARANG_JASA_FAKULTAS+idFakultas;
-        JsonArrayRequest barangJasaFakultas = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+    public void getBarangJasaFakultas(){
+        String url = UrlUbama.FAKULTAS_BARANG_JASA+idFakultas;
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 barangJasaList = new Gson().fromJson(response.toString(), new TypeToken<List<BarangJasa>>() {
                 }.getType());
-                adapterBarangJasaFakultas = new BarangJasaAdapter(barangJasaList);
-                recyclerBarangJasaFakultas.setAdapter(adapterBarangJasaFakultas);
+                adapter = new BarangJasaAdapter(barangJasaList);
+                recycler.setAdapter(adapter);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -80,6 +79,6 @@ public class HasilFakultasActivity extends AppCompatActivity {
                 return params;
             }
         };
-        queue.add(barangJasaFakultas);
+        queue.add(request);
     }
 }

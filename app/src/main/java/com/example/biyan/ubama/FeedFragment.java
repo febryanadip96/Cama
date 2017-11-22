@@ -29,16 +29,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FeedFragment extends Fragment {
-    private RecyclerView recyclerFavoritToko;
-    private RecyclerView.Adapter adapterFavoritToko;
-    private RecyclerView.LayoutManager layoutManagerFavoritToko;
-    private TextView empty;
-    private List<Feed> feedList;
+    @BindView(R.id.recycler)
+    RecyclerView recycler;
+    @BindView(R.id.empty)
+    TextView empty;
+    Unbinder unbinder;
+
+    RecyclerView.Adapter adapter;
+    RecyclerView.LayoutManager layoutManager;
+    List<Feed> feedList;
     RequestQueue queue;
 
     public static FeedFragment newInstance() {
@@ -53,30 +61,26 @@ public class FeedFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_feed, container, false);
+        unbinder = ButterKnife.bind(this, rootView);
         queue = Volley.newRequestQueue(getActivity());
-
-        empty = (TextView) rootView.findViewById(R.id.empty);
-
-        recyclerFavoritToko = (RecyclerView) rootView.findViewById(R.id.recycler_favoritToko);
-        layoutManagerFavoritToko = new GridLayoutManager(getActivity(), 1);
-        recyclerFavoritToko.setLayoutManager(layoutManagerFavoritToko);
-
+        layoutManager = new GridLayoutManager(getActivity(), 1);
+        recycler.setLayoutManager(layoutManager);
         getFeed();
         return rootView;
     }
 
-    private void getFeed() {
+    public void getFeed() {
         String url = UrlUbama.USER_FEED;
-        JsonArrayRequest feedRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 feedList = new Gson().fromJson(response.toString(), new TypeToken<List<Feed>>() {
                 }.getType());
-                adapterFavoritToko = new FeedTokoAdapter(feedList);
-                recyclerFavoritToko.setAdapter(adapterFavoritToko);
-                if(!(feedList.size()>0)){
+                adapter = new FeedTokoAdapter(feedList);
+                recycler.setAdapter(adapter);
+                if (!(feedList.size() > 0)) {
                     empty.setVisibility(View.VISIBLE);
-                    recyclerFavoritToko.setVisibility(View.GONE);
+                    recycler.setVisibility(View.GONE);
                 }
             }
         }, new Response.ErrorListener() {
@@ -94,6 +98,12 @@ public class FeedFragment extends Fragment {
                 return params;
             }
         };
-        queue.add(feedRequest);
+        queue.add(request);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

@@ -61,9 +61,10 @@ public class PemesananActivity extends AppCompatActivity {
     Button pesan;
     @BindView(R.id.catatan_pembeli)
     EditText catatanPembeli;
-    private ProgressDialog loading;
-    private int idBarangJasa;
-    private int min_pesan;
+
+    ProgressDialog loading;
+    int idBarangJasa;
+    int min_pesan;
     BarangJasa barangJasa;
     User user;
     RequestQueue queue;
@@ -107,7 +108,7 @@ public class PemesananActivity extends AppCompatActivity {
         loading.show();
         queue = Volley.newRequestQueue(this);
         String url = UrlUbama.USER_DATA_PEMESANAN + idBarangJasa;
-        JsonObjectRequest barangJasaRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -143,7 +144,7 @@ public class PemesananActivity extends AppCompatActivity {
                 return params;
             }
         };
-        queue.add(barangJasaRequest);
+        queue.add(request);
     }
 
     @OnClick({R.id.kurang, R.id.tambah})
@@ -185,7 +186,7 @@ public class PemesananActivity extends AppCompatActivity {
         params.put("barang_jasa_id", idBarangJasa+"");
         params.put("alamat", alamatTujuan.getText().toString());
         String url = UrlUbama.USER_MASUK_KERANJANG;
-        JsonObjectRequest masukkanKeranjang = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -228,6 +229,6 @@ public class PemesananActivity extends AppCompatActivity {
                 return params;
             }
         };
-        queue.add(masukkanKeranjang);
+        queue.add(request);
     }
 }

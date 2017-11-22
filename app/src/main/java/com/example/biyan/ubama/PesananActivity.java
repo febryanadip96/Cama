@@ -24,36 +24,41 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class PesananActivity extends AppCompatActivity {
-    private RecyclerView recyclerPesanan;
-    private RecyclerView.Adapter adapterPesanan;
-    private RecyclerView.LayoutManager layoutManagerPesanan;
-    private List<Pesanan> pesananList;
+    @BindView(R.id.recycler)
+    RecyclerView recycler;
+
+    RecyclerView.Adapter adapter;
+    RecyclerView.LayoutManager layoutManager;
+    List<Pesanan> pesananList;
     RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pesanan);
+        ButterKnife.bind(this);
         queue = Volley.newRequestQueue(this);
         this.setTitle("Pesanan");
 
-        recyclerPesanan = (RecyclerView) findViewById(R.id.recycler_pesanan);
-        layoutManagerPesanan = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recyclerPesanan.setLayoutManager(layoutManagerPesanan);
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recycler.setLayoutManager(layoutManager);
 
         getPesanan();
     }
 
-    private void getPesanan() {
+    public void getPesanan() {
         String url = UrlUbama.USER_PESANAN;
-        JsonArrayRequest feedRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 pesananList = new Gson().fromJson(response.toString(), new TypeToken<List<Pesanan>>() {
                 }.getType());
-                adapterPesanan = new PesananAdapter(pesananList);
-                recyclerPesanan.setAdapter(adapterPesanan);
+                adapter = new PesananAdapter(pesananList);
+                recycler.setAdapter(adapter);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -69,6 +74,6 @@ public class PesananActivity extends AppCompatActivity {
                 return params;
             }
         };
-        queue.add(feedRequest);
+        queue.add(request);
     }
 }

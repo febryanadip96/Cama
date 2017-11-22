@@ -76,7 +76,7 @@ public class BerandaFragment extends Fragment {
         return rootView;
     }
 
-    private void getKategori() {
+    public void getKategori() {
         String url = UrlUbama.KATEGORI;
         JsonArrayRequest berandaKategoriRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
@@ -103,10 +103,10 @@ public class BerandaFragment extends Fragment {
         queue.add(berandaKategoriRequest);
     }
 
-    private void getFakultas() {
+    public void getFakultas() {
         queue = Volley.newRequestQueue(getActivity());
         String url = UrlUbama.FAKULTAS;
-        JsonArrayRequest berandaFakultasRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 fakultasList = new Gson().fromJson(response.toString(), new TypeToken<List<Fakultas>>() {
@@ -129,7 +129,7 @@ public class BerandaFragment extends Fragment {
                 return params;
             }
         };
-        queue.add(berandaFakultasRequest);
+        queue.add(request);
     }
 
 }

@@ -54,8 +54,8 @@ public class DetailPesananActivity extends AppCompatActivity {
     int idPesanan;
     Pesanan pesanan;
     RequestQueue queue;
-    RecyclerView.Adapter itemDetailPesananAdapter;
-    RecyclerView.LayoutManager layoutManagerItemDetailPesanan;
+    RecyclerView.Adapter adapter;
+    RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +65,8 @@ public class DetailPesananActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         idPesanan = intent.getIntExtra("idPesanan",0);
-        layoutManagerItemDetailPesanan = new LinearLayoutManager(this);
-        recyclerItemDetailPesanan.setLayoutManager(layoutManagerItemDetailPesanan);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerItemDetailPesanan.setLayoutManager(layoutManager);
         queue = Volley.newRequestQueue(this);
 
         getDetailPesanan();
@@ -80,7 +80,7 @@ public class DetailPesananActivity extends AppCompatActivity {
         loading.show();
         queue = Volley.newRequestQueue(this);
         String url = UrlUbama.USER_DETAIL_PESANAN + idPesanan;
-        JsonObjectRequest detailPesananRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 pesanan = new Gson().fromJson(response.toString(), Pesanan.class);
@@ -106,8 +106,8 @@ public class DetailPesananActivity extends AppCompatActivity {
                     }
                     isiLog += outputFormat.format(date)+"\n"+log.keterangan+"\n\n";
                 }
-                itemDetailPesananAdapter = new DetailPesananItemAdapter( pesanan.detail_pesanan);
-                recyclerItemDetailPesanan.setAdapter(itemDetailPesananAdapter);
+                adapter = new DetailPesananItemAdapter( pesanan.detail_pesanan);
+                recyclerItemDetailPesanan.setAdapter(adapter);
                 logPesanan.setText(isiLog);
                 alamat.setText(pesanan.alamat);
                 loading.dismiss();
@@ -128,7 +128,7 @@ public class DetailPesananActivity extends AppCompatActivity {
                 return params;
             }
         };
-        queue.add(detailPesananRequest);
+        queue.add(request);
     }
 
 }

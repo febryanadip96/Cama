@@ -37,8 +37,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class KeranjangActivity extends AppCompatActivity {
-    @BindView(R.id.recycler_keranjang)
-    RecyclerView recyclerKeranjang;
+    @BindView(R.id.recycler)
+    RecyclerView recycler;
     @BindView(R.id.total_harga)
     TextView totalHarga;
     @BindView(R.id.proses)
@@ -47,8 +47,9 @@ public class KeranjangActivity extends AppCompatActivity {
     TextView empty;
     @BindView(R.id.layout_lanjut_pesan)
     LinearLayout layoutLanjutPesan;
-    RecyclerView.Adapter adapterKeranjang;
-    RecyclerView.LayoutManager layoutManagerKeranjang;
+
+    RecyclerView.Adapter adapter;
+    RecyclerView.LayoutManager layoutManager;
     ProgressDialog loading;
     RequestQueue queue;
     List<Keranjang> keranjangList;
@@ -60,8 +61,8 @@ public class KeranjangActivity extends AppCompatActivity {
         setContentView(R.layout.activity_keranjang);
         ButterKnife.bind(this);
         queue = Volley.newRequestQueue(this);
-        layoutManagerKeranjang = new GridLayoutManager(this, 1);
-        recyclerKeranjang.setLayoutManager(layoutManagerKeranjang);
+        layoutManager = new GridLayoutManager(this, 1);
+        recycler.setLayoutManager(layoutManager);
         getKeranjang();
     }
 
@@ -71,9 +72,8 @@ public class KeranjangActivity extends AppCompatActivity {
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
-        queue = Volley.newRequestQueue(this);
         String url = UrlUbama.USER_KERANJANG;
-        JsonObjectRequest keranjangRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -86,14 +86,14 @@ public class KeranjangActivity extends AppCompatActivity {
 
                 if (keranjangList.size() > 0) {
                     layoutLanjutPesan.setVisibility(View.VISIBLE);
-                    adapterKeranjang = new KeranjangAdapter(keranjangList);
-                    recyclerKeranjang.setAdapter(adapterKeranjang);
+                    adapter = new KeranjangAdapter(keranjangList);
+                    recycler.setAdapter(adapter);
                     NumberFormat currency = NumberFormat.getInstance(Locale.GERMANY);
                     totalHarga.setText("Rp. " + currency.format(tampungTotalHarga).toString());
                 } else {
                     layoutLanjutPesan.setVisibility(View.GONE);
                     empty.setVisibility(View.VISIBLE);
-                    recyclerKeranjang.setVisibility(View.GONE);
+                    recycler.setVisibility(View.GONE);
                 }
 
                 loading.dismiss();
@@ -114,7 +114,7 @@ public class KeranjangActivity extends AppCompatActivity {
                 return params;
             }
         };
-        queue.add(keranjangRequest);
+        queue.add(request);
     }
 
     @OnClick(R.id.proses)
@@ -124,9 +124,8 @@ public class KeranjangActivity extends AppCompatActivity {
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
-        queue = Volley.newRequestQueue(this);
         String url = UrlUbama.USER_PROSES_PESANAN;
-        JsonObjectRequest prosesPesananRequest = new JsonObjectRequest(Request.Method.PUT, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -154,6 +153,6 @@ public class KeranjangActivity extends AppCompatActivity {
                 return params;
             }
         };
-        queue.add(prosesPesananRequest);
+        queue.add(request);
     }
 }

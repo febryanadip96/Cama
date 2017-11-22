@@ -63,7 +63,7 @@ public class TokoUserActivity extends AppCompatActivity {
 
     public void getTokoUser() {
         String url = UrlUbama.USER_TOKO;
-        JsonObjectRequest getUserToko = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 toko = new Gson().fromJson(response.toString(), Toko.class);
@@ -85,8 +85,14 @@ public class TokoUserActivity extends AppCompatActivity {
                 return params;
             }
         };
-        getUserToko.setShouldCache(false);
-        queue.add(getUserToko);
+        request.setShouldCache(false);
+        queue.add(request);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getTokoUser();
     }
 
     @OnClick(R.id.jual_produk)
@@ -97,17 +103,25 @@ public class TokoUserActivity extends AppCompatActivity {
 
     @OnClick(R.id.produk)
     public void onProdukClicked() {
+        Intent produk = new Intent(TokoUserActivity.this, TokoProdukActivity.class);
+        startActivity(produk);
     }
 
     @OnClick(R.id.pesanan)
     public void onPesananClicked() {
+        Intent pesanan = new Intent(TokoUserActivity.this, TokoPesananActivity.class);
+        startActivity(pesanan);
     }
 
     @OnClick(R.id.tanya_jawab)
     public void onTanyaJawabClicked() {
+        Intent tanyaJawab = new Intent(TokoUserActivity.this, TokoTanyaJawabActivity.class);
+        startActivity(tanyaJawab);
     }
 
     @OnClick(R.id.pengaturan)
     public void onPengaturanClicked() {
+        Intent pengaturan = new Intent(TokoUserActivity.this, PengaturanTokoActivity.class);
+        startActivity(pengaturan);
     }
 }

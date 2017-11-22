@@ -258,8 +258,9 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("Error Volley ", error.toString());
-                Toast.makeText(getApplicationContext(), "Logout gagal", Toast.LENGTH_SHORT).show();
-                return;
+                Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
+                startActivity(welcomeIntent);
+                finish();
             }
         }){
             @Override
@@ -274,7 +275,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void CekToko(){
-        String url = UrlUbama.CEK_TOKO;
+        String url = UrlUbama.USER_CEK_TOKO;
         Log.d("URL", url.toString());
         JsonObjectRequest cekTokoRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override

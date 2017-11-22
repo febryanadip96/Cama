@@ -27,56 +27,68 @@ public final class UrlUbama {
 
     public final static String FAKULTAS = URL_API+"beranda/fakultas";
 
-    public final static String BARANG_JASA_FAKULTAS = URL_API+"barangjasafakultas/";
+    public final static String FAKULTAS_BARANG_JASA = URL_API+"fakultas/barangjasa/";
 
-    public final static String SUBKATEGORI_KATEGORI = URL_API+"subkategorikategori/";
+    public final static String KATEGORI_SUBKATEGORI = URL_API+"kategori/subkategori/";
 
-    public final static String BARANG_JASA_SUBKATEGORI = URL_API+"barangjasasubkategori/";
+    public final static String SUBKATEGORI_BARANG_JASA = URL_API+"kategori/subkategori/barangjasa/";
 
-    public final static String USER_FEED = URL_API+"userfeed";
+    public final static String USER_FEED = URL_API+"user/feed";
 
-    public final static String USER_FAVORIT = URL_API+"userfavoritbarangjasa";
+    public final static String USER_FAVORIT = URL_API+"user/favoritbarangjasa";
 
-    public final static String USER_UBAH_FAVORIT = URL_API+"userubahfavoritbarangjasa/";
+    public final static String USER_UBAH_FAVORIT = URL_API+"user/ubahfavoritbarangjasa/";
 
     //PESANAN
 
-    public final static String USER_PESANAN = URL_API+"userpesanan";
+    public final static String USER_PESANAN = URL_API+"user/pesanan";
 
-    public final static String USER_DETAIL_PESANAN = URL_API+"userdetailpesanan/";
+    public final static String USER_DETAIL_PESANAN = URL_API+"user/detailpesanan/";
 
 
     //BARANG JASA
 
     public final static String BARANG_JASA = URL_API+"barangjasa/";
 
-    public final static String CARI = URL_API+"cari/";
+    public final static String KOMENTAR_BARANG_JASA = URL_API+"barangjasa/komentar/";
 
-    public final static String USER_DATA_PEMESANAN = URL_API+"userdatapemesanan/";
+    public final static String TANYA_JAWAB_BARANG_JASA = URL_API+"barangjasa/tanyajawab/";
 
-    public final static String USER_MASUK_KERANJANG = URL_API+"usermasukkeranjang";
+    public final static String KIRIM_PERTANYAAN_BARANG_JASA = URL_API+"barangjasa/kirimpertanyaan/";
 
-    public final static String USER_KERANJANG = URL_API+"userkeranjang";
+    public final static String CARI_BARANG_JASA = URL_API+"barangjasa/cari/";
 
-    public final static String USER_HAPUS_KERANJANG = URL_API+"userhapuskeranjang/";
+    public final static String USER_DATA_PEMESANAN = URL_API+"user/datapemesanan/";
 
-    public final static String KOMENTAR_BARANG_JASA = URL_API+"komentarbarangjasa/";
+    public final static String USER_MASUK_KERANJANG = URL_API+"user/masukkeranjang";
 
-    public final static String TANYA_JAWAB_BARANG_JASA = URL_API+"tanyajawabbarangjasa/";
+    public final static String USER_KERANJANG = URL_API+"user/keranjang";
 
-    public final static String USER_KIRIM_PERTANYAAN_BARANG_JASA = URL_API+"userkirimpertanyaanbarangjasa/";
+    public final static String USER_HAPUS_KERANJANG = URL_API+"user/hapuskeranjang/";
 
-    public final static String USER_PROSES_PESANAN = URL_API+"userprosespesanan";
+    public final static String USER_PROSES_PESANAN = URL_API+"user/prosespesanan";
 
     //TOKO
 
-    public final static String CEK_TOKO = URL_API+"cektoko";
+    public final static String TOKO = URL_API+"toko/";
 
-    public final static String DATA_TOKO = URL_API+"toko/";
+    public final static String USER_UBAH_FAVORIT_TOKO = URL_API+"user/ubahfavorittoko/";
 
-    public final static String BUAT_TOKO = URL_API+"buattoko";
+    //USER TOKO
 
-    public final static String UBAH_FAVORIT_TOKO = URL_API+"ubahfavorittoko/";
+    public final static String USER_CEK_TOKO = URL_API+"user/cektoko";
 
-    public final static String USER_TOKO = URL_API+"usertoko";
+    public final static String USER_BUAT_TOKO = URL_API+"user/buattoko";
+
+    public final static String USER_TOKO = URL_API+"user/toko";
+
+    public final static String USER_UPDATE_TOKO = URL_API+"user/updatetoko";
+
+    public final static String USER_TOKO_TANYA_JAWAB_TERJAWAB = URL_API+"user/toko/tanyajawab/terjawab";
+
+    public final static String USER_TOKO_TANYA_JAWAB_BELUM_TERJAWAB = URL_API+"user/toko/tanyajawab/belumterjawab";
+
+    public final static String USER_TOKO_PRODUK_JASA = URL_API+"user/toko/produk/jasa";
+
+    public final static String USER_TOKO_PRODUK_BARANG = URL_API+"user/toko/produk/barang";
 }

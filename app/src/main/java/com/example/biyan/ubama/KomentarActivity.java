@@ -51,15 +51,15 @@ public class KomentarActivity extends AppCompatActivity {
     ImageView star4;
     @BindView(R.id.star_5)
     ImageView star5;
-    @BindView(R.id.recycler_komentar)
-    RecyclerView recyclerKomentar;
+    @BindView(R.id.recycler)
+    RecyclerView recycler;
 
-    private RequestQueue queue;
-    private RecyclerView.Adapter adapterKomentar;
-    private RecyclerView.LayoutManager layoutManagerKomentar;
-    private List<Komentar> komentarList;
-    private BarangJasa barangJasa;
-    private int idBarangJasa;
+    RequestQueue queue;
+    RecyclerView.Adapter adapter;
+    RecyclerView.LayoutManager layoutManager;
+    List<Komentar> komentarList;
+    BarangJasa barangJasa;
+    int idBarangJasa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,15 +69,15 @@ public class KomentarActivity extends AppCompatActivity {
         Intent intent = getIntent();
         queue = Volley.newRequestQueue(this);
         idBarangJasa = intent.getIntExtra("idBarangJasa",0);
-        layoutManagerKomentar = new LinearLayoutManager(this);
-        recyclerKomentar.setLayoutManager(layoutManagerKomentar);
+        layoutManager = new LinearLayoutManager(this);
+        recycler.setLayoutManager(layoutManager);
 
         getDataKomentar();
     }
 
-    private void getDataKomentar(){
+    public void getDataKomentar(){
         String url = UrlUbama.KOMENTAR_BARANG_JASA+idBarangJasa;
-        JsonObjectRequest favoritBarangJasaRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -122,8 +122,8 @@ public class KomentarActivity extends AppCompatActivity {
                     default:
                         break;
                 }
-                adapterKomentar = new KomentarAdapter(komentarList);
-                recyclerKomentar.setAdapter(adapterKomentar);
+                adapter = new KomentarAdapter(komentarList);
+                recycler.setAdapter(adapter);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -140,6 +140,6 @@ public class KomentarActivity extends AppCompatActivity {
                 return params;
             }
         };
-        queue.add(favoritBarangJasaRequest);
+        queue.add(request);
     }
 }

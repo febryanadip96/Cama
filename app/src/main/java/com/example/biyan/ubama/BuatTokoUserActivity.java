@@ -98,8 +98,8 @@ public class BuatTokoUserActivity extends AppCompatActivity {
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon menunggu");
         loading.show();
-        String url = UrlUbama.BUAT_TOKO;
-        SimpleMultiPartRequest buatTokoRequest = new SimpleMultiPartRequest(Request.Method.POST, url,
+        String url = UrlUbama.USER_BUAT_TOKO;
+        SimpleMultiPartRequest request = new SimpleMultiPartRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -108,9 +108,6 @@ public class BuatTokoUserActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             Boolean toko = jsonResponse.getBoolean("toko");
-                            if(!jsonResponse.isNull("message")){
-                                String message = jsonResponse.getString("message");
-                            }
                             if(toko){
                                 Intent tokoUser = new Intent(BuatTokoUserActivity.this, TokoUserActivity.class);
                                 startActivity(tokoUser);
@@ -138,17 +135,17 @@ public class BuatTokoUserActivity extends AppCompatActivity {
                 return params;
             }
         };
-        buatTokoRequest.addFile("gambar", imagePath );
-        buatTokoRequest.addMultipartParam("nama", "text/plain",namaToko.getText().toString());
-        buatTokoRequest.addMultipartParam("deskripsi","text/plain", deskripsiToko.getText().toString());
-        buatTokoRequest.addMultipartParam("slogan", "text/plain",sloganToko.getText().toString());
-        buatTokoRequest.addMultipartParam("catatan_toko","text/plain", catatanToko.getText().toString());
-        buatTokoRequest.addMultipartParam("alamat","text/plain", alamatToko.getText().toString());
-        buatTokoRequest.setRetryPolicy(new DefaultRetryPolicy(
+        request.addFile("gambar", imagePath );
+        request.addMultipartParam("nama", "text/plain",namaToko.getText().toString());
+        request.addMultipartParam("deskripsi","text/plain", deskripsiToko.getText().toString());
+        request.addMultipartParam("slogan", "text/plain",sloganToko.getText().toString());
+        request.addMultipartParam("catatan_toko","text/plain", catatanToko.getText().toString());
+        request.addMultipartParam("alamat","text/plain", alamatToko.getText().toString());
+        request.setRetryPolicy(new DefaultRetryPolicy(
                 30000,
                 0,  // maxNumRetries = 0 means no retry
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        queue.add(buatTokoRequest);
+        queue.add(request);
     }
 
     private String getRealPathFromURI(Uri contentUri) {

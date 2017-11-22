@@ -118,7 +118,7 @@ public class KeranjangItemAdapter extends RecyclerView.Adapter<RecyclerView.View
     private void hapusBarangJasaKeranjang(final int idBarangJasa, final int position) {
         queue = Volley.newRequestQueue(context);
         String url = UrlUbama.USER_HAPUS_KERANJANG + idBarangJasa;
-        JsonObjectRequest hapusBarangJasaDiKeranjangRequest = new JsonObjectRequest(Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest hapusBarangJasaDiKeranjangRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {

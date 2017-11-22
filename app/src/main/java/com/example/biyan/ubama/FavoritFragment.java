@@ -29,17 +29,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FavoritFragment extends Fragment {
-    RecyclerView recyclerFavorit;
-    RecyclerView.Adapter adapterFavorit;
-    RecyclerView.LayoutManager layoutManagerFavorit;
+
+    @BindView(R.id.recycler)
+    RecyclerView recycler;
+    @BindView(R.id.empty)
+    TextView empty;
+    Unbinder unbinder;
+
+    RecyclerView.Adapter adapter;
+    RecyclerView.LayoutManager layoutManager;
     List<Favorit> favoritList;
     RequestQueue queue;
-    TextView empty;
 
     public static FavoritFragment newInstance() {
         FavoritFragment favoritFragment = new FavoritFragment();
@@ -52,31 +61,26 @@ public class FavoritFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_favorit, container, false);
+        unbinder = ButterKnife.bind(this, rootView);
         queue = Volley.newRequestQueue(getActivity());
-
-        recyclerFavorit = (RecyclerView) rootView.findViewById(R.id.recycler_favorit);
-        layoutManagerFavorit = new GridLayoutManager(getActivity(), 2);
-        recyclerFavorit.setLayoutManager(layoutManagerFavorit);
-
-        empty = (TextView) rootView.findViewById(R.id.empty);
-
+        layoutManager = new GridLayoutManager(getActivity(), 2);
+        recycler.setLayoutManager(layoutManager);
         getFavorit();
-
         return rootView;
     }
 
     public void getFavorit() {
         String url = UrlUbama.USER_FAVORIT;
-        JsonArrayRequest favoritBarangJasaRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 favoritList = new Gson().fromJson(response.toString(), new TypeToken<List<Favorit>>() {
                 }.getType());
-                adapterFavorit = new FavoritAdapter(favoritList);
-                recyclerFavorit.setAdapter(adapterFavorit);
-                if(!(favoritList.size()>0)){
+                adapter = new FavoritAdapter(favoritList);
+                recycler.setAdapter(adapter);
+                if (!(favoritList.size() > 0)) {
                     empty.setVisibility(View.VISIBLE);
-                    recyclerFavorit.setVisibility(View.GONE);
+                    recycler.setVisibility(View.GONE);
                 }
             }
         }, new Response.ErrorListener() {
@@ -94,6 +98,12 @@ public class FavoritFragment extends Fragment {
                 return params;
             }
         };
-        queue.add(favoritBarangJasaRequest);
+        queue.add(request);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

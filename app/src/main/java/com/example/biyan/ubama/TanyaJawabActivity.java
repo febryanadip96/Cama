@@ -32,14 +32,14 @@ import butterknife.ButterKnife;
 
 public class TanyaJawabActivity extends AppCompatActivity {
 
-    @BindView(R.id.recycler_tanya_jawab)
-    RecyclerView recyclerTanyaJawab;
+    @BindView(R.id.recycler)
+    RecyclerView recycler;
     @BindView(R.id.kirim_pertanyaan)
     Button kirimPertanyaan;
 
     RequestQueue queue;
-    RecyclerView.Adapter adapterTanyaJawab;
-    RecyclerView.LayoutManager layoutManagerTanyaJawab;
+    RecyclerView.Adapter adapter;
+    RecyclerView.LayoutManager layoutManager;
     int idBarangJasa;
     List<TanyaJawab> tanyaJawabList;
 
@@ -51,8 +51,8 @@ public class TanyaJawabActivity extends AppCompatActivity {
         Intent intent = getIntent();
         idBarangJasa = intent.getIntExtra("idBarangJasa", 0);
         queue = Volley.newRequestQueue(this);
-        layoutManagerTanyaJawab = new LinearLayoutManager(this);
-        recyclerTanyaJawab.setLayoutManager(layoutManagerTanyaJawab);
+        layoutManager = new LinearLayoutManager(this);
+        recycler.setLayoutManager(layoutManager);
         getTanyaJawab();
         kirimPertanyaan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,13 +72,13 @@ public class TanyaJawabActivity extends AppCompatActivity {
 
     public void getTanyaJawab() {
         String url = UrlUbama.TANYA_JAWAB_BARANG_JASA + idBarangJasa;
-        JsonArrayRequest getTanyaJawabRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 tanyaJawabList = new Gson().fromJson(response.toString(), new TypeToken<List<TanyaJawab>>() {
                 }.getType());
-                adapterTanyaJawab = new TanyaJawabAdapter(tanyaJawabList);
-                recyclerTanyaJawab.setAdapter(adapterTanyaJawab);
+                adapter = new TanyaJawabAdapter(tanyaJawabList);
+                recycler.setAdapter(adapter);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -95,6 +95,6 @@ public class TanyaJawabActivity extends AppCompatActivity {
                 return params;
             }
         };
-        queue.add(getTanyaJawabRequest);
+        queue.add(request);
     }
 }

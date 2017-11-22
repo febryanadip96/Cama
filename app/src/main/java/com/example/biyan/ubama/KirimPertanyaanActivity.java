@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -32,6 +31,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class KirimPertanyaanActivity extends AppCompatActivity {
 
@@ -55,27 +55,19 @@ public class KirimPertanyaanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_kirim_pertanyaan);
         ButterKnife.bind(this);
         Intent intent = getIntent();
-        idBarangJasa = intent.getIntExtra("idBarangJasa",0);
+        idBarangJasa = intent.getIntExtra("idBarangJasa", 0);
         queue = Volley.newRequestQueue(this);
-
         getDataBarangJasa();
-
-        kirim.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                KirimPertanyaan();
-            }
-        });
     }
 
-    public void getDataBarangJasa(){
+    public void getDataBarangJasa() {
         String url = UrlUbama.BARANG_JASA + idBarangJasa;
         final JsonObjectRequest barangJasaRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 barangJasa = new Gson().fromJson(response.toString(), BarangJasa.class);
-                if(barangJasa.gambar.size()>0){
-                    Picasso.with(KirimPertanyaanActivity.this).load(UrlUbama.URL_IMAGE+barangJasa.gambar.get(0).url_gambar).into(imageBarang);
+                if (barangJasa.gambar.size() > 0) {
+                    Picasso.with(KirimPertanyaanActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar).into(imageBarang);
                 }
                 namaBarang.setText(barangJasa.nama);
             }
@@ -97,7 +89,8 @@ public class KirimPertanyaanActivity extends AppCompatActivity {
         queue.add(barangJasaRequest);
     }
 
-    public void KirimPertanyaan(){
+    @OnClick(R.id.kirim)
+    public void onViewClicked() {
         loadingLogin = new ProgressDialog(this);
         loadingLogin.setIndeterminate(true);
         loadingLogin.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -105,8 +98,8 @@ public class KirimPertanyaanActivity extends AppCompatActivity {
         loadingLogin.show();
         Map<String, String> params = new HashMap<String, String>();
         params.put("pertanyaan", pertanyaan.getText().toString());
-        String url = UrlUbama.USER_KIRIM_PERTANYAAN_BARANG_JASA+idBarangJasa;
-        JsonObjectRequest kirimPertanyaan = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
+        String url = UrlUbama.KIRIM_PERTANYAAN_BARANG_JASA + idBarangJasa;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 loadingLogin.dismiss();
@@ -115,8 +108,7 @@ public class KirimPertanyaanActivity extends AppCompatActivity {
                         Toast.makeText(KirimPertanyaanActivity.this, "Pertanyaan sudah terkirim", Toast.LENGTH_LONG).show();
                         finish();
                     }
-                }
-                catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -124,7 +116,7 @@ public class KirimPertanyaanActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingLogin.dismiss();
-                Log.e("Error Volley Login",error.toString());
+                Log.e("Error Volley Login", error.toString());
                 Toast.makeText(KirimPertanyaanActivity.this, "Pertanyaan gagal terkirim", Toast.LENGTH_LONG).show();
             }
         }) {
@@ -136,10 +128,10 @@ public class KirimPertanyaanActivity extends AppCompatActivity {
                 return params;
             }
         };
-        kirimPertanyaan.setRetryPolicy(new DefaultRetryPolicy(
+        request.setRetryPolicy(new DefaultRetryPolicy(
                 30000,
                 0,  // maxNumRetries = 0 means no retry
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        queue.add(kirimPertanyaan);
+        queue.add(request);
     }
 }

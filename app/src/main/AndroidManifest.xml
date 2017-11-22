@@ -149,7 +149,20 @@
                 android:value=".BarangJasaActivity" />
         </activity>
         <activity android:name=".KirimPertanyaanActivity" />
-        <activity android:name=".JualProdukActivity"></activity>
+        <activity android:name=".JualProdukActivity" />
+        <activity android:name=".PengaturanTokoActivity" />
+        <activity
+            android:name=".TokoProdukActivity"
+            android:label="@string/title_activity_toko_produk"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TokoPesananActivity"
+            android:label="@string/title_activity_toko_pesanan"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TokoTanyaJawabActivity"
+            android:label="@string/title_activity_toko_tanya_jawab"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

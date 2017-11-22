@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         ProsesLogin();
     }
 
-    private void ProsesLogin() {
+    public void ProsesLogin() {
         loadingLogin = new ProgressDialog(this);
         loadingLogin.setIndeterminate(true);
         loadingLogin.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         params.put("email", email.getText().toString());
         params.put("password", password.getText().toString());
         String url = UrlUbama.LOGIN;
-        JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 loadingLogin.dismiss();
@@ -119,11 +119,11 @@ public class LoginActivity extends AppCompatActivity {
                 return params;
             }
         };
-        loginRequest.setRetryPolicy(new DefaultRetryPolicy(
+        request.setRetryPolicy(new DefaultRetryPolicy(
                 30000,
                 0,  // maxNumRetries = 0 means no retry
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        queue.add(loginRequest);
+        queue.add(request);
     }
 
 
