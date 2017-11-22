@@ -9,12 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.error.AuthFailureError;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.adapters.DetailPesananItemAdapter;
 import com.example.biyan.ubama.models.Pesanan;
@@ -50,12 +50,12 @@ public class DetailPesananActivity extends AppCompatActivity {
     @BindView(R.id.alamat)
     TextView alamat;
 
-    private ProgressDialog loading;
-    private int idPesanan;
-    private Pesanan pesanan;
-    private RequestQueue queue;
-    private RecyclerView.Adapter itemDetailPesananAdapter;
-    private RecyclerView.LayoutManager layoutManagerItemDetailPesanan;
+    ProgressDialog loading;
+    int idPesanan;
+    Pesanan pesanan;
+    RequestQueue queue;
+    RecyclerView.Adapter itemDetailPesananAdapter;
+    RecyclerView.LayoutManager layoutManagerItemDetailPesanan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

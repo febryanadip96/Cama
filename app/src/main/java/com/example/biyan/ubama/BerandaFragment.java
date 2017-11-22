@@ -10,13 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.error.AuthFailureError;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+
 import com.example.biyan.ubama.adapters.BerandaFakultasAdapter;
 import com.example.biyan.ubama.adapters.BerandaKategoriAdapter;
 import com.example.biyan.ubama.models.Fakultas;
@@ -36,14 +37,14 @@ import java.util.Map;
  */
 public class BerandaFragment extends Fragment {
 
-    private RecyclerView recyclerKategori;
-    private RecyclerView recyclerFakultas;
-    private RecyclerView.Adapter adapterKategori;
-    private RecyclerView.LayoutManager layoutManagerKategori;
-    private RecyclerView.Adapter adapterFakultas;
-    private RecyclerView.LayoutManager layoutManagerFakultas;
-    private List<Kategori> kategoriList;
-    private List<Fakultas> fakultasList;
+    RecyclerView recyclerKategori;
+    RecyclerView recyclerFakultas;
+    RecyclerView.Adapter adapterKategori;
+    RecyclerView.LayoutManager layoutManagerKategori;
+    RecyclerView.Adapter adapterFakultas;
+    RecyclerView.LayoutManager layoutManagerFakultas;
+    List<Kategori> kategoriList;
+    List<Fakultas> fakultasList;
     RequestQueue queue;
 
     public static BerandaFragment newInstance() {
@@ -76,7 +77,7 @@ public class BerandaFragment extends Fragment {
     }
 
     private void getKategori() {
-        String url = UrlUbama.BERANDAKATEGORI;
+        String url = UrlUbama.KATEGORI;
         JsonArrayRequest berandaKategoriRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -104,7 +105,7 @@ public class BerandaFragment extends Fragment {
 
     private void getFakultas() {
         queue = Volley.newRequestQueue(getActivity());
-        String url = UrlUbama.BERANDAFAKULTAS;
+        String url = UrlUbama.FAKULTAS;
         JsonArrayRequest berandaFakultasRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {

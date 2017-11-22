@@ -3,6 +3,7 @@ package com.example.biyan.ubama;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,13 +11,13 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.error.AuthFailureError;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
@@ -52,8 +53,9 @@ public class RegisterActivity extends AppCompatActivity {
     EditText passwordConfirm;
     @BindView(R.id.register)
     Button register;
+
     ProgressDialog loadingRegister;
-    private int jenis;
+    int jenis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,9 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
         queue = Volley.newRequestQueue(this);
+        password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        passwordConfirm.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        lakiLaki.setChecked(true);
     }
 
     @OnClick(R.id.register)
@@ -78,12 +83,12 @@ public class RegisterActivity extends AppCompatActivity {
             password.requestFocus();
             return;
         }
-        jenis = 0;
+        jenis = 1;
         int checkedRadioButtonId = jenisKelamin.getCheckedRadioButtonId();
         if (checkedRadioButtonId == R.id.lakiLaki) {
-             jenis = 0;
+             jenis = 1;
         } else if (checkedRadioButtonId == R.id.perempuan) {
-            jenis = 1;
+            jenis = 2;
         }
         ProsesRegister();
     }

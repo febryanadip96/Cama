@@ -11,13 +11,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.error.AuthFailureError;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+
 import com.example.biyan.ubama.KeranjangActivity;
 import com.example.biyan.ubama.R;
 import com.example.biyan.ubama.UrlUbama;
@@ -49,11 +50,9 @@ public class KeranjangItemAdapter extends RecyclerView.Adapter<RecyclerView.View
     private RequestQueue queue;
     private KeranjangItemAdapter adapter;
 
-    public KeranjangItemAdapter (Context context, List<Keranjang.BarangJasa> barangJasaList){
-        this.context = context;
+    public KeranjangItemAdapter (List<Keranjang.BarangJasa> barangJasaList){
         this.barangJasaList = barangJasaList;
         this.adapter = this;
-        queue = Volley.newRequestQueue(context);
     }
 
     @Override
@@ -117,8 +116,9 @@ public class KeranjangItemAdapter extends RecyclerView.Adapter<RecyclerView.View
 
 
     private void hapusBarangJasaKeranjang(final int idBarangJasa, final int position) {
-        String url = UrlUbama.HAPUS_BARANG_JASA_DI_KERANJANG + idBarangJasa;
-        JsonObjectRequest hapusBarangJasaDiKeranjangRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        queue = Volley.newRequestQueue(context);
+        String url = UrlUbama.USER_HAPUS_KERANJANG + idBarangJasa;
+        JsonObjectRequest hapusBarangJasaDiKeranjangRequest = new JsonObjectRequest(Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {

@@ -24,12 +24,12 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.error.AuthFailureError;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.adapters.BerandaPagerAdapter;
 import com.squareup.picasso.Picasso;
@@ -44,14 +44,14 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private TextView nama;
-    private TextView email;
-    private ImageView imageProfile;
-    private TabLayout tabs;
-    private NavigationView navigationView;
-    private ViewPager pagerBeranda;
-    private BerandaPagerAdapter adapterBeranda;
-    private RequestQueue queue;
+    TextView nama;
+    TextView email;
+    ImageView imageProfile;
+    TabLayout tabs;
+    NavigationView navigationView;
+    ViewPager pagerBeranda;
+    BerandaPagerAdapter adapterBeranda;
+    RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,9 +151,6 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             //tidak ada
-        } else if (id == R.id.nav_kotak_masuk) {
-            Intent kotakMasuk = new Intent(this,KotakMasukActivity.class);
-            startActivity(kotakMasuk);
         } else if (id == R.id.nav_keranjang) {
             Intent keranjang = new Intent(this,KeranjangActivity.class);
             startActivity(keranjang);
@@ -171,7 +168,7 @@ public class MainActivity extends AppCompatActivity
         return false;
     }
 
-    private void IsiHeaderUser() {
+    public void IsiHeaderUser() {
         String url = UrlUbama.USER;
         JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -223,7 +220,7 @@ public class MainActivity extends AppCompatActivity
         queue.add(loginRequest);
     }
 
-    private void AskLogout(){
+    public void AskLogout(){
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setMessage("Anda yakin ingin keluar?")
                 .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
@@ -240,9 +237,9 @@ public class MainActivity extends AppCompatActivity
         alert.show();
     }
 
-    private void Logout(){
+    public void Logout(){
         String url = UrlUbama.LOGOUT;
-        JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -276,17 +273,18 @@ public class MainActivity extends AppCompatActivity
         queue.add(loginRequest);
     }
 
-    private void CekToko(){
+    public void CekToko(){
         String url = UrlUbama.CEK_TOKO;
+        Log.d("URL", url.toString());
         JsonObjectRequest cekTokoRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
                     if (response.getBoolean("toko")) {
-                        Intent toko = new Intent(MainActivity.this, TokoActivity.class);
+                        Intent toko = new Intent(MainActivity.this, TokoUserActivity.class);
                         startActivity(toko);
                     } else {
-                        Intent buatToko = new Intent(MainActivity.this, BuatTokoActivity.class);
+                        Intent buatToko = new Intent(MainActivity.this, BuatTokoUserActivity.class);
                         startActivity(buatToko);
                     }
                 } catch (JSONException e) {
@@ -307,6 +305,7 @@ public class MainActivity extends AppCompatActivity
                 return params;
             }
         };
+        cekTokoRequest.setShouldCache(false);
         queue.add(cekTokoRequest);
 
 

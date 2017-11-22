@@ -11,12 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.error.AuthFailureError;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.adapters.FavoritAdapter;
 import com.example.biyan.ubama.models.Favorit;
@@ -34,12 +34,12 @@ import java.util.Map;
  * A simple {@link Fragment} subclass.
  */
 public class FavoritFragment extends Fragment {
-    private RecyclerView recyclerFavorit;
-    private RecyclerView.Adapter adapterFavorit;
-    private RecyclerView.LayoutManager layoutManagerFavorit;
-    private List<Favorit> favoritList;
+    RecyclerView recyclerFavorit;
+    RecyclerView.Adapter adapterFavorit;
+    RecyclerView.LayoutManager layoutManagerFavorit;
+    List<Favorit> favoritList;
     RequestQueue queue;
-    private TextView empty;
+    TextView empty;
 
     public static FavoritFragment newInstance() {
         FavoritFragment favoritFragment = new FavoritFragment();
@@ -54,11 +54,11 @@ public class FavoritFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_favorit, container, false);
         queue = Volley.newRequestQueue(getActivity());
 
-        empty = (TextView) rootView.findViewById(R.id.empty);
-
         recyclerFavorit = (RecyclerView) rootView.findViewById(R.id.recycler_favorit);
         layoutManagerFavorit = new GridLayoutManager(getActivity(), 2);
         recyclerFavorit.setLayoutManager(layoutManagerFavorit);
+
+        empty = (TextView) rootView.findViewById(R.id.empty);
 
         getFavorit();
 
@@ -66,7 +66,7 @@ public class FavoritFragment extends Fragment {
     }
 
     public void getFavorit() {
-        String url = UrlUbama.USER_FAVORIT_BARANGJASA;
+        String url = UrlUbama.USER_FAVORIT;
         JsonArrayRequest favoritBarangJasaRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {

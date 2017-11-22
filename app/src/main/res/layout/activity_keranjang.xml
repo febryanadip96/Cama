@@ -43,6 +43,7 @@
                 android:text="Rp."/>
         </RelativeLayout>
         <Button
+            android:id="@+id/proses"
             android:background="@color/colorPrimary"
             android:layout_width="match_parent"
             android:textColor="@android:color/white"

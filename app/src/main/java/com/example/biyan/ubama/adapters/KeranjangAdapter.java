@@ -54,7 +54,7 @@ public class KeranjangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         Picasso.with(context).load(UrlUbama.URL_IMAGE+keranjangList.get(position).url_profile).into(imageToko);
         namaToko.setText(keranjangList.get(position).nama);
         layoutManagerItemKeranjang = new LinearLayoutManager(context);
-        adapterItemKeranjang = new KeranjangItemAdapter(context, keranjangList.get(position).barangJasa);
+        adapterItemKeranjang = new KeranjangItemAdapter(keranjangList.get(position).barangJasa);
         recyclerItemKeranjang.setLayoutManager(layoutManagerItemKeranjang);
         recyclerItemKeranjang.setAdapter(adapterItemKeranjang);
     }

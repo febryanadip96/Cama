@@ -15,12 +15,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.error.AuthFailureError;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.models.BarangJasa;
 import com.example.biyan.ubama.models.User;
@@ -99,14 +99,14 @@ public class PemesananActivity extends AppCompatActivity {
         });
     }
 
-    private void getDetailBarangJasa() {
+    public void getDetailBarangJasa() {
         loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
         queue = Volley.newRequestQueue(this);
-        String url = UrlUbama.USER_DATA_PESANAN + idBarangJasa;
+        String url = UrlUbama.USER_DATA_PEMESANAN + idBarangJasa;
         JsonObjectRequest barangJasaRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -146,8 +146,8 @@ public class PemesananActivity extends AppCompatActivity {
         queue.add(barangJasaRequest);
     }
 
-    @OnClick({R.id.kurang, R.id.tambah, R.id.pesan})
-    public void onViewClicked(View view) {
+    @OnClick({R.id.kurang, R.id.tambah})
+    public void ubahJumlah(View view) {
         int tertulis = Integer.parseInt(jumlah.getText().toString()) + 0;
         int harga = barangJasa.harga + 0;
         int total = 0;
@@ -166,16 +166,14 @@ public class PemesananActivity extends AppCompatActivity {
                 tertulis++;
                 jumlah.setText(tertulis + "");
                 break;
-            case R.id.pesan:
-                MasukkanKeranjang();
-                break;
         }
         total = tertulis * harga;
         NumberFormat currency = NumberFormat.getInstance(Locale.GERMANY);
         totalHarga.setText("Rp. " + currency.format(total));
     }
 
-    private void MasukkanKeranjang() {
+    @OnClick(R.id.pesan)
+    public void MasukkanKeranjang() {
         loading = new ProgressDialog(this);
         loading.setIndeterminate(true);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);

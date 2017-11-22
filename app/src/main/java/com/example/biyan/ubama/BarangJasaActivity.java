@@ -8,15 +8,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.error.AuthFailureError;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+
 import com.example.biyan.ubama.models.BarangJasa;
 import com.google.gson.Gson;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
@@ -73,11 +75,17 @@ public class BarangJasaActivity extends AppCompatActivity {
     ExpandableTextView catatanPenjual;
     @BindView(R.id.pesan)
     Button pesan;
+    @BindView(R.id.layout_toko)
+    LinearLayout layoutToko;
+    @BindView(R.id.layout_komentar)
+    LinearLayout layoutKomentar;
+    @BindView(R.id.layout_tanya_jawab)
+    LinearLayout layoutTanyaJawab;
 
-    private ProgressDialog loading;
-    private int idBarangJasa;
-    private BarangJasa barangJasa;
-    private RequestQueue queue;
+    ProgressDialog loading;
+    int idBarangJasa;
+    BarangJasa barangJasa;
+    RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +105,7 @@ public class BarangJasaActivity extends AppCompatActivity {
         getDetailBarangJasa();
     }
 
-    private void getDetailBarangJasa() {
+    public void getDetailBarangJasa() {
         loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
@@ -158,7 +166,30 @@ public class BarangJasaActivity extends AppCompatActivity {
                 jumlahFaq.setText(barangJasa.jumlah_faq + " FAQ");
                 deskripsi.setText(barangJasa.deskripsi);
                 catatanPenjual.setText(barangJasa.catatan_penjual);
-
+                layoutToko.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent toko = new Intent(BarangJasaActivity.this, TokoActivity.class);
+                        toko.putExtra("idToko", barangJasa.toko.id);
+                        startActivity(toko);
+                    }
+                });
+                layoutKomentar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent komentar = new Intent(BarangJasaActivity.this, KomentarActivity.class);
+                        komentar.putExtra("idBarangJasa", idBarangJasa);
+                        startActivity(komentar);
+                    }
+                });
+                layoutTanyaJawab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent tanyaJawab = new Intent(BarangJasaActivity.this, TanyaJawabActivity.class);
+                        tanyaJawab.putExtra("idBarangJasa", idBarangJasa);
+                        startActivity(tanyaJawab);
+                    }
+                });
                 loading.dismiss();
             }
         }, new Response.ErrorListener() {
@@ -189,27 +220,16 @@ public class BarangJasaActivity extends AppCompatActivity {
         }
     };
 
-    @OnClick({R.id.favorit_barang, R.id.pesan})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.favorit_barang:
-                ubahFavorit();
-                break;
-            case R.id.pesan:
-                masukkanPesan();
-                break;
-        }
-    }
-
-    private void masukkanPesan() {
+    @OnClick(R.id.pesan)
+    public void masukkanPesan() {
         Intent pesan = new Intent(this, PemesananActivity.class);
         pesan.putExtra("idBarangJasa", idBarangJasa);
         startActivity(pesan);
     }
-
-    private void ubahFavorit() {
-        String url = UrlUbama.USER_UBAH_FAVORIT_BARANG_JADA + idBarangJasa;
-        JsonObjectRequest ubahFavoritRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+    @OnClick(R.id.favorit_barang)
+    public void ubahFavorit() {
+        String url = UrlUbama.USER_UBAH_FAVORIT + idBarangJasa;
+        JsonObjectRequest ubahFavoritBarangJasaRequest = new JsonObjectRequest(Request.Method.PUT, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -236,6 +256,6 @@ public class BarangJasaActivity extends AppCompatActivity {
                 return params;
             }
         };
-        queue.add(ubahFavoritRequest);
+        queue.add(ubahFavoritBarangJasaRequest);
     }
 }

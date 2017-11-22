@@ -3,6 +3,8 @@
     package="com.example.biyan.ubama">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -78,15 +80,6 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".KotakMasukActivity"
-            android:label="Kotak Masuk"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.biyan.ubama.MainActivity" />
-        </activity>
-        <activity
             android:name=".PesananActivity"
             android:label="Pesanan"
             android:launchMode="singleTask">
@@ -131,18 +124,32 @@
                 android:value=".PesananActivity" />
         </activity>
         <activity
-            android:name=".TokoActivity"
+            android:name=".TokoUserActivity"
             android:label="Toko">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".BuatTokoActivity"
+        <activity
+            android:name=".BuatTokoUserActivity"
             android:label="Toko">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity android:name=".TokoActivity" />
+        <activity android:name=".KomentarActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".BarangJasaActivity" />
+        </activity>
+        <activity android:name=".TanyaJawabActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".BarangJasaActivity" />
+        </activity>
+        <activity android:name=".KirimPertanyaanActivity" />
+        <activity android:name=".JualProdukActivity"></activity>
     </application>
 
 </manifest>
