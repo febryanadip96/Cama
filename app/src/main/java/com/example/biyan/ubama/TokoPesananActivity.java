@@ -37,9 +37,9 @@ public class TokoPesananActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return TokoPesananMenungguFragment.newInstance();
+                return TokoPesananTungguFragment.newInstance();
             } else if(position == 1){
-                return TokoPesananProsesFragment.newInstance();
+                return TokoPesananDiprosesFragment.newInstance();
             } else if(position == 2){
                 return TokoPesananSelesaiFragment.newInstance();
             } else {

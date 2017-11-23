@@ -29,10 +29,52 @@ public class Pesanan {
     public String created_at;
     @SerializedName("updated_at")
     public String updated_at;
+    @SerializedName("pemesan")
+    public Pemesan pemesan;
     @SerializedName("detail_pesanan")
     public List<Detail_pesanan> detail_pesanan;
     @SerializedName("log_pesanan")
     public List<Log_pesanan> log_pesanan;
+
+    public static class User {
+        @SerializedName("id")
+        public int id;
+        @SerializedName("name")
+        public String name;
+        @SerializedName("email")
+        public String email;
+        @SerializedName("created_at")
+        public String created_at;
+        @SerializedName("updated_at")
+        public String updated_at;
+        @SerializedName("deleted_at")
+        public String deleted_at;
+    }
+
+    public static class Pemesan {
+        @SerializedName("id")
+        public int id;
+        @SerializedName("jenis_kelamin")
+        public String jenis_kelamin;
+        @SerializedName("telepon")
+        public String telepon;
+        @SerializedName("alamat")
+        public String alamat;
+        @SerializedName("notif_number")
+        public String notif_number;
+        @SerializedName("url_profile")
+        public String url_profile;
+        @SerializedName("user_id")
+        public int user_id;
+        @SerializedName("created_at")
+        public String created_at;
+        @SerializedName("updated_at")
+        public String updated_at;
+        @SerializedName("deleted_at")
+        public String deleted_at;
+        @SerializedName("user")
+        public User user;
+    }
 
     public static class Toko {
         @SerializedName("id")
@@ -62,17 +104,17 @@ public class Pesanan {
     }
 
     public static class Gambar {
-        @com.google.gson.annotations.SerializedName("id")
+        @SerializedName("id")
         public int id;
-        @com.google.gson.annotations.SerializedName("barang_jasa_id")
+        @SerializedName("barang_jasa_id")
         public int barang_jasa_id;
-        @com.google.gson.annotations.SerializedName("url_gambar")
+        @SerializedName("url_gambar")
         public String url_gambar;
-        @com.google.gson.annotations.SerializedName("created_at")
+        @SerializedName("created_at")
         public String created_at;
-        @com.google.gson.annotations.SerializedName("updated_at")
+        @SerializedName("updated_at")
         public String updated_at;
-        @com.google.gson.annotations.SerializedName("deleted_at")
+        @SerializedName("deleted_at")
         public String deleted_at;
     }
 

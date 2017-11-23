@@ -67,9 +67,8 @@ public class TokoTanyaJawabBelumTerjawabFragment extends Fragment {
     }
 
     public void getTanyaJawabBelumTerjawab(){
-        queue = Volley.newRequestQueue(getActivity());
         String url = UrlUbama.USER_TOKO_TANYA_JAWAB_BELUM_TERJAWAB;
-        JsonArrayRequest tanyaJawabListRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 Log.d("Response", response.toString());
@@ -93,8 +92,8 @@ public class TokoTanyaJawabBelumTerjawabFragment extends Fragment {
                 return params;
             }
         };
-        tanyaJawabListRequest.setShouldCache(false);
-        queue.add(tanyaJawabListRequest);
+        request.setShouldCache(false);
+        queue.add(request);
     }
 
     @Override

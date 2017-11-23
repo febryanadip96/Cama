@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -32,6 +34,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DetailPesananActivity extends AppCompatActivity {
 
@@ -49,6 +52,14 @@ public class DetailPesananActivity extends AppCompatActivity {
     TextView logPesanan;
     @BindView(R.id.alamat)
     TextView alamat;
+    @BindView(R.id.telepon)
+    LinearLayout telepon;
+    @BindView(R.id.sms)
+    LinearLayout sms;
+    @BindView(R.id.email)
+    LinearLayout email;
+    @BindView(R.id.layout_hubungi)
+    LinearLayout layoutHubungi;
 
     ProgressDialog loading;
     int idPesanan;
@@ -64,7 +75,7 @@ public class DetailPesananActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        idPesanan = intent.getIntExtra("idPesanan",0);
+        idPesanan = intent.getIntExtra("idPesanan", 0);
         layoutManager = new LinearLayoutManager(this);
         recyclerItemDetailPesanan.setLayoutManager(layoutManager);
         queue = Volley.newRequestQueue(this);
@@ -72,7 +83,7 @@ public class DetailPesananActivity extends AppCompatActivity {
         getDetailPesanan();
     }
 
-    private void getDetailPesanan(){
+    private void getDetailPesanan() {
         loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
@@ -84,12 +95,12 @@ public class DetailPesananActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 pesanan = new Gson().fromJson(response.toString(), Pesanan.class);
-                nomorPesanan.setText(pesanan.id+"");
+                nomorPesanan.setText(pesanan.id + "");
                 NumberFormat currency = NumberFormat.getInstance(Locale.GERMANY);
                 totalHarga.setText(String.valueOf("Rp. " + currency.format(pesanan.total_harga).toString()));
                 SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                SimpleDateFormat outputFormat= new SimpleDateFormat("dd MMMM yyyy");
-                Date date =null;
+                SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMMM yyyy");
+                Date date = null;
                 try {
                     date = inputFormat.parse(pesanan.created_at);
                 } catch (ParseException e) {
@@ -97,19 +108,25 @@ public class DetailPesananActivity extends AppCompatActivity {
                 }
                 tanggalPesan.setText(outputFormat.format(date));
                 namaToko.setText(pesanan.detail_pesanan.get(0).barang_jasa.toko.nama);
-                String isiLog="";
-                for (Pesanan.Log_pesanan log:pesanan.log_pesanan) {
+                alamat.setText(pesanan.alamat);
+                String isiLog = "";
+                for (Pesanan.Log_pesanan log : pesanan.log_pesanan) {
                     try {
                         date = inputFormat.parse(log.created_at);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    isiLog += outputFormat.format(date)+"\n"+log.keterangan+"\n\n";
+                    isiLog += outputFormat.format(date) + "\n" + log.keterangan + "\n\n";
                 }
-                adapter = new DetailPesananItemAdapter( pesanan.detail_pesanan);
-                recyclerItemDetailPesanan.setAdapter(adapter);
                 logPesanan.setText(isiLog);
-                alamat.setText(pesanan.alamat);
+                adapter = new DetailPesananItemAdapter(pesanan.detail_pesanan);
+                recyclerItemDetailPesanan.setAdapter(adapter);
+                if(pesanan.status.equals("Selesai") || pesanan.status.equals("Ditolak")){
+                    layoutHubungi.setVisibility(View.GONE);
+                }
+                else{
+                    layoutHubungi.setVisibility(View.VISIBLE);
+                }
                 loading.dismiss();
             }
         }, new Response.ErrorListener() {
@@ -131,4 +148,15 @@ public class DetailPesananActivity extends AppCompatActivity {
         queue.add(request);
     }
 
+    @OnClick(R.id.telepon)
+    public void onTeleponClicked() {
+    }
+
+    @OnClick(R.id.sms)
+    public void onSmsClicked() {
+    }
+
+    @OnClick(R.id.email)
+    public void onEmailClicked() {
+    }
 }

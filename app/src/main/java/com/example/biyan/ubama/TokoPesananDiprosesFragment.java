@@ -17,7 +17,7 @@ import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.biyan.ubama.adapters.TokoPesananSelesaiAdapter;
+import com.example.biyan.ubama.adapters.TokoPesananDiprosesAdapter;
 import com.example.biyan.ubama.models.Pesanan;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -36,7 +36,7 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TokoPesananSelesaiFragment extends Fragment {
+public class TokoPesananDiprosesFragment extends Fragment {
 
     @BindView(R.id.recycler)
     RecyclerView recycler;
@@ -47,9 +47,9 @@ public class TokoPesananSelesaiFragment extends Fragment {
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layoutManager;
 
-    public static TokoPesananSelesaiFragment newInstance() {
-        TokoPesananSelesaiFragment tokoPesananSelesaiFragment = new TokoPesananSelesaiFragment();
-        return tokoPesananSelesaiFragment;
+    public static TokoPesananDiprosesFragment newInstance() {
+        TokoPesananDiprosesFragment tokoPesananDiprosesFragment = new TokoPesananDiprosesFragment();
+        return tokoPesananDiprosesFragment;
     }
 
 
@@ -57,24 +57,24 @@ public class TokoPesananSelesaiFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_toko_pesanan_selesai, container, false);
+        View view = inflater.inflate(R.layout.fragment_toko_pesanan_diproses, container, false);
         unbinder = ButterKnife.bind(this, view);
         queue = Volley.newRequestQueue(getContext());
         layoutManager = new LinearLayoutManager(getContext());
         recycler.setLayoutManager(layoutManager);
-        getPesananSelesai();
+        getPesananDiproses();
         return view;
     }
 
-    public void getPesananSelesai(){
-        String url = UrlUbama.USER_TOKO_PESANAN_SELESAI;
+    public void getPesananDiproses(){
+        String url = UrlUbama.USER_TOKO_PESANAN_DIPROSES;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 Log.d("Response", response.toString());
                 pesananList = new Gson().fromJson(response.toString(), new TypeToken<List<Pesanan>>() {
                 }.getType());
-                adapter = new TokoPesananSelesaiAdapter(pesananList);
+                adapter = new TokoPesananDiprosesAdapter(pesananList);
                 recycler.setAdapter(adapter);
             }
         }, new Response.ErrorListener() {

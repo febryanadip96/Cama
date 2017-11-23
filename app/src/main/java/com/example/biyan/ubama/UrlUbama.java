@@ -84,11 +84,25 @@ public final class UrlUbama {
 
     public final static String USER_UPDATE_TOKO = URL_API+"user/updatetoko";
 
+    //USER TOKO TANYA JAWAB
+
     public final static String USER_TOKO_TANYA_JAWAB_TERJAWAB = URL_API+"user/toko/tanyajawab/terjawab";
 
     public final static String USER_TOKO_TANYA_JAWAB_BELUM_TERJAWAB = URL_API+"user/toko/tanyajawab/belumterjawab";
 
+    //USER TOKO PRODUK
+
     public final static String USER_TOKO_PRODUK_JASA = URL_API+"user/toko/produk/jasa";
 
     public final static String USER_TOKO_PRODUK_BARANG = URL_API+"user/toko/produk/barang";
+
+    //USER TOKO PESANAN
+
+    public final static String USER_TOKO_PESANAN_TUNGGU = URL_API+"user/toko/pesanan/tunggu";
+
+    public final static String USER_TOKO_PESANAN_DIPROSES = URL_API+"user/toko/pesanan/diproses";
+
+    public final static String USER_TOKO_PESANAN_SELESAI = URL_API+"user/toko/pesanan/selesai";
+
+    public final static String USER_TOKO_PESANAN_DITOLAK= URL_API+"user/toko/pesanan/ditolak";
 }

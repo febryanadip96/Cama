@@ -30,7 +30,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:background="@android:color/darker_gray"/>
 
             <RelativeLayout
@@ -71,13 +71,13 @@
                     android:layout_alignParentEnd="true"
                     android:src="@drawable/ic_favorite_border_grey"
                     android:clickable="true"
-                    android:background="?attr/selectableItemBackgroundBorderless"/>
+                    android:background="?attr/selectableItemBackground"/>
 
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:background="@android:color/darker_gray"/>
 
             <LinearLayout
@@ -91,7 +91,7 @@
                     android:padding="10dp"
                     android:orientation="vertical"
                     android:clickable="true"
-                    android:background="?attr/selectableItemBackground">
+                    android:background="?attr/selectableItemBackgroundBorderless">
 
                     <LinearLayout
                         android:id="@+id/layout_komentar"
@@ -132,20 +132,27 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:orientation="horizontal"
                         android:gravity="center">
 
                         <TextView
                             android:id="@+id/jumlah_komentar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Jumlah Komentar"/>
+                            android:text="0"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" Komentar"/>
 
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <View
-                    android:layout_width="1dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_width="2dp"
                     android:layout_height="match_parent"
                     android:background="@android:color/darker_gray"/>
 
@@ -162,19 +169,33 @@
                     android:background="?attr/selectableItemBackground">
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_faq"/>
-
-                    <TextView
-                        android:id="@+id/jumlah_faq"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_tanya_jawab"/>
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Jumlah FAQ"/>
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/jumlah_faq"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" FAQ"/>
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <View
-                    android:layout_width="1dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_width="2dp"
                     android:layout_height="match_parent"
                     android:background="@android:color/darker_gray"/>
 
@@ -204,8 +225,8 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"/>
+                android:layout_height="16dp"
+                android:background="@color/background"/>
 
             <LinearLayout
                 android:id="@+id/layout_toko"
@@ -221,7 +242,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:src="@mipmap/ic_launcher"
-                    app:civ_border_width="1dp"
+                    app:civ_border_width="0.5dp"
                     app:civ_border_color="#56000000"/>
 
                 <TextView
@@ -236,13 +257,14 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"/>
+                android:layout_height="16dp"
+                android:background="@color/background"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="16dp">
 
                 <TextView
                     android:layout_marginTop="10dp"
@@ -282,13 +304,14 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"/>
+                android:layout_height="16dp"
+                android:background="@color/background"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="16dp">
 
                 <TextView
                     android:layout_marginTop="10dp"
@@ -326,6 +349,10 @@
                 </com.ms.square.android.expandabletextview.ExpandableTextView>
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:background="@color/background"/>
         </LinearLayout>
 
     </ScrollView>

@@ -114,6 +114,7 @@ public class KeranjangActivity extends AppCompatActivity {
                 return params;
             }
         };
+        request.setShouldCache(false);
         queue.add(request);
     }
 
@@ -153,6 +154,7 @@ public class KeranjangActivity extends AppCompatActivity {
                 return params;
             }
         };
+        request.setShouldCache(false);
         queue.add(request);
     }
 }

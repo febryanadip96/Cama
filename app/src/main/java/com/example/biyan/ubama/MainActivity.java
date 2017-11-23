@@ -217,6 +217,7 @@ public class MainActivity extends AppCompatActivity
                 return params;
             }
         };
+        loginRequest.setShouldCache(false);
         queue.add(loginRequest);
     }
 

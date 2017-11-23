@@ -66,7 +66,6 @@ public class TokoTanyaJawabTerjawabFragment extends Fragment {
     }
 
     public void getTanyaJawabTerjawab(){
-        queue = Volley.newRequestQueue(getActivity());
         String url = UrlUbama.USER_TOKO_TANYA_JAWAB_TERJAWAB;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override

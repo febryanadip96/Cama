@@ -74,6 +74,7 @@ public class PesananActivity extends AppCompatActivity {
                 return params;
             }
         };
+        request.setShouldCache(false);
         queue.add(request);
     }
 }
