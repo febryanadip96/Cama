@@ -31,7 +31,12 @@ import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.biyan.ubama.adapters.BerandaPagerAdapter;
+import com.example.biyan.ubama.beranda.BerandaPagerAdapter;
+import com.example.biyan.ubama.keranjang.KeranjangActivity;
+import com.example.biyan.ubama.pesanan.PesananActivity;
+import com.example.biyan.ubama.toko.TokoCreateActivity;
+import com.example.biyan.ubama.toko.TokoUserActivity;
+import com.example.biyan.ubama.welcome.WelcomeActivity;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -286,7 +291,7 @@ public class MainActivity extends AppCompatActivity
                         Intent toko = new Intent(MainActivity.this, TokoUserActivity.class);
                         startActivity(toko);
                     } else {
-                        Intent buatToko = new Intent(MainActivity.this, BuatTokoUserActivity.class);
+                        Intent buatToko = new Intent(MainActivity.this, TokoCreateActivity.class);
                         startActivity(buatToko);
                     }
                 } catch (JSONException e) {

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="5dp"
-    tools:context="com.example.biyan.ubama.KirimPertanyaanActivity">
+    tools:context="com.example.biyan.ubama.tanyajawab.KirimPertanyaanActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,15 +30,21 @@
 
     </LinearLayout>
 
-    <TextView
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pertanyaan Anda:"/>
+        app:counterEnabled="true"
+        app:counterMaxLength="300">
 
-    <EditText
-        android:id="@+id/pertanyaan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/pertanyaan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Pertanyaan Anda"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+
 
     <Button
         android:id="@+id/kirim"

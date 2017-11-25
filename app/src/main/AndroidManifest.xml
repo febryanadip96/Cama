@@ -13,8 +13,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <service
+            android:name=".messaging.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".messaging.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
         <activity
-            android:name=".SplashActivity"
+            android:name=".welcome.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,24 +46,24 @@
                 android:value=".HasilPencarianActivity" />
         </activity>
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".welcome.WelcomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".welcome.LoginActivity"
             android:label="Masuk"
-            android:parentActivityName=".WelcomeActivity">
+            android:parentActivityName=".welcome.WelcomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".WelcomeActivity" />
+                android:value=".welcome.WelcomeActivity" />
         </activity>
         <activity
-            android:name=".RegisterActivity"
+            android:name=".welcome.RegisterActivity"
             android:label="Daftar"
-            android:parentActivityName=".WelcomeActivity">
+            android:parentActivityName=".welcome.WelcomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".WelcomeActivity" />
+                android:value=".welcome.WelcomeActivity" />
         </activity>
         <activity
             android:name=".HasilPencarianActivity"
@@ -73,14 +88,14 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".KeranjangActivity"
+            android:name=".keranjang.KeranjangActivity"
             android:label="Keranjang">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".PesananActivity"
+            android:name=".pesanan.PesananActivity"
             android:label="Pesanan"
             android:launchMode="singleTask">
             <meta-data
@@ -95,14 +110,14 @@
                 android:value=".BarangJasaActivity" />
         </activity>
         <activity
-            android:name=".HasilFakultasActivity"
+            android:name=".beranda.HasilFakultasActivity"
             android:label="Fakultas">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".SubkategoriActivity"
+            android:name=".beranda.SubkategoriActivity"
             android:label="Kategori"
             android:launchMode="singleTask">
             <meta-data
@@ -110,57 +125,57 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".HasilSubkategoriActivity"
+            android:name=".beranda.HasilSubkategoriActivity"
             android:label="Subkategori">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".SubkategoriActivity" />
+                android:value=".beranda.SubkategoriActivity" />
         </activity>
         <activity
-            android:name=".DetailPesananActivity"
+            android:name=".pesanan.DetailPesananActivity"
             android:label="Detail Pesanan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".PesananActivity" />
+                android:value=".pesanan.PesananActivity" />
         </activity>
         <activity
-            android:name=".TokoUserActivity"
+            android:name=".toko.TokoUserActivity"
             android:label="Toko">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".BuatTokoUserActivity"
+            android:name=".toko.TokoCreateActivity"
             android:label="Toko">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
         <activity android:name=".TokoActivity" />
-        <activity android:name=".KomentarActivity">
+        <activity android:name=".komentar.KomentarActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".BarangJasaActivity" />
         </activity>
-        <activity android:name=".TanyaJawabActivity">
+        <activity android:name=".tanyajawab.TanyaJawabActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".BarangJasaActivity" />
         </activity>
-        <activity android:name=".KirimPertanyaanActivity" />
-        <activity android:name=".JualProdukActivity" />
-        <activity android:name=".PengaturanTokoActivity" />
+        <activity android:name=".tanyajawab.KirimPertanyaanActivity" />
+        <activity android:name=".toko.TokoJualProdukActivity" />
+        <activity android:name=".toko.TokoPengaturanActivity" />
         <activity
-            android:name=".TokoProdukActivity"
+            android:name=".toko.TokoProdukActivity"
             android:label="@string/title_activity_toko_produk"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".TokoPesananActivity"
+            android:name=".toko.TokoPesananActivity"
             android:label="@string/title_activity_toko_pesanan"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".TokoTanyaJawabActivity"
+            android:name=".toko.TokoTanyaJawabActivity"
             android:label="@string/title_activity_toko_tanya_jawab"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

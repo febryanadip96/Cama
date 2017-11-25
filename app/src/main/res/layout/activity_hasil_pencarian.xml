@@ -8,10 +8,8 @@
     tools:context="com.example.biyan.ubama.HasilPencarianActivity">
 
     <LinearLayout
-        android:id="@+id/btn_feature"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:padding="10dp"
         android:orientation="horizontal"
         android:background="@color/colorPrimary">
 
@@ -69,7 +67,6 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
-        app:layout_constraintTop_toBottomOf="@id/btn_feature"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

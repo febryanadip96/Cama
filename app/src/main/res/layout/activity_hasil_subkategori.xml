@@ -5,13 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.biyan.ubama.HasilSubkategoriActivity">
+    tools:context="com.example.biyan.ubama.beranda.HasilSubkategoriActivity">
 
     <LinearLayout
-        android:id="@+id/btn_feature"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:padding="10dp"
         android:orientation="horizontal"
         android:background="@color/colorPrimary">
 

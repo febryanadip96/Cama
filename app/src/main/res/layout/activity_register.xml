@@ -1,123 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.biyan.ubama.RegisterActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.biyan.ubama.welcome.RegisterActivity">
 
-    <ScrollView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
 
-        <LinearLayout
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
-
-            <TextView
-                android:labelFor="@id/namaLengkap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nama Lengkap"/>
+            android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/namaLengkap"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:hint="Nama Lengkap"/>
 
-            <TextView
-                android:labelFor="@id/jenisKelamin"
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/jenisKelamin"
+            android:text="Jenis Kelamin" />
+
+        <RadioGroup
+            android:id="@+id/jenisKelamin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/lakiLaki"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Jenis Kelamin"/>
+                android:text="Laki-laki" />
 
-            <RadioGroup
-                android:id="@+id/jenisKelamin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <RadioButton
-                    android:id="@+id/lakiLaki"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Laki-laki" />
-                <RadioButton
-                    android:id="@+id/perempuan"
-                    android:layout_marginLeft="30dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Perempuan"/>
-            </RadioGroup>
-
-            <TextView
-                android:labelFor="@id/telepon"
+            <RadioButton
+                android:id="@+id/perempuan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nomor Telepon"/>
+                android:layout_marginLeft="30dp"
+                android:text="Perempuan" />
+        </RadioGroup>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/telepon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"/>
+                android:inputType="number"
+                android:hint="Nomor Telepon"/>
 
-            <TextView
-                android:labelFor="@id/alamat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Alamat"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/alamat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lines="3"/>
+                android:lines="3"
+                android:hint="Alamat"/>
 
-            <TextView
-                android:labelFor="@id/email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Email"/>
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:labelFor="@id/password"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Password"/>
+                android:inputType="textEmailAddress"
+                android:hint="Email"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            app:passwordToggleEnabled="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:labelFor="@id/passwordConfirm"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Konfirmasi Password"/>
+                android:inputType="textPassword"
+                android:hint="Password"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            app:passwordToggleEnabled="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/passwordConfirm"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <Button
-                android:id="@+id/register"
-                android:layout_marginTop="20dp"
-                android:background="@color/colorPrimary"
-                android:textColor="@android:color/white"
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Daftar"/>
+                android:inputType="textPassword"
+                android:hint="Konfirmasi Password"/>
 
-        </LinearLayout>
+        </android.support.design.widget.TextInputLayout>
 
-    </ScrollView>
+        <Button
+            android:id="@+id/register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimary"
+            android:text="Daftar"
+            android:textColor="@android:color/white" />
 
-</RelativeLayout>
+    </LinearLayout>
+
+</ScrollView>

@@ -1,7 +1,9 @@
 package com.example.biyan.ubama;
 
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +13,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,7 +24,7 @@ import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.biyan.ubama.adapters.BarangJasaAdapter;
+import com.example.biyan.ubama.keranjang.KeranjangActivity;
 import com.example.biyan.ubama.models.BarangJasa;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -33,15 +37,28 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class HasilPencarianActivity extends AppCompatActivity {
 
+
+    @BindView(R.id.sort)
+    LinearLayout sort;
+    @BindView(R.id.filter)
+    LinearLayout filter;
     @BindView(R.id.recycler)
     RecyclerView recycler;
-    private RecyclerView.Adapter adapter;
+    @BindView(R.id.empty)
+    TextView empty;
+
+    RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layoutManager;
-    private List<BarangJasa> barangJasaList;
+    List<BarangJasa> barangJasaList;
     RequestQueue queue;
+
+    int idSort = 0;
+    int idFilter = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +98,7 @@ public class HasilPencarianActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.keranjang) {
-            Intent keranjang = new Intent(this,KeranjangActivity.class);
+            Intent keranjang = new Intent(this, KeranjangActivity.class);
             startActivity(keranjang);
         }
 
@@ -102,8 +119,8 @@ public class HasilPencarianActivity extends AppCompatActivity {
         }
     }
 
-    public void Cari(String query){
-        String url = UrlUbama.CARI_BARANG_JASA+query;
+    public void Cari(String query) {
+        String url = UrlUbama.CARI_BARANG_JASA + query;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -127,5 +144,33 @@ public class HasilPencarianActivity extends AppCompatActivity {
             }
         };
         queue.add(request);
+    }
+
+    @OnClick(R.id.sort)
+    public void onSortClicked() {
+        final String[] sortArray = {"Paling Sesuai", "Terbaru", "Harga Tertinggi", "Harga Terendah"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Urutkan")
+                .setItems(sortArray, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d("Filter", sortArray[which]);
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    @OnClick(R.id.filter)
+    public void onFilterClicked() {
+        final String[] filterArray = {"Baru", "Bekas"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Filter")
+                .setItems(filterArray, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d("Filter",  filterArray[which]);
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
