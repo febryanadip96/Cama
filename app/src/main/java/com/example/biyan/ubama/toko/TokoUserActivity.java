@@ -20,6 +20,7 @@ import com.example.biyan.ubama.UrlUbama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.Toko;
 import com.google.gson.Gson;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
@@ -70,7 +71,7 @@ public class TokoUserActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 toko = new Gson().fromJson(response.toString(), Toko.class);
-                Picasso.with(TokoUserActivity.this).load(UrlUbama.URL_IMAGE + toko.url_profile).into(imageToko);
+                Picasso.with(TokoUserActivity.this).load(UrlUbama.URL_IMAGE + toko.url_profile).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).into(imageToko);
                 namaToko.setText(toko.nama);
                 namaPemilik.setText(toko.pemilik.user.name);
             }

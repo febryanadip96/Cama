@@ -54,6 +54,11 @@ public class TokoPesananDiprosesFragment extends Fragment {
         return tokoPesananDiprosesFragment;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getPesananDiproses();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,10 +19,10 @@ import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.biyan.ubama.BarangJasaAdapter;
 import com.example.biyan.ubama.R;
 import com.example.biyan.ubama.UrlUbama;
 import com.example.biyan.ubama.UserToken;
-import com.example.biyan.ubama.BarangJasaAdapter;
 import com.example.biyan.ubama.models.BarangJasa;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -58,6 +59,7 @@ public class HasilFakultasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hasil_fakultas);
         ButterKnife.bind(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
         idFakultas = intent.getIntExtra("idFakultas", 0);
         setTitle(intent.getStringExtra("namaFakultas"));
@@ -67,6 +69,20 @@ public class HasilFakultasActivity extends AppCompatActivity {
         recycler.setLayoutManager(layoutManager);
 
         getBarangJasaFakultas();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == android.R.id.home)
+        {
+            this.finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void getBarangJasaFakultas() {

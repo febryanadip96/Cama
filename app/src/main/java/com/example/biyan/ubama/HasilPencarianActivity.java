@@ -64,6 +64,7 @@ public class HasilPencarianActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hasil_pencarian);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
         layoutManager = new GridLayoutManager(this, 2);
         recycler.setLayoutManager(layoutManager);
@@ -95,9 +96,11 @@ public class HasilPencarianActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.keranjang) {
+        if (id == android.R.id.home)
+        {
+            this.finish();
+        }
+        else if (id == R.id.keranjang) {
             Intent keranjang = new Intent(this, KeranjangActivity.class);
             startActivity(keranjang);
         }

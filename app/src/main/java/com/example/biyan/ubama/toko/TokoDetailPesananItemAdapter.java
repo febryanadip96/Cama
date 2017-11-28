@@ -1,4 +1,4 @@
-package com.example.biyan.ubama.pesanan;
+package com.example.biyan.ubama.toko;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +20,7 @@ import java.util.Locale;
 /**
  * Created by Biyan on 11/11/2017.
  */
-public class DetailPesananItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class TokoDetailPesananItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     List<Pesanan.Detail_pesanan> detailPesananList;
     ImageView imageBarang;
@@ -30,7 +30,7 @@ public class DetailPesananItemAdapter extends RecyclerView.Adapter<RecyclerView.
     TextView jumlah;
     Context context;
 
-    public DetailPesananItemAdapter(List<Pesanan.Detail_pesanan> detailPesananList) {
+    public TokoDetailPesananItemAdapter(List<Pesanan.Detail_pesanan> detailPesananList) {
         this.context = context;
         this.detailPesananList = detailPesananList;
     }

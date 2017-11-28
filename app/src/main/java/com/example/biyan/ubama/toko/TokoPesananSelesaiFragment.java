@@ -54,6 +54,11 @@ public class TokoPesananSelesaiFragment extends Fragment {
         return tokoPesananSelesaiFragment;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getPesananSelesai();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

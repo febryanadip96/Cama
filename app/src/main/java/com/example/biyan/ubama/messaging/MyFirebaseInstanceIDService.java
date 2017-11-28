@@ -2,6 +2,7 @@ package com.example.biyan.ubama.messaging;
 
 import android.util.Log;
 
+import com.example.biyan.ubama.UserToken;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
@@ -17,6 +18,8 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     public void onTokenRefresh() {
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.d(TAG, "Refreshed token: " + refreshedToken);
-        SendToken.sendRegistrationToServer(this, refreshedToken);
+        if(!UserToken.getToken(this).equals("")){
+            SendToken.sendRegistrationToServer(this, refreshedToken);
+        }
     }
 }

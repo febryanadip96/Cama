@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -76,6 +77,7 @@ public class PemesananActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pemesanan);
         ButterKnife.bind(this);
         Intent intent = getIntent();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         idBarangJasa = intent.getIntExtra("idBarangJasa", 0);
         getDetailBarangJasa();
         catatanPembeli.hasFocus();
@@ -99,6 +101,20 @@ public class PemesananActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == android.R.id.home)
+        {
+            this.finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void getDetailBarangJasa() {

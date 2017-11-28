@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,10 +20,10 @@ import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.biyan.ubama.BarangJasaAdapter;
 import com.example.biyan.ubama.R;
 import com.example.biyan.ubama.UrlUbama;
 import com.example.biyan.ubama.UserToken;
-import com.example.biyan.ubama.BarangJasaAdapter;
 import com.example.biyan.ubama.models.BarangJasa;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -60,6 +61,7 @@ public class HasilSubkategoriActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hasil_subkategori);
         ButterKnife.bind(this);
         Intent intent = getIntent();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         idSubkategori = intent.getIntExtra("idSubkategori", 0);
         setTitle(intent.getStringExtra("namaSubkategori"));
 
@@ -69,6 +71,20 @@ public class HasilSubkategoriActivity extends AppCompatActivity {
         recycler.setLayoutManager(layoutManager);
 
         getBarangJasaSubkategori();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == android.R.id.home)
+        {
+            this.finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void getBarangJasaSubkategori() {

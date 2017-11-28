@@ -33,7 +33,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_add_image)
+                        .setSmallIcon(R.drawable.ic_launcher)
                         .setContentTitle( remoteMessage.getData().get("Title").toString())
                         .setContentText(remoteMessage.getData().get("Content").toString());
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

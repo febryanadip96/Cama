@@ -1,6 +1,7 @@
 package com.example.biyan.ubama.toko;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +48,7 @@ public class TokoPesananAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         imagePemesan = (ImageView) holder.itemView.findViewById(R.id.image_pemesan);
         namaPemesan = (TextView) holder.itemView.findViewById(R.id.nama_pemesan);
         statusPesanan = (TextView) holder.itemView.findViewById(R.id.status_pesanan);
@@ -58,6 +59,14 @@ public class TokoPesananAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         statusPesanan.setText(pesananList.get(position).status);
         idPesanan.setText(pesananList.get(position).id+"");
         tanggalPesan.setText(pesananList.get(position).created_at);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, TokoDetailPesananActivity.class);
+                intent.putExtra("idPesanan", pesananList.get(position).id);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

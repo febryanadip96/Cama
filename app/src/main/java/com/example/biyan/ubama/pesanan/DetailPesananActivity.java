@@ -85,7 +85,7 @@ public class DetailPesananActivity extends AppCompatActivity {
         getDetailPesanan();
     }
 
-    private void getDetailPesanan() {
+    public void getDetailPesanan() {
         loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");

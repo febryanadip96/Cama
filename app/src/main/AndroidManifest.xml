@@ -10,21 +10,17 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <service
-            android:name=".messaging.MyFirebaseMessagingService">
+        <service android:name=".messaging.MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <service
-            android:name=".messaging.MyFirebaseInstanceIDService">
+        <service android:name=".messaging.MyFirebaseInstanceIDService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
@@ -67,22 +63,18 @@
         </activity>
         <activity
             android:name=".HasilPencarianActivity"
-            android:label="Hasil Pencarian">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+            android:label="Hasil Pencarian"
+            android:launchMode="singleTask">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
-
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
         <activity
             android:name=".BarangJasaActivity"
-            android:label="Detail Produk"
-            android:launchMode="singleTask">
+            android:label="Detail Produk">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -96,29 +88,20 @@
         </activity>
         <activity
             android:name=".pesanan.PesananActivity"
-            android:label="Pesanan"
-            android:launchMode="singleTask">
+            android:label="Pesanan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".PemesananActivity"
-            android:label="Pemesanan Produk">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".BarangJasaActivity" />
-        </activity>
+            android:label="Pemesanan Produk"/>
         <activity
             android:name=".beranda.HasilFakultasActivity"
-            android:label="Fakultas">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
+            android:label="Fakultas"/>
         <activity
             android:name=".beranda.SubkategoriActivity"
-            android:label="Kategori"
+            android:label="Subkategori"
             android:launchMode="singleTask">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -126,11 +109,7 @@
         </activity>
         <activity
             android:name=".beranda.HasilSubkategoriActivity"
-            android:label="Subkategori">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".beranda.SubkategoriActivity" />
-        </activity>
+            android:label="Subkategori"/>
         <activity
             android:name=".pesanan.DetailPesananActivity"
             android:label="Detail Pesanan">
@@ -168,16 +147,20 @@
         <activity android:name=".toko.TokoPengaturanActivity" />
         <activity
             android:name=".toko.TokoProdukActivity"
-            android:label="@string/title_activity_toko_produk"
+            android:label="Produk"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".toko.TokoPesananActivity"
-            android:label="@string/title_activity_toko_pesanan"
+            android:label="Pesanan"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".toko.TokoTanyaJawabActivity"
-            android:label="@string/title_activity_toko_tanya_jawab"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="Tanya Jawab"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".toko.TokoProdukPilihKategoriActivity" />
+        <activity android:name=".toko.TokoProdukPilihSubkategoriActivity" />
+        <activity android:name=".toko.TokoProdukPilihFakultasActivity" />
+        <activity android:name=".toko.TokoDetailPesananActivity"/>
     </application>
 
 </manifest>

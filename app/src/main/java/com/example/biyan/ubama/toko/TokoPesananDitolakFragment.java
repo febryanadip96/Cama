@@ -69,6 +69,12 @@ public class TokoPesananDitolakFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getPesananDitolak();
+    }
+
     public void getPesananDitolak(){
         String url = UrlUbama.USER_TOKO_PESANAN_DITOLAK;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {

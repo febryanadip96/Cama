@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity
     public void onPause()
     {
         super.onPause();
-        final SharedPreferences.Editor ed = getSharedPreferences("name",
+        final SharedPreferences.Editor ed = getSharedPreferences("pager",
                 android.content.Context.MODE_PRIVATE).edit();
         ed.putInt("currentPage", pagerBeranda.getCurrentItem());
         ed.commit();
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
-        final SharedPreferences sp = getSharedPreferences("name",
+        final SharedPreferences sp = getSharedPreferences("pager",
                 android.content.Context.MODE_PRIVATE);
         pagerBeranda.setCurrentItem(sp.getInt("currentPage", 0));
     }
@@ -282,7 +282,6 @@ public class MainActivity extends AppCompatActivity
 
     public void CekToko(){
         String url = UrlUbama.USER_CEK_TOKO;
-        Log.d("URL", url.toString());
         JsonObjectRequest cekTokoRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -314,7 +313,5 @@ public class MainActivity extends AppCompatActivity
         };
         cekTokoRequest.setShouldCache(false);
         queue.add(cekTokoRequest);
-
-
     }
 }
