@@ -30,6 +30,7 @@ import com.android.volley.Response;
 import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
+import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.beranda.BerandaPagerAdapter;
 import com.example.biyan.ubama.keranjang.KeranjangActivity;
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity
     ViewPager pagerBeranda;
     BerandaPagerAdapter adapterBeranda;
     RequestQueue queue;
+
+    MenuItem keranjang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +90,7 @@ public class MainActivity extends AppCompatActivity
         email = (TextView) headerView.findViewById(R.id.email);
         queue = Volley.newRequestQueue(this);
         isiHeaderUser();
+        cekKeranjang();
     }
 
     @Override
@@ -103,6 +107,7 @@ public class MainActivity extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
+        cekKeranjang();
         final SharedPreferences sp = getSharedPreferences("pager",
                 android.content.Context.MODE_PRIVATE);
         pagerBeranda.setCurrentItem(sp.getInt("currentPage", 0));
@@ -122,7 +127,9 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        // Associate searchable configuration with the SearchView
+
+        keranjang = menu.findItem(R.id.keranjang);
+                // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
@@ -285,6 +292,34 @@ public class MainActivity extends AppCompatActivity
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Error Volley Cek Toko", error.toString());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", UserToken.getToken(getApplicationContext()));
+                params.put("Accept", "application/json");
+                return params;
+            }
+        };
+        cekTokoRequest.setShouldCache(false);
+        queue.add(cekTokoRequest);
+    }
+
+    public void cekKeranjang(){
+        String url = UrlUbama.USER_CEK_KERANJANG;
+        StringRequest cekTokoRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                int jumlah = Integer.parseInt(response.toString());
+                if(jumlah>0){
+                    keranjang.setIcon(R.drawable.ic_keranjang_isi);
                 }
             }
         }, new Response.ErrorListener() {

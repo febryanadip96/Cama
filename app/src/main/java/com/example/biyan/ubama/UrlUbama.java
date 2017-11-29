@@ -29,6 +29,8 @@ public final class UrlUbama {
 
     public final static String FAKULTAS = URL_API+"beranda/fakultas";
 
+    public final static String USER_CEK_KERANJANG = URL_API+"user/cekkeranjang";
+
     public final static String FAKULTAS_BARANG_JASA = URL_API+"fakultas/barangjasa/";
 
     public final static String KATEGORI_SUBKATEGORI = URL_API+"kategori/subkategori/";

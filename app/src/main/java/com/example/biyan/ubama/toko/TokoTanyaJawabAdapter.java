@@ -13,6 +13,9 @@ import com.example.biyan.ubama.UrlUbama;
 import com.example.biyan.ubama.models.TanyaJawab;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -68,19 +71,32 @@ public class TokoTanyaJawabAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             jawaban = (TextView) holder.itemView.findViewById(R.id.jawaban);
             waktuJawab = (TextView) holder.itemView.findViewById(R.id.waktu_jawab);
         }
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm");
+        Date date = null;
         if(tanyaJawabList.get(position).barang_jasa.gambar.size()>0){
             Picasso.with(context).load(UrlUbama.URL_IMAGE+tanyaJawabList.get(position).barang_jasa.gambar.get(0)).into(imageBarang);
         }
         namaPenanya.setText(tanyaJawabList.get(position).penanya.user.name);
         pertanyaan.setText(tanyaJawabList.get(position).pertanyaan);
-        waktuTanya.setText(tanyaJawabList.get(position).waktu_tanya);
+        try {
+            date = inputFormat.parse(tanyaJawabList.get(position).waktu_tanya);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        waktuTanya.setText(outputFormat.format(date));
         if(tanyaJawabList.get(position).jawaban!=null){
             if(!tanyaJawabList.get(position).barang_jasa.toko.url_profile.equals("")){
                 Picasso.with(context).load(UrlUbama.URL_IMAGE+tanyaJawabList.get(position).barang_jasa.toko.url_profile).into(imageToko);
             }
             namaToko.setText(tanyaJawabList.get(position).barang_jasa.toko.nama);
             jawaban.setText(tanyaJawabList.get(position).jawaban);
-            waktuJawab.setText(tanyaJawabList.get(position).waktu_jawab);
+            try {
+                date = inputFormat.parse(tanyaJawabList.get(position).waktu_jawab);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            waktuJawab.setText(outputFormat.format(date));
         }
     }
 
