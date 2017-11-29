@@ -1,6 +1,7 @@
 package com.example.biyan.ubama.toko;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,7 +49,7 @@ public class TokoProdukAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         imageBarang = (ImageView) holder.itemView.findViewById(R.id.image_barang);
         namaBarang = (TextView) holder.itemView.findViewById(R.id.nama_barang);
         hargaBarang = (TextView) holder.itemView.findViewById(R.id.harga_barang);
@@ -58,6 +59,14 @@ public class TokoProdukAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         namaBarang.setText(barangJasaList.get(position).nama);
         NumberFormat currency = NumberFormat.getInstance(Locale.GERMANY);
         hargaBarang.setText("Rp. " + currency.format(barangJasaList.get(position).harga).toString());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,TokoLihatProdukActivity.class);
+                intent.putExtra("idBarangJasa", barangJasaList.get(position).id);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

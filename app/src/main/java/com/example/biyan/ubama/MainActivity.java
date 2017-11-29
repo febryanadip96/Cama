@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity
         nama = (TextView) headerView.findViewById(R.id.nama);
         email = (TextView) headerView.findViewById(R.id.email);
         queue = Volley.newRequestQueue(this);
-        IsiHeaderUser();
+        isiHeaderUser();
     }
 
     @Override
@@ -128,32 +128,23 @@ public class MainActivity extends AppCompatActivity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false);
         searchView.requestFocus();
-
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.keranjang) {
             Intent keranjang = new Intent(this,KeranjangActivity.class);
             startActivity(keranjang);
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
-
         if (id == R.id.nav_home) {
             //tidak ada
         } else if (id == R.id.nav_keranjang) {
@@ -163,17 +154,16 @@ public class MainActivity extends AppCompatActivity
             Intent pesanan = new Intent(this, PesananActivity.class);
             startActivity(pesanan);
         } else if (id == R.id.nav_toko) {
-            CekToko();
+            cekToko();
         } else if (id == R.id.nav_logout) {
-            AskLogout();
+            askLogout();
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return false;
     }
 
-    public void IsiHeaderUser() {
+    public void isiHeaderUser() {
         String url = UrlUbama.USER;
         JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -226,12 +216,12 @@ public class MainActivity extends AppCompatActivity
         queue.add(loginRequest);
     }
 
-    public void AskLogout(){
+    public void askLogout(){
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setMessage("Anda yakin ingin keluar?")
                 .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Logout();
+                        logout();
                     }
                 })
                 .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
@@ -243,7 +233,7 @@ public class MainActivity extends AppCompatActivity
         alert.show();
     }
 
-    public void Logout(){
+    public void logout(){
         String url = UrlUbama.LOGOUT;
         JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -280,7 +270,7 @@ public class MainActivity extends AppCompatActivity
         queue.add(loginRequest);
     }
 
-    public void CekToko(){
+    public void cekToko(){
         String url = UrlUbama.USER_CEK_TOKO;
         JsonObjectRequest cekTokoRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override

@@ -86,7 +86,6 @@ public class BarangJasaActivity extends AppCompatActivity {
     @BindView(R.id.layout_tanya_jawab)
     LinearLayout layoutTanyaJawab;
 
-    ProgressDialog loading;
     int idBarangJasa;
     BarangJasa barangJasa;
     RequestQueue queue;
@@ -112,9 +111,6 @@ public class BarangJasaActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == android.R.id.home) {
             this.finish();
@@ -123,7 +119,7 @@ public class BarangJasaActivity extends AppCompatActivity {
     }
 
     public void getDetailBarangJasa() {
-        loading = new ProgressDialog(this);
+        final ProgressDialog loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);

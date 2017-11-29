@@ -47,35 +47,39 @@ public class BarangJasa {
     public Toko toko;
     @SerializedName("gambar")
     public List<Gambar> gambar;
+    @SerializedName("fakultas")
+    public Fakultas fakultas;
+    @SerializedName("subkategori")
+    public Subkategori subkategori;
 
     public static class Toko {
-        @com.google.gson.annotations.SerializedName("id")
+        @SerializedName("id")
         public int id;
-        @com.google.gson.annotations.SerializedName("nama")
+        @SerializedName("nama")
         public String nama;
-        @com.google.gson.annotations.SerializedName("deskripsi")
+        @SerializedName("deskripsi")
         public String deskripsi;
-        @com.google.gson.annotations.SerializedName("alamat")
+        @SerializedName("alamat")
         public String alamat;
-        @com.google.gson.annotations.SerializedName("catatan_toko")
+        @SerializedName("catatan_toko")
         public String catatan_toko;
-        @com.google.gson.annotations.SerializedName("open")
+        @SerializedName("open")
         public int open;
-        @com.google.gson.annotations.SerializedName("total_rating")
+        @SerializedName("total_rating")
         public int total_rating;
-        @com.google.gson.annotations.SerializedName("slogan")
+        @SerializedName("slogan")
         public String slogan;
-        @com.google.gson.annotations.SerializedName("url_profile")
+        @SerializedName("url_profile")
         public String url_profile;
-        @com.google.gson.annotations.SerializedName("pemilik")
+        @SerializedName("pemilik")
         public Pengguna pemilik;
-        @com.google.gson.annotations.SerializedName("created_at")
+        @SerializedName("created_at")
         public String created_at;
-        @com.google.gson.annotations.SerializedName("updated_at")
+        @SerializedName("updated_at")
         public String updated_at;
-        @com.google.gson.annotations.SerializedName("barang_jasa")
+        @SerializedName("barang_jasa")
         public List<BarangJasa> barang_jasa;
-        @com.google.gson.annotations.SerializedName("barangJasa")
+        @SerializedName("barangJasa")
         public List<BarangJasa> barangJasa;
     }
 
@@ -103,18 +107,46 @@ public class BarangJasa {
     }
 
     public static class Gambar {
-        @com.google.gson.annotations.SerializedName("id")
+        @SerializedName("id")
         public int id;
-        @com.google.gson.annotations.SerializedName("barang_jasa_id")
+        @SerializedName("barang_jasa_id")
         public int barang_jasa_id;
-        @com.google.gson.annotations.SerializedName("url_gambar")
+        @SerializedName("url_gambar")
         public String url_gambar;
-        @com.google.gson.annotations.SerializedName("created_at")
+        @SerializedName("created_at")
         public String created_at;
-        @com.google.gson.annotations.SerializedName("updated_at")
+        @SerializedName("updated_at")
         public String updated_at;
-        @com.google.gson.annotations.SerializedName("deleted_at")
+        @SerializedName("deleted_at")
         public String deleted_at;
     }
 
+    public static class Fakultas {
+        @SerializedName("id")
+        public int id;
+        @SerializedName("nama")
+        public String nama;
+        @SerializedName("url_gambar")
+        public String url_gambar;
+    }
+
+    public static class Kategori {
+        @SerializedName("id")
+        public int id;
+        @SerializedName("nama")
+        public String nama;
+        @SerializedName("url_gambar")
+        public String url_gambar;
+    }
+
+    public static class Subkategori {
+        @SerializedName("id")
+        public int id;
+        @SerializedName("nama")
+        public String nama;
+        @SerializedName("kategori_id")
+        public int kategori_id;
+        @SerializedName("kategori")
+        public Kategori kategori;
+    }
 }

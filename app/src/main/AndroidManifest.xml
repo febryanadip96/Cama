@@ -161,7 +161,8 @@
         <activity android:name=".toko.TokoDetailPesananActivity" />
         <activity android:name=".pesanan.KomentarPesananActivity" />
         <activity android:name=".toko.TokoAlasanDitolakActivity" />
-        <activity android:name=".toko.TokoLihatProdukActivity"></activity>
+        <activity android:name=".toko.TokoLihatProdukActivity" />
+        <activity android:name=".toko.TokoEditProdukActivity"></activity>
     </application>
 
 </manifest>

@@ -55,6 +55,11 @@ public class TokoProdukBarangFragment extends Fragment {
         return tokoProdukBarangFragment;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getProdukBarang();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

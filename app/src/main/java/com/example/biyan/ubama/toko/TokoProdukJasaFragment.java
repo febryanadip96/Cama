@@ -55,6 +55,11 @@ public class TokoProdukJasaFragment extends Fragment {
         return tokoProdukJasaFragment;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getProdukJasa();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
