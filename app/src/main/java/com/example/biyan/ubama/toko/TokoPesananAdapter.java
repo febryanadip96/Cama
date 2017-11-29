@@ -14,6 +14,9 @@ import com.example.biyan.ubama.UrlUbama;
 import com.example.biyan.ubama.models.Pesanan;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -58,7 +61,15 @@ public class TokoPesananAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         namaPemesan.setText(pesananList.get(position).pemesan.user.name);
         statusPesanan.setText(pesananList.get(position).status);
         idPesanan.setText(pesananList.get(position).id+"");
-        tanggalPesan.setText(pesananList.get(position).created_at);
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm");
+        Date date = null;
+        try {
+            date = inputFormat.parse(pesananList.get(position).created_at);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        tanggalPesan.setText(outputFormat.format(date));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

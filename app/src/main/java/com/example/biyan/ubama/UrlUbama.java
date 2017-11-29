@@ -5,7 +5,7 @@ package com.example.biyan.ubama;
  */
 
 public final class UrlUbama {
-    private final static String IP = "http://192.168.100.17:8000";
+    private final static String IP = "http://192.168.1.115:8000";
 
     private final static String URL_API = IP+"/api/";
 
@@ -116,7 +116,13 @@ public final class UrlUbama {
 
     public final static String USER_TOKO_TERIMA_PESANAN = URL_API+"user/toko/terima/pesanan/";
 
-    public final static String USER_TOKO_SELESAI_PESANAN = URL_API+"user/toko/selesai/pesanan/";
-
     public final static String USER_TOKO_TOLAK_PESANAN = URL_API+"user/toko/tolak/pesanan/";
+
+
+    //PESANAN
+    public final static String PESANAN_SELESAI = URL_API+"user/pesanan/selesai/";
+
+    public final static String PESANAN_FORM_KOMENTAR = URL_API+"user/pesanan/formkomentar/";
+
+    public final static String SIMPAN_KOMENTAR = URL_API+"user/pesanan/simpankomentar";
 }

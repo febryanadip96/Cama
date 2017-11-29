@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -48,6 +49,8 @@ public class BarangJasaActivity extends AppCompatActivity {
     TextView namaBarang;
     @BindView(R.id.harga_barang)
     TextView hargaBarang;
+    @BindView(R.id.jenis_barang)
+    TextView jenisBarang;
     @BindView(R.id.favorit_barang)
     ImageView favoritBarang;
     @BindView(R.id.star_barang_1)
@@ -94,6 +97,7 @@ public class BarangJasaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_barang_jasa);
         ButterKnife.bind(this);
         Intent intent = getIntent();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(intent.getStringExtra("namaBarangJasa"));
         idBarangJasa = intent.getIntExtra("idBarangJasa", 0);
 
@@ -104,6 +108,18 @@ public class BarangJasaActivity extends AppCompatActivity {
         queue = Volley.newRequestQueue(this);
 
         getDetailBarangJasa();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void getDetailBarangJasa() {
@@ -123,6 +139,7 @@ public class BarangJasaActivity extends AppCompatActivity {
                 namaBarang.setText(barangJasa.nama);
                 NumberFormat currency = NumberFormat.getInstance(Locale.GERMANY);
                 hargaBarang.setText("Rp. " + currency.format(barangJasa.harga).toString());
+                jenisBarang.setText(barangJasa.jenis);
                 if (barangJasa.favorit) {
                     favoritBarang.setImageResource(R.drawable.ic_favorite_red);
                 } else {
@@ -163,8 +180,8 @@ public class BarangJasaActivity extends AppCompatActivity {
                     default:
                         break;
                 }
-                jumlahKomentar.setText(barangJasa.jumlah_komentar + " komentar");
-                jumlahFaq.setText(barangJasa.jumlah_faq + " FAQ");
+                jumlahKomentar.setText(barangJasa.jumlah_komentar + "");
+                jumlahFaq.setText(barangJasa.jumlah_faq + "");
                 deskripsi.setText(barangJasa.deskripsi);
                 catatanPenjual.setText(barangJasa.catatan_penjual);
                 layoutToko.setOnClickListener(new View.OnClickListener() {
@@ -209,6 +226,7 @@ public class BarangJasaActivity extends AppCompatActivity {
                 return params;
             }
         };
+        request.setShouldCache(false);
         queue.add(request);
     }
 

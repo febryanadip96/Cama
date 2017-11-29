@@ -64,21 +64,19 @@
         <activity
             android:name=".HasilPencarianActivity"
             android:label="Hasil Pencarian"
-            android:launchMode="singleTask">
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
+
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
         <activity
             android:name=".BarangJasaActivity"
-            android:label="Detail Produk">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
+            android:label="Detail Produk"
+            android:launchMode="singleTask" />
         <activity
             android:name=".keranjang.KeranjangActivity"
             android:label="Keranjang">
@@ -95,10 +93,10 @@
         </activity>
         <activity
             android:name=".PemesananActivity"
-            android:label="Pemesanan Produk"/>
+            android:label="Pemesanan Produk" />
         <activity
             android:name=".beranda.HasilFakultasActivity"
-            android:label="Fakultas"/>
+            android:label="Fakultas" />
         <activity
             android:name=".beranda.SubkategoriActivity"
             android:label="Subkategori"
@@ -109,7 +107,7 @@
         </activity>
         <activity
             android:name=".beranda.HasilSubkategoriActivity"
-            android:label="Subkategori"/>
+            android:label="Subkategori" />
         <activity
             android:name=".pesanan.DetailPesananActivity"
             android:label="Detail Pesanan">
@@ -160,7 +158,10 @@
         <activity android:name=".toko.TokoProdukPilihKategoriActivity" />
         <activity android:name=".toko.TokoProdukPilihSubkategoriActivity" />
         <activity android:name=".toko.TokoProdukPilihFakultasActivity" />
-        <activity android:name=".toko.TokoDetailPesananActivity"/>
+        <activity android:name=".toko.TokoDetailPesananActivity" />
+        <activity android:name=".pesanan.KomentarPesananActivity" />
+        <activity android:name=".toko.TokoAlasanDitolakActivity" />
+        <activity android:name=".toko.TokoLihatProdukActivity"></activity>
     </application>
 
 </manifest>

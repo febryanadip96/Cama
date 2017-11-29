@@ -18,7 +18,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
-import com.android.volley.request.JsonArrayRequest;
+import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
 import com.example.biyan.ubama.UrlUbama;
@@ -26,8 +26,6 @@ import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.Kategori;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONArray;
 
 import java.util.HashMap;
 import java.util.List;
@@ -72,9 +70,9 @@ public class TokoProdukPilihKategoriActivity extends AppCompatActivity {
 
     public void getKategori() {
         String url = UrlUbama.KATEGORI;
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONArray response) {
+            public void onResponse(String response) {
                 kategoriList = new Gson().fromJson(response.toString(), new TypeToken<List<Kategori>>() {
                 }.getType());
                 Adapter adapter = new KategoriAdapter(kategoriList);

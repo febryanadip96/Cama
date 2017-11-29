@@ -2,12 +2,14 @@ package com.example.biyan.ubama.pesanan;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,6 +26,7 @@ import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.Pesanan;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.NumberFormat;
@@ -69,6 +72,13 @@ public class DetailPesananActivity extends AppCompatActivity {
     RequestQueue queue;
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layoutManager;
+
+    String noTelpPenjual;
+    String emailPenjual;
+    @BindView(R.id.selesai)
+    Button selesai;
+    @BindView(R.id.beri_komentar)
+    Button beriKomentar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,12 +132,19 @@ public class DetailPesananActivity extends AppCompatActivity {
                 logPesanan.setText(isiLog);
                 adapter = new DetailPesananItemAdapter(pesanan.detail_pesanan);
                 recyclerItemDetailPesanan.setAdapter(adapter);
-                if(pesanan.status.equals("Selesai") || pesanan.status.equals("Ditolak")){
+                if (pesanan.status.equals("Selesai") || pesanan.status.equals("Ditolak")) {
                     layoutHubungi.setVisibility(View.GONE);
-                }
-                else{
+                } else {
                     layoutHubungi.setVisibility(View.VISIBLE);
                 }
+                if(pesanan.status.equals("Selesai")){
+                    selesai.setVisibility(View.GONE);
+                }
+                else{
+                    beriKomentar.setVisibility(View.GONE);
+                }
+                noTelpPenjual = pesanan.detail_pesanan.get(0).barang_jasa.toko.pemilik.telepon;
+                emailPenjual = pesanan.detail_pesanan.get(0).barang_jasa.toko.pemilik.user.email;
                 loading.dismiss();
             }
         }, new Response.ErrorListener() {
@@ -146,18 +163,76 @@ public class DetailPesananActivity extends AppCompatActivity {
                 return params;
             }
         };
+        request.setShouldCache(false);
         queue.add(request);
     }
 
     @OnClick(R.id.telepon)
     public void onTeleponClicked() {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", noTelpPenjual, null));
+        startActivity(intent);
     }
 
     @OnClick(R.id.sms)
     public void onSmsClicked() {
+        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + noTelpPenjual));
+        intent.putExtra("sms_body", "UBAMA PESANAN ID " + idPesanan + "\n\n");
+        startActivity(intent);
     }
 
     @OnClick(R.id.email)
     public void onEmailClicked() {
+        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                "mailto", emailPenjual, null));
+        intent.putExtra(Intent.EXTRA_SUBJECT, "UBAMA PESANAN ID " + idPesanan);
+        startActivity(Intent.createChooser(intent, "Send Email"));
+    }
+
+    @OnClick(R.id.selesai)
+    public void onSelesaiClicked() {
+        loading = new ProgressDialog(this);
+        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loading.setMessage("Mohon Menunggu");
+        loading.setIndeterminate(true);
+        loading.show();
+        String url = UrlUbama.PESANAN_SELESAI + idPesanan;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                loading.dismiss();
+                try {
+                    boolean selesai = response.getBoolean("selesai");
+                    if(selesai){
+                        getDetailPesanan();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loading.dismiss();
+                Log.e("Error Volley", error.toString());
+                finish();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", UserToken.getToken(getApplicationContext()));
+                params.put("Accept", "application/json");
+                return params;
+            }
+        };
+        request.setShouldCache(false);
+        queue.add(request);
+    }
+
+    @OnClick(R.id.beri_komentar)
+    public void onBeriKomentarClicked() {
+        Intent intent = new Intent(this, KomentarPesananActivity.class);
+        intent.putExtra("idPesanan", idPesanan);
+        startActivity(intent);
     }
 }

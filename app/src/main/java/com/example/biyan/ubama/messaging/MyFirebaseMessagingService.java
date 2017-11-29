@@ -2,6 +2,8 @@ package com.example.biyan.ubama.messaging;
 
 import android.app.NotificationManager;
 import android.content.Context;
+import android.graphics.Color;
+import android.media.RingtoneManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -34,6 +36,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.ic_launcher)
+                        .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                        .setLights(Color.GREEN, 1000, 1000)
                         .setContentTitle( remoteMessage.getData().get("Title").toString())
                         .setContentText(remoteMessage.getData().get("Content").toString());
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

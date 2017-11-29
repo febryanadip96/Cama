@@ -62,8 +62,8 @@ public class KomentarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         star3 = (ImageView) holder.itemView.findViewById(R.id.star_3);
         star4 = (ImageView) holder.itemView.findViewById(R.id.star_4);
         star5 = (ImageView) holder.itemView.findViewById(R.id.star_5);
-        Picasso.with(context).load(UrlUbama.URL_IMAGE+komentarList.get(position).penulis.url_profile).into(imagePengguna);
-        namaPengguna.setText(komentarList.get(position).penulis.user.name);
+        Picasso.with(context).load(UrlUbama.URL_IMAGE+komentarList.get(position).detail_pesanan.pesanan.pemesan.url_profile).into(imagePengguna);
+        namaPengguna.setText(komentarList.get(position).detail_pesanan.pesanan.pemesan.user.name);
         isiKomentar.setText(komentarList.get(position).komentar);
         int rating = (int) Math.floor(komentarList.get(position).nilai);
         switch (rating){

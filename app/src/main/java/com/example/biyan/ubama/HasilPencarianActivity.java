@@ -2,7 +2,6 @@ package com.example.biyan.ubama;
 
 import android.app.AlertDialog;
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,11 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -22,14 +18,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
-import com.android.volley.request.JsonArrayRequest;
+import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.keranjang.KeranjangActivity;
 import com.example.biyan.ubama.models.BarangJasa;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONArray;
 
 import java.util.HashMap;
 import java.util.List;
@@ -56,8 +50,8 @@ public class HasilPencarianActivity extends AppCompatActivity {
     List<BarangJasa> barangJasaList;
     RequestQueue queue;
 
-    int idSort = 0;
-    int idFilter = 0;
+
+    String query, orderQuery, sortQuery = "asc", filterQuery;
 
 
     @Override
@@ -70,24 +64,6 @@ public class HasilPencarianActivity extends AppCompatActivity {
         recycler.setLayoutManager(layoutManager);
         queue = Volley.newRequestQueue(this);
         handleIntent(getIntent());
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
-
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconifiedByDefault(false);
-        searchView.requestFocus();
-
-        return true;
     }
 
     @Override
@@ -114,19 +90,19 @@ public class HasilPencarianActivity extends AppCompatActivity {
     }
 
     private void handleIntent(Intent intent) {
-
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
+            query = intent.getStringExtra(SearchManager.QUERY);
             HasilPencarianActivity.this.setTitle(query);
-            Cari(query);
+            cari();
         }
     }
 
-    public void Cari(String query) {
+    public void cari() {
         String url = UrlUbama.CARI_BARANG_JASA + query;
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        Log.d("cari", query+" "+orderQuery+" "+sortQuery+" "+filterQuery);
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONArray response) {
+            public void onResponse(String response) {
                 barangJasaList = new Gson().fromJson(response.toString(), new TypeToken<List<BarangJasa>>() {
                 }.getType());
                 adapter = new BarangJasaAdapter(barangJasaList);
@@ -145,18 +121,46 @@ public class HasilPencarianActivity extends AppCompatActivity {
                 params.put("Accept", "application/json");
                 return params;
             }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("order", orderQuery);
+                params.put("sort", sortQuery);
+                params.put("filter", filterQuery);
+                return params;
+            }
         };
+        request.setShouldCache(false);
         queue.add(request);
     }
 
     @OnClick(R.id.sort)
     public void onSortClicked() {
-        final String[] sortArray = {"Paling Sesuai", "Terbaru", "Harga Tertinggi", "Harga Terendah"};
+        final String[] orderArray = {"Paling Sesuai", "Terbaru", "Harga Tertinggi", "Harga Terendah"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Urutkan")
-                .setItems(sortArray, new DialogInterface.OnClickListener() {
+                .setItems(orderArray, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.d("Filter", sortArray[which]);
+                        switch (which){
+                            case 0:
+                                orderQuery = null;
+                                sortQuery = "asc";
+                                break;
+                            case 1:
+                                orderQuery = "created_at";
+                                sortQuery = "desc";
+                                break;
+                            case 2:
+                                orderQuery = "harga";
+                                sortQuery = "desc";
+                                break;
+                            case 3:
+                                orderQuery = "harga";
+                                sortQuery = "asc";
+                                break;
+                        }
+                        cari();
                     }
                 });
         AlertDialog dialog = builder.create();
@@ -165,12 +169,23 @@ public class HasilPencarianActivity extends AppCompatActivity {
 
     @OnClick(R.id.filter)
     public void onFilterClicked() {
-        final String[] filterArray = {"Baru", "Bekas"};
+        final String[] filterArray = {"Semua", "Baru", "Bekas"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Filter")
                 .setItems(filterArray, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.d("Filter",  filterArray[which]);
+                        switch (which){
+                            case 0:
+                                filterQuery = null;
+                                break;
+                            case 1:
+                                filterQuery = "baru";
+                                break;
+                            case 2:
+                                filterQuery = "bekas";
+                                break;
+                        }
+                        cari();
                     }
                 });
         AlertDialog dialog = builder.create();

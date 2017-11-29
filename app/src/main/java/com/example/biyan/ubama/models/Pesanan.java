@@ -87,10 +87,6 @@ public class Pesanan {
         public String alamat;
         @SerializedName("catatan_toko")
         public String catatan_toko;
-        @SerializedName("open")
-        public int open;
-        @SerializedName("total_rating")
-        public int total_rating;
         @SerializedName("slogan")
         public String slogan;
         @SerializedName("url_profile")
@@ -101,6 +97,33 @@ public class Pesanan {
         public String created_at;
         @SerializedName("updated_at")
         public String updated_at;
+        @SerializedName("pemilik")
+        public Pemilik pemilik;
+    }
+
+    public static class Pemilik {
+        @SerializedName("id")
+        public int id;
+        @SerializedName("jenis_kelamin")
+        public String jenis_kelamin;
+        @SerializedName("telepon")
+        public String telepon;
+        @SerializedName("alamat")
+        public String alamat;
+        @SerializedName("notif_number")
+        public String notif_number;
+        @SerializedName("url_profile")
+        public String url_profile;
+        @SerializedName("user_id")
+        public int user_id;
+        @SerializedName("created_at")
+        public String created_at;
+        @SerializedName("updated_at")
+        public String updated_at;
+        @SerializedName("deleted_at")
+        public String deleted_at;
+        @SerializedName("user")
+        public User user;
     }
 
     public static class Gambar {
@@ -180,6 +203,25 @@ public class Pesanan {
         public String updated_at;
         @SerializedName("barang_jasa")
         public Barang_jasa barang_jasa;
+        @SerializedName("komentar")
+        public Komentar komentar;
+    }
+
+    public static class Komentar {
+        @SerializedName("id")
+        public int id;
+        @SerializedName("nilai")
+        public int nilai;
+        @SerializedName("komentar")
+        public String komentar;
+        @SerializedName("detail_pesanan_id")
+        public int detail_pesanan_id;
+        @SerializedName("pengguna_id")
+        public int pengguna_id;
+        @SerializedName("created_at")
+        public String created_at;
+        @SerializedName("updated_at")
+        public String updated_at;
     }
 
     public static class Log_pesanan {

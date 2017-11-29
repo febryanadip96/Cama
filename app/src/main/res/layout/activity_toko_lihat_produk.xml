@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.biyan.ubama.BarangJasaActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.example.biyan.ubama.toko.TokoLihatProdukActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -68,17 +68,6 @@
                         android:text="Jenis Barang"/>
 
                 </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/favorit_barang"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_favorite_border_grey"
-                    android:clickable="true"
-                    android:background="?attr/selectableItemBackground"/>
 
             </RelativeLayout>
 
@@ -236,38 +225,6 @@
                 android:background="@color/background"/>
 
             <LinearLayout
-                android:id="@+id/layout_toko"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:padding="10dp"
-                android:orientation="horizontal"
-                android:clickable="true"
-                android:background="?attr/selectableItemBackground">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/image_toko"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@mipmap/ic_launcher"
-                    app:civ_border_width="0.5dp"
-                    app:civ_border_color="#56000000"/>
-
-                <TextView
-                    android:id="@+id/nama_toko"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Nama Toko"/>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="16dp"
-                android:background="@color/background"/>
-
-            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -371,13 +328,24 @@
         android:background="?attr/selectableItemBackground">
 
         <Button
-            android:id="@+id/pesan"
-            android:layout_width="match_parent"
+            android:id="@+id/edit"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:textColor="@android:color/white"
             android:clickable="true"
-            android:text="Pesan"/>
+            android:text="Edit"/>
+
+        <Button
+            android:id="@+id/hapus"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:clickable="true"
+            android:text="Hapus"/>
 
     </LinearLayout>
 

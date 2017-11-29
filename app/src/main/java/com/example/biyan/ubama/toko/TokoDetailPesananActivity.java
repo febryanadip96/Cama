@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -57,10 +58,7 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
     Button terimaPesanan;
     @BindView(R.id.tolak_pesanan)
     Button tolakPesanan;
-    @BindView(R.id.selesai)
-    Button selesai;
 
-    ProgressDialog loading;
     int idPesanan;
     Pesanan pesanan;
     RequestQueue queue;
@@ -72,7 +70,7 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toko_detail_pesanan);
         ButterKnife.bind(this);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
         idPesanan = intent.getIntExtra("idPesanan", 0);
         layoutManager = new LinearLayoutManager(this);
@@ -82,8 +80,23 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
         getDetailPesanan();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getDetailPesanan();
+    }
+
     public void getDetailPesanan() {
-        loading = new ProgressDialog(this);
+        final ProgressDialog loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
@@ -92,6 +105,7 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                loading.dismiss();
                 pesanan = new Gson().fromJson(response.toString(), Pesanan.class);
                 nomorPesanan.setText(pesanan.id + "");
                 NumberFormat currency = NumberFormat.getInstance(Locale.GERMANY);
@@ -118,18 +132,13 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
                 logPesanan.setText(isiLog);
                 adapter = new TokoDetailPesananItemAdapter(pesanan.detail_pesanan);
                 recyclerItemDetailPesanan.setAdapter(adapter);
-                if(pesanan.status.equals("Tunggu")){
-                    selesai.setVisibility(View.GONE);
-                }
-                else if(pesanan.status.equals("Diproses")){
+                if(pesanan.status.equals("Diproses")){
                     terimaPesanan.setVisibility(View.GONE);
                 }
                 else if(pesanan.status.equals("Selesai") || pesanan.status.equals("Ditolak")){
                     terimaPesanan.setVisibility(View.GONE);
                     tolakPesanan.setVisibility(View.GONE);
-                    selesai.setVisibility(View.GONE);
                 }
-                loading.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -153,7 +162,7 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
 
     @OnClick(R.id.terima_pesanan)
     public void onTerimaPesananClicked() {
-        loading = new ProgressDialog(this);
+        final ProgressDialog loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
@@ -194,84 +203,8 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
 
     @OnClick(R.id.tolak_pesanan)
     public void onTolakPesananClicked() {
-        loading = new ProgressDialog(this);
-        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        loading.setMessage("Mohon Menunggu");
-        loading.setIndeterminate(true);
-        loading.show();
-        String url = UrlUbama.USER_TOKO_TOLAK_PESANAN + idPesanan;
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                loading.dismiss();
-                try {
-                    boolean ditolak = response.getBoolean("ditolak");
-                    if(ditolak){
-                        finish();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                loading.dismiss();
-                Log.e("Error Volley", error.toString());
-                finish();
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("Authorization", UserToken.getToken(getApplicationContext()));
-                params.put("Accept", "application/json");
-                return params;
-            }
-        };
-        request.setShouldCache(false);
-        queue.add(request);
-
-    }
-
-    @OnClick(R.id.selesai)
-    public void onSelesaiClicked() {
-        loading = new ProgressDialog(this);
-        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        loading.setMessage("Mohon Menunggu");
-        loading.setIndeterminate(true);
-        loading.show();
-        String url = UrlUbama.USER_TOKO_SELESAI_PESANAN + idPesanan;
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                loading.dismiss();
-                try {
-                    boolean selesai = response.getBoolean("selesai");
-                    if(selesai){
-                        finish();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                loading.dismiss();
-                Log.e("Error Volley", error.toString());
-                finish();
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("Authorization", UserToken.getToken(getApplicationContext()));
-                params.put("Accept", "application/json");
-                return params;
-            }
-        };
-        request.setShouldCache(false);
-        queue.add(request);
+        Intent intent = new Intent(this, TokoAlasanDitolakActivity.class);
+        intent.putExtra("idPesanan",idPesanan);
+        startActivity(intent);
     }
 }
