@@ -55,6 +55,8 @@ public class TokoProdukAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         hargaBarang = (TextView) holder.itemView.findViewById(R.id.harga_barang);
         if(barangJasaList.get(position).gambar.size()>0){
             Picasso.with(context).load(UrlUbama.URL_IMAGE+barangJasaList.get(position).gambar.get(0).url_gambar).into(imageBarang);
+        } else {
+            imageBarang.setImageResource(R.drawable.ic_error_image);
         }
         namaBarang.setText(barangJasaList.get(position).nama);
         NumberFormat currency = NumberFormat.getInstance(Locale.GERMANY);

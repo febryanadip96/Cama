@@ -24,7 +24,7 @@ import java.util.List;
 
 public class TokoTanyaJawabAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     List<TanyaJawab> tanyaJawabList;
-    ImageView imageBarang;
+    ImageView imagePenanya;
     TextView namaPenanya;
     TextView pertanyaan;
     TextView waktuTanya;
@@ -61,7 +61,7 @@ public class TokoTanyaJawabAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        imageBarang = (ImageView) holder.itemView.findViewById(R.id.image_barang);
+        imagePenanya = (ImageView) holder.itemView.findViewById(R.id.image_penanya);
         namaPenanya = (TextView) holder.itemView.findViewById(R.id.nama_penanya);
         pertanyaan = (TextView) holder.itemView.findViewById(R.id.pertanyaan);
         waktuTanya = (TextView) holder.itemView.findViewById(R.id.waktu_tanya);
@@ -75,7 +75,7 @@ public class TokoTanyaJawabAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm");
         Date date = null;
         if(tanyaJawabList.get(position).barang_jasa.gambar.size()>0){
-            Picasso.with(context).load(UrlUbama.URL_IMAGE+tanyaJawabList.get(position).barang_jasa.gambar.get(0)).into(imageBarang);
+            Picasso.with(context).load(UrlUbama.URL_IMAGE+tanyaJawabList.get(position).penanya.url_profile).into(imagePenanya);
         }
         namaPenanya.setText(tanyaJawabList.get(position).penanya.user.name);
         pertanyaan.setText(tanyaJawabList.get(position).pertanyaan);

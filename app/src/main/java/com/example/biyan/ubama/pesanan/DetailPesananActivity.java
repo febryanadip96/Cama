@@ -140,6 +140,10 @@ public class DetailPesananActivity extends AppCompatActivity {
                 if(pesanan.status.equals("Selesai")){
                     selesai.setVisibility(View.GONE);
                 }
+                else if(pesanan.status.equals("Ditolak")){
+                    selesai.setVisibility(View.GONE);
+                    beriKomentar.setVisibility(View.GONE);
+                }
                 else{
                     beriKomentar.setVisibility(View.GONE);
                 }

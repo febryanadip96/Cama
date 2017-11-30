@@ -22,7 +22,7 @@
                     android:id="@+id/image_barang"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@drawable/ic_error_image" />
             </RelativeLayout>
 
             <LinearLayout
