@@ -19,9 +19,23 @@ public final class UrlUbama {
 
     public final static String REGISTER = URL_API+"register";
 
+    public final static String RESEND_VERIFICATION = URL_API+"resendVerification";
+
+    //USER
+
     public final static String USER = URL_API+"user";
 
+    public final static String USER_FEED = URL_API+"user/feed";
+
+    public final static String USER_FAVORIT = URL_API+"user/favoritbarangjasa";
+
+    public final static String USER_UBAH_FAVORIT = URL_API+"user/ubahfavoritbarangjasa/";
+
+    public final static String USER_UPDATE_PROFILE = URL_API+"user/updateprofile";
+
     public final static String USER_SEND_TOKEN = URL_API +"user/token";
+
+    public final static String USER_UBAH_PASSWORD = URL_API+"user/ubahpassword";
 
     //HOME
 
@@ -36,12 +50,6 @@ public final class UrlUbama {
     public final static String KATEGORI_SUBKATEGORI = URL_API+"kategori/subkategori/";
 
     public final static String SUBKATEGORI_BARANG_JASA = URL_API+"kategori/subkategori/barangjasa/";
-
-    public final static String USER_FEED = URL_API+"user/feed";
-
-    public final static String USER_FAVORIT = URL_API+"user/favoritbarangjasa";
-
-    public final static String USER_UBAH_FAVORIT = URL_API+"user/ubahfavoritbarangjasa/";
 
     //PESANAN
 
@@ -93,6 +101,10 @@ public final class UrlUbama {
     public final static String USER_TOKO_TANYA_JAWAB_TERJAWAB = URL_API+"user/toko/tanyajawab/terjawab";
 
     public final static String USER_TOKO_TANYA_JAWAB_BELUM_TERJAWAB = URL_API+"user/toko/tanyajawab/belumterjawab";
+
+    public final static String USER_TOKO_TANYA_JAWAB = URL_API+"user/toko/tanyajawab/";
+
+    public final static String USER_TOKO_JAWAB_TANYA_JAWAB = URL_API+"user/toko/tanyajawab/jawab/";
 
     //USER TOKO PRODUK
 

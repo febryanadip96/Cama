@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -43,13 +44,14 @@ public class TokoProdukJasaFragment extends Fragment {
 
     @BindView(R.id.recycler)
     RecyclerView recycler;
+    @BindView(R.id.empty)
+    TextView empty;
     Unbinder unbinder;
 
     RequestQueue queue;
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
     List<BarangJasa> jasaList;
-
     public static TokoProdukJasaFragment newInstance() {
         TokoProdukJasaFragment tokoProdukJasaFragment = new TokoProdukJasaFragment();
         return tokoProdukJasaFragment;
@@ -74,7 +76,7 @@ public class TokoProdukJasaFragment extends Fragment {
         return view;
     }
 
-    public void getProdukJasa(){
+    public void getProdukJasa() {
         queue = Volley.newRequestQueue(getActivity());
         String url = UrlUbama.USER_TOKO_PRODUK_JASA;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -84,6 +86,10 @@ public class TokoProdukJasaFragment extends Fragment {
                 }.getType());
                 adapter = new TokoProdukAdapter(jasaList);
                 recycler.setAdapter(adapter);
+                if (!(jasaList.size() > 0)) {
+                    recycler.setVisibility(View.GONE);
+                    empty.setVisibility(View.VISIBLE);
+                }
             }
         }, new Response.ErrorListener() {
             @Override

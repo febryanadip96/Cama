@@ -9,9 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.biyan.ubama.BarangJasaActivity;
-import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
 import com.example.biyan.ubama.models.Toko;
 import com.squareup.picasso.Picasso;
 
@@ -24,11 +21,11 @@ import java.util.Locale;
  */
 
 public class TokoBarangJasaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ImageView imageBarang;
-    private TextView namaBarang;
-    private TextView hargaBarang;
-    private Context context;
-    private List<Toko.Barang_jasa> tokoBarangJasaList;
+    ImageView imageBarang;
+    TextView namaBarang;
+    TextView hargaBarang;
+    Context context;
+    List<Toko.Barang_jasa> tokoBarangJasaList;
 
     public TokoBarangJasaAdapter(List<Toko.Barang_jasa> tokoBarangJasaList) {
         this.tokoBarangJasaList = tokoBarangJasaList;
@@ -37,7 +34,7 @@ public class TokoBarangJasaAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_toko_produk, parent, false);
+                .inflate(R.layout.item_toko_barang_jasa, parent, false);
         context = parent.getContext();
         RecyclerView.ViewHolder vh = new RecyclerView.ViewHolder(v) {
             @Override

@@ -9,6 +9,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -73,15 +74,11 @@ public class HasilFakultasActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
             this.finish();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -94,6 +91,10 @@ public class HasilFakultasActivity extends AppCompatActivity {
                 }.getType());
                 adapter = new BarangJasaAdapter(barangJasaList);
                 recycler.setAdapter(adapter);
+                if(!(barangJasaList.size()>0)){
+                    recycler.setVisibility(View.GONE);
+                    empty.setVisibility(View.GONE);
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -109,6 +110,7 @@ public class HasilFakultasActivity extends AppCompatActivity {
                 return params;
             }
         };
+        request.setShouldCache(false);
         queue.add(request);
     }
 

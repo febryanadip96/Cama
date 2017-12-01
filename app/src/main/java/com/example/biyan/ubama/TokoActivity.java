@@ -1,11 +1,13 @@
 package com.example.biyan.ubama;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -60,6 +62,7 @@ public class TokoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toko);
         ButterKnife.bind(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
         idToko = intent.getIntExtra("idToko", 0);
         queue = Volley.newRequestQueue(this);
@@ -68,11 +71,26 @@ public class TokoActivity extends AppCompatActivity {
         getDataToko();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void getDataToko(){
+        final ProgressDialog loading = new ProgressDialog(this);
+        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loading.setMessage("Mohon Menunggu");
+        loading.setIndeterminate(true);
+        loading.show();
         String url = UrlUbama.TOKO+idToko;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                loading.dismiss();
                 toko = new Gson().fromJson(response.toString(), Toko.class);
                 namaToko.setText(toko.nama);
                 namaPemilik.setText(toko.pemilik.user.name);
@@ -97,7 +115,8 @@ public class TokoActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Error Volley Toko Activity", error.toString());
+                loading.dismiss();
+                Log.e("Error Volley", error.toString());
                 return;
             }
         }) {

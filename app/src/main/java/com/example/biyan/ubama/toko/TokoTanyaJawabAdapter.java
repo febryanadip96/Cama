@@ -1,6 +1,7 @@
 package com.example.biyan.ubama.toko;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,20 +19,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by Biyan on 11/22/2017.
  */
 
 public class TokoTanyaJawabAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     List<TanyaJawab> tanyaJawabList;
-    ImageView imagePenanya;
+    ImageView imageBarang;
+    CircleImageView imagePenanya;
     TextView namaPenanya;
     TextView pertanyaan;
     TextView waktuTanya;
-    ImageView imageToko;
-    TextView namaToko;
     TextView jawaban;
-    TextView waktuJawab;
     Context context;
 
     final static int BELUM_TERJAWAB = 1;
@@ -60,22 +61,29 @@ public class TokoTanyaJawabAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        imagePenanya = (ImageView) holder.itemView.findViewById(R.id.image_penanya);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        imageBarang = (ImageView) holder.itemView.findViewById(R.id.image_barang);
+        imagePenanya = (CircleImageView) holder.itemView.findViewById(R.id.image_penanya);
         namaPenanya = (TextView) holder.itemView.findViewById(R.id.nama_penanya);
         pertanyaan = (TextView) holder.itemView.findViewById(R.id.pertanyaan);
         waktuTanya = (TextView) holder.itemView.findViewById(R.id.waktu_tanya);
         if(tanyaJawabList.get(position).jawaban!=null){
-            imageToko = (ImageView) holder.itemView.findViewById(R.id.image_toko);
-            namaToko = (TextView) holder.itemView.findViewById(R.id.nama_toko);
             jawaban = (TextView) holder.itemView.findViewById(R.id.jawaban);
-            waktuJawab = (TextView) holder.itemView.findViewById(R.id.waktu_jawab);
         }
-        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm");
+        final SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm");
         Date date = null;
         if(tanyaJawabList.get(position).barang_jasa.gambar.size()>0){
+            Picasso.with(context).load(UrlUbama.URL_IMAGE+tanyaJawabList.get(position).barang_jasa.gambar.get(0).url_gambar).into(imageBarang);
+        }
+        else{
+            imageBarang.setImageResource(R.drawable.ic_error_image);
+        }
+        if(!tanyaJawabList.get(position).penanya.url_profile.equals("")){
             Picasso.with(context).load(UrlUbama.URL_IMAGE+tanyaJawabList.get(position).penanya.url_profile).into(imagePenanya);
+        }
+        else{
+            imagePenanya.setImageResource(R.drawable.ic_error_image);
         }
         namaPenanya.setText(tanyaJawabList.get(position).penanya.user.name);
         pertanyaan.setText(tanyaJawabList.get(position).pertanyaan);
@@ -86,18 +94,16 @@ public class TokoTanyaJawabAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
         waktuTanya.setText(outputFormat.format(date));
         if(tanyaJawabList.get(position).jawaban!=null){
-            if(!tanyaJawabList.get(position).barang_jasa.toko.url_profile.equals("")){
-                Picasso.with(context).load(UrlUbama.URL_IMAGE+tanyaJawabList.get(position).barang_jasa.toko.url_profile).into(imageToko);
-            }
-            namaToko.setText(tanyaJawabList.get(position).barang_jasa.toko.nama);
             jawaban.setText(tanyaJawabList.get(position).jawaban);
-            try {
-                date = inputFormat.parse(tanyaJawabList.get(position).waktu_jawab);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            waktuJawab.setText(outputFormat.format(date));
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,TokoJawabPertanyaanActivity.class);
+                intent.putExtra("idTanyaJawab", tanyaJawabList.get(position).id);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

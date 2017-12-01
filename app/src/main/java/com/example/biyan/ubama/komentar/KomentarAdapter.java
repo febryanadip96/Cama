@@ -22,16 +22,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class KomentarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
-    private CircleImageView imagePengguna;
-    private TextView namaPengguna;
-    private ImageView star1;
-    private ImageView star2;
-    private ImageView star3;
-    private ImageView star4;
-    private ImageView star5;
-    private TextView isiKomentar;
-    private List<Komentar> komentarList;
-    private Context context;
+    CircleImageView imagePengguna;
+    TextView namaPengguna;
+    ImageView star1;
+    ImageView star2;
+    ImageView star3;
+    ImageView star4;
+    ImageView star5;
+    TextView isiKomentar;
+    List<Komentar> komentarList;
+    Context context;
 
     public KomentarAdapter (List<Komentar> komentarList){
         this.komentarList = komentarList;

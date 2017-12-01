@@ -50,7 +50,6 @@ public class KirimPertanyaanActivity extends AppCompatActivity {
     int idBarangJasa;
     RequestQueue queue;
     BarangJasa barangJasa;
-    ProgressDialog loadingLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +64,7 @@ public class KirimPertanyaanActivity extends AppCompatActivity {
 
     public void getDataBarangJasa() {
         String url = UrlUbama.BARANG_JASA + idBarangJasa;
-        final JsonObjectRequest barangJasaRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 barangJasa = new Gson().fromJson(response.toString(), BarangJasa.class);
@@ -89,23 +88,24 @@ public class KirimPertanyaanActivity extends AppCompatActivity {
                 return params;
             }
         };
-        queue.add(barangJasaRequest);
+        request.setShouldCache(false);
+        queue.add(request);
     }
 
     @OnClick(R.id.kirim)
     public void onViewClicked() {
-        loadingLogin = new ProgressDialog(this);
-        loadingLogin.setIndeterminate(true);
-        loadingLogin.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        loadingLogin.setMessage("Proses Login");
-        loadingLogin.show();
+        final ProgressDialog loading = new ProgressDialog(this);
+        loading.setIndeterminate(true);
+        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loading.setMessage("Proses Login");
+        loading.show();
         Map<String, String> params = new HashMap<String, String>();
         params.put("pertanyaan", pertanyaan.getText().toString());
         String url = UrlUbama.KIRIM_PERTANYAAN_BARANG_JASA + idBarangJasa;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                loadingLogin.dismiss();
+                loading.dismiss();
                 try {
                     if (response.getBoolean("terkirim")) {
                         Toast.makeText(KirimPertanyaanActivity.this, "Pertanyaan sudah terkirim", Toast.LENGTH_LONG).show();
@@ -118,7 +118,7 @@ public class KirimPertanyaanActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                loadingLogin.dismiss();
+                loading.dismiss();
                 Log.e("Error Volley Login", error.toString());
                 Toast.makeText(KirimPertanyaanActivity.this, "Pertanyaan gagal terkirim", Toast.LENGTH_LONG).show();
             }
@@ -135,6 +135,7 @@ public class KirimPertanyaanActivity extends AppCompatActivity {
                 30000,
                 0,  // maxNumRetries = 0 means no retry
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        request.setShouldCache(false);
         queue.add(request);
     }
 }

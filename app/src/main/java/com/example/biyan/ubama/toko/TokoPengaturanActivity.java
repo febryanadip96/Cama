@@ -16,6 +16,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -55,6 +57,8 @@ public class TokoPengaturanActivity extends AppCompatActivity {
     CircleImageView imageToko;
     @BindView(R.id.nama_toko)
     TextView namaToko;
+    @BindView(R.id.edit_nama_toko)
+    EditText editNamaToko;
     @BindView(R.id.slogan_toko)
     EditText sloganToko;
     @BindView(R.id.deskripsi_toko)
@@ -81,8 +85,18 @@ public class TokoPengaturanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toko_pengaturan);
         ButterKnife.bind(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         queue = Volley.newRequestQueue(this);
         getUserToko();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -104,13 +118,26 @@ public class TokoPengaturanActivity extends AppCompatActivity {
     }
 
     public void getUserToko() {
+        final ProgressDialog loading = new ProgressDialog(this);
+        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loading.setMessage("Mohon Menunggu");
+        loading.setIndeterminate(true);
+        loading.show();
         String url = UrlUbama.USER_TOKO;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                loading.dismiss();
                 toko = new Gson().fromJson(response.toString(), Toko.class);
                 Picasso.with(TokoPengaturanActivity.this).load(UrlUbama.URL_IMAGE + toko.url_profile).into(imageToko);
                 namaToko.setText(toko.nama);
+                if(toko.lewati == 1){
+                    editNamaToko.setVisibility(View.VISIBLE);
+                    editNamaToko.setText(toko.nama);
+                }
+                else{
+                    editNamaToko.setVisibility(View.GONE);
+                }
                 sloganToko.setText(toko.slogan);
                 deskripsiToko.setText(toko.deskripsi);
                 alamatToko.setText(toko.alamat);
@@ -120,7 +147,8 @@ public class TokoPengaturanActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Error Volley Ubah Favorit", error.toString());
+                loading.dismiss();
+                Log.e("Error Volley", error.toString());
             }
         }) {
             @Override
@@ -213,6 +241,9 @@ public class TokoPengaturanActivity extends AppCompatActivity {
             }
         };
         request.addFile("gambar", imagePath);
+        if(toko.lewati == 1){
+            request.addMultipartParam("nama", "text/plain", editNamaToko.getText().toString());
+        }
         request.addMultipartParam("deskripsi", "text/plain", deskripsiToko.getText().toString());
         request.addMultipartParam("slogan", "text/plain", sloganToko.getText().toString());
         request.addMultipartParam("catatan_toko", "text/plain", catatanToko.getText().toString());

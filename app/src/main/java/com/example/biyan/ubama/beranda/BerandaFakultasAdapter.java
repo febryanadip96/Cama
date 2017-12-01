@@ -20,10 +20,10 @@ import java.util.List;
  * Created by Biyan on 11/10/2017.
  */
 public class BerandaFakultasAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ImageView imageFakultas;
-    private TextView namaFakultas;
-    private Context context;
-    private List<Fakultas> fakultasList;
+    ImageView imageFakultas;
+    TextView namaFakultas;
+    Context context;
+    List<Fakultas> fakultasList;
 
     public BerandaFakultasAdapter(List<Fakultas> fakultasList) {
         this.fakultasList = fakultasList;

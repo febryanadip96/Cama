@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.biyan.ubama.R;
 
@@ -19,6 +20,8 @@ public class WelcomeActivity extends AppCompatActivity {
     Button btnMasuk;
     @BindView(R.id.btnDaftar)
     Button btnDaftar;
+    @BindView(R.id.kirim_ulang)
+    TextView kirimUlang;
 
     public static Activity welcome;
 
@@ -42,5 +45,11 @@ public class WelcomeActivity extends AppCompatActivity {
                 startActivity(daftarActivity);
                 break;
         }
+    }
+
+    @OnClick(R.id.kirim_ulang)
+    public void onViewClicked() {
+        Intent intent = new Intent(WelcomeActivity.this, ResendVerificationActivity.class);
+        startActivity(intent);
     }
 }

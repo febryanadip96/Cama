@@ -16,28 +16,24 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import butterknife.ButterKnife;
-
 /**
  * Created by Biyan on 11/10/2017.
  */
 
 public class BerandaKategoriAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ImageView imageKategori;
-    private TextView namaKategori;
-    private Context context;
-    private List<Kategori> kategoriList;
+    ImageView imageKategori;
+    TextView namaKategori;
+    Context context;
+    List<Kategori> kategoriList;
 
     public BerandaKategoriAdapter(List<Kategori> kategoriList) {
         this.kategoriList = kategoriList;
     }
 
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_kategori, parent, false);
-        ButterKnife.bind(this, v);
         context = parent.getContext();
         RecyclerView.ViewHolder vh = new RecyclerView.ViewHolder(v) {
             @Override

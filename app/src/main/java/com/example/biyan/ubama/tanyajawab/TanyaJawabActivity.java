@@ -1,5 +1,6 @@
 package com.example.biyan.ubama.tanyajawab;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -73,10 +74,16 @@ public class TanyaJawabActivity extends AppCompatActivity {
     }
 
     public void getTanyaJawab() {
+        final ProgressDialog loading = new ProgressDialog(this);
+        loading.setIndeterminate(true);
+        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loading.setMessage("Proses Login");
+        loading.show();
         String url = UrlUbama.TANYA_JAWAB_BARANG_JASA + idBarangJasa;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                loading.dismiss();
                 tanyaJawabList = new Gson().fromJson(response.toString(), new TypeToken<List<TanyaJawab>>() {
                 }.getType());
                 adapter = new TanyaJawabAdapter(tanyaJawabList);
@@ -85,6 +92,7 @@ public class TanyaJawabActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                loading.dismiss();
                 Log.e("Error Volley FavoritFragment", error.toString());
                 return;
             }
@@ -97,6 +105,7 @@ public class TanyaJawabActivity extends AppCompatActivity {
                 return params;
             }
         };
+        request.setShouldCache(false);
         queue.add(request);
     }
 }

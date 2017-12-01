@@ -39,15 +39,15 @@ import java.util.Map;
  */
 
 public class KeranjangItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ImageView hapus;
-    private ImageView gambarBarang;
-    private TextView namaBarang;
-    private TextView hargaBarang;
-    private TextView jumlah;
-    private List<Keranjang.BarangJasa> barangJasaList;
-    private Context context;
-    private RequestQueue queue;
-    private KeranjangItemAdapter adapter;
+    ImageView hapus;
+    ImageView gambarBarang;
+    TextView namaBarang;
+    TextView hargaBarang;
+    TextView jumlah;
+    List<Keranjang.BarangJasa> barangJasaList;
+    Context context;
+    RequestQueue queue;
+    KeranjangItemAdapter adapter;
 
     public KeranjangItemAdapter (List<Keranjang.BarangJasa> barangJasaList){
         this.barangJasaList = barangJasaList;
@@ -117,7 +117,7 @@ public class KeranjangItemAdapter extends RecyclerView.Adapter<RecyclerView.View
     private void hapusBarangJasaKeranjang(final int idBarangJasa, final int position) {
         queue = Volley.newRequestQueue(context);
         String url = UrlUbama.USER_HAPUS_KERANJANG + idBarangJasa;
-        JsonObjectRequest hapusBarangJasaDiKeranjangRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -142,6 +142,7 @@ public class KeranjangItemAdapter extends RecyclerView.Adapter<RecyclerView.View
                 return params;
             }
         };
-        queue.add(hapusBarangJasaDiKeranjangRequest);
+        request.setShouldCache(false);
+        queue.add(request);
     }
 }

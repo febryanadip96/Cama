@@ -46,7 +46,6 @@ public class LoginActivity extends AppCompatActivity {
     RequestQueue queue;
     @BindView(R.id.loginView)
     LinearLayout loginView;
-    private ProgressDialog loadingLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,14 +61,13 @@ public class LoginActivity extends AppCompatActivity {
             Snackbar snackbar = Snackbar
                     .make(loginView, "Harap masukkan email dan password Anda", Snackbar.LENGTH_LONG);
             snackbar.show();
-            //Toast.makeText(getApplicationContext(), "Harap masukkan email dan password Anda", Toast.LENGTH_SHORT).show();
             return;
         }
         ProsesLogin();
     }
 
     public void ProsesLogin() {
-        loadingLogin = new ProgressDialog(this);
+        final ProgressDialog loadingLogin = new ProgressDialog(this);
         loadingLogin.setIndeterminate(true);
         loadingLogin.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loadingLogin.setMessage("Proses Login");

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -42,7 +43,10 @@ public class TokoTanyaJawabTerjawabFragment extends Fragment {
 
     @BindView(R.id.recycler)
     RecyclerView recycler;
+    @BindView(R.id.empty)
+    TextView empty;
     Unbinder unbinder;
+
     RequestQueue queue;
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
@@ -67,7 +71,13 @@ public class TokoTanyaJawabTerjawabFragment extends Fragment {
         return view;
     }
 
-    public void getTanyaJawabTerjawab(){
+    @Override
+    public void onResume() {
+        super.onResume();
+        getTanyaJawabTerjawab();
+    }
+
+    public void getTanyaJawabTerjawab() {
         String url = UrlUbama.USER_TOKO_TANYA_JAWAB_TERJAWAB;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
@@ -76,6 +86,10 @@ public class TokoTanyaJawabTerjawabFragment extends Fragment {
                 }.getType());
                 adapter = new TokoTanyaJawabAdapter(tanyaJawabList);
                 recycler.setAdapter(adapter);
+                if(!(tanyaJawabList.size()>0)){
+                    recycler.setVisibility(View.GONE);
+                    empty.setVisibility(View.VISIBLE);
+                }
             }
         }, new Response.ErrorListener() {
             @Override

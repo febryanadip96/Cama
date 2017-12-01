@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -42,6 +43,8 @@ public class TokoPesananTungguFragment extends Fragment {
 
     @BindView(R.id.recycler)
     RecyclerView recycler;
+    @BindView(R.id.empty)
+    TextView empty;
     Unbinder unbinder;
 
     List<Pesanan> pesananList;
@@ -85,6 +88,10 @@ public class TokoPesananTungguFragment extends Fragment {
                 }.getType());
                 adapter = new TokoPesananAdapter(pesananList);
                 recycler.setAdapter(adapter);
+                if (!(pesananList.size() > 0)) {
+                    recycler.setVisibility(View.GONE);
+                    empty.setVisibility(View.VISIBLE);
+                }
             }
         }, new Response.ErrorListener() {
             @Override

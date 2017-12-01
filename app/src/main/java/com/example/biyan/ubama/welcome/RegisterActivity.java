@@ -55,7 +55,6 @@ public class RegisterActivity extends AppCompatActivity {
     @BindView(R.id.register)
     Button register;
 
-    ProgressDialog loading;
     int jenis;
 
     @Override
@@ -89,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void ProsesRegister() {
-        loading = new ProgressDialog(this);
+        final ProgressDialog loading = new ProgressDialog(this);
         loading.setIndeterminate(true);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Proses Register");

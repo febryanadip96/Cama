@@ -1,5 +1,6 @@
 package com.example.biyan.ubama;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,7 +20,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +38,7 @@ import com.example.biyan.ubama.pesanan.PesananActivity;
 import com.example.biyan.ubama.toko.TokoCreateActivity;
 import com.example.biyan.ubama.toko.TokoUserActivity;
 import com.example.biyan.ubama.welcome.WelcomeActivity;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -46,13 +47,15 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView nama;
     TextView email;
-    ImageView imageProfile;
+    CircleImageView imageProfile;
     TabLayout tabs;
     NavigationView navigationView;
     ViewPager pagerBeranda;
@@ -85,7 +88,14 @@ public class MainActivity extends AppCompatActivity
         tabs.setupWithViewPager(pagerBeranda);
 
         View headerView = navigationView.getHeaderView(0);
-        imageProfile = (ImageView) headerView.findViewById(R.id.imageProfile);
+        headerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ProfileUserActivity.class);
+                startActivity(intent);
+            }
+        });
+        imageProfile = (CircleImageView) headerView.findViewById(R.id.imageProfile);
         nama = (TextView) headerView.findViewById(R.id.nama);
         email = (TextView) headerView.findViewById(R.id.email);
         queue = Volley.newRequestQueue(this);
@@ -108,6 +118,7 @@ public class MainActivity extends AppCompatActivity
     {
         super.onResume();
         cekKeranjang();
+        isiHeaderUser();
         final SharedPreferences sp = getSharedPreferences("pager",
                 android.content.Context.MODE_PRIVATE);
         pagerBeranda.setCurrentItem(sp.getInt("currentPage", 0));
@@ -125,11 +136,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-
         keranjang = menu.findItem(R.id.keranjang);
-                // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
@@ -172,13 +180,12 @@ public class MainActivity extends AppCompatActivity
 
     public void isiHeaderUser() {
         String url = UrlUbama.USER;
-        JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest requst = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    //Toast.makeText(getApplicationContext(),response.getString("name")+" "+response.getString("email"), Toast.LENGTH_SHORT).show();
                     if(!(response.isNull("name") || response.isNull("email"))){
-                        Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE+response.getJSONObject("pengguna").getString("url_profile")).into(imageProfile);
+                        Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE+response.getJSONObject("pengguna").getString("url_profile")).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).into(imageProfile);
                         nama.setText(response.getString("name"));
                         email.setText(response.getString("email"));
                     }
@@ -201,10 +208,8 @@ public class MainActivity extends AppCompatActivity
                 Log.e("Error Volley ", error.toString());
                 try {
                     if (error instanceof AuthFailureError) {
-                        //error
                         finish();
                     }
-
 
                 } catch (Exception e) {
                     Log.e("Error Volley ", e.toString());
@@ -219,8 +224,8 @@ public class MainActivity extends AppCompatActivity
                 return params;
             }
         };
-        loginRequest.setShouldCache(false);
-        queue.add(loginRequest);
+        requst.setShouldCache(false);
+        queue.add(requst);
     }
 
     public void askLogout(){
@@ -241,10 +246,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void logout(){
+        final ProgressDialog loading = new ProgressDialog(this);
+        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loading.setMessage("Mohon Menunggu");
+        loading.setIndeterminate(true);
+        loading.show();
         String url = UrlUbama.LOGOUT;
-        JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                loading.dismiss();
                 try {
                     Toast.makeText(getApplicationContext(),response.getString("message"), Toast.LENGTH_SHORT).show();
                     UserToken.setToken(getApplicationContext(),"");
@@ -260,6 +271,7 @@ public class MainActivity extends AppCompatActivity
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                loading.dismiss();
                 Log.e("Error Volley ", error.toString());
                 Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
                 startActivity(welcomeIntent);
@@ -274,12 +286,13 @@ public class MainActivity extends AppCompatActivity
                 return params;
             }
         };
-        queue.add(loginRequest);
+        request.setShouldCache(false);
+        queue.add(request);
     }
 
     public void cekToko(){
         String url = UrlUbama.USER_CEK_TOKO;
-        JsonObjectRequest cekTokoRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest requst = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -298,6 +311,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("Error Volley Cek Toko", error.toString());
+                return;
             }
         }) {
             @Override
@@ -308,13 +322,13 @@ public class MainActivity extends AppCompatActivity
                 return params;
             }
         };
-        cekTokoRequest.setShouldCache(false);
-        queue.add(cekTokoRequest);
+        requst.setShouldCache(false);
+        queue.add(requst);
     }
 
     public void cekKeranjang(){
         String url = UrlUbama.USER_CEK_KERANJANG;
-        StringRequest cekTokoRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        StringRequest requst = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 int jumlah = Integer.parseInt(response.toString());
@@ -336,7 +350,7 @@ public class MainActivity extends AppCompatActivity
                 return params;
             }
         };
-        cekTokoRequest.setShouldCache(false);
-        queue.add(cekTokoRequest);
+        requst.setShouldCache(false);
+        queue.add(requst);
     }
 }

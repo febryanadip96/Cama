@@ -25,6 +25,8 @@ public class Toko {
     public String url_profile;
     @SerializedName("pengguna_id")
     public int pengguna_id;
+    @SerializedName("lewati")
+    public int lewati;
     @SerializedName("created_at")
     public String created_at;
     @SerializedName("updated_at")

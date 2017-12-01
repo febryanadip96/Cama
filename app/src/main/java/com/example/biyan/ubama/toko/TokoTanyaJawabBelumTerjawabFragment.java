@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -40,10 +41,12 @@ import butterknife.Unbinder;
  */
 public class TokoTanyaJawabBelumTerjawabFragment extends Fragment {
 
-
     @BindView(R.id.recycler)
     RecyclerView recycler;
+    @BindView(R.id.empty)
+    TextView empty;
     Unbinder unbinder;
+
     RequestQueue queue;
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
@@ -54,6 +57,11 @@ public class TokoTanyaJawabBelumTerjawabFragment extends Fragment {
         return tokoTanyaJawabBelumTerjawabFragment;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getTanyaJawabBelumTerjawab();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,16 +76,19 @@ public class TokoTanyaJawabBelumTerjawabFragment extends Fragment {
         return view;
     }
 
-    public void getTanyaJawabBelumTerjawab(){
+    public void getTanyaJawabBelumTerjawab() {
         String url = UrlUbama.USER_TOKO_TANYA_JAWAB_BELUM_TERJAWAB;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                Log.d("Response", response.toString());
                 tanyaJawabList = new Gson().fromJson(response.toString(), new TypeToken<List<TanyaJawab>>() {
                 }.getType());
                 adapter = new TokoTanyaJawabAdapter(tanyaJawabList);
                 recycler.setAdapter(adapter);
+                if(!(tanyaJawabList.size()>0)){
+                    recycler.setVisibility(View.GONE);
+                    empty.setVisibility(View.VISIBLE);
+                }
             }
         }, new Response.ErrorListener() {
             @Override

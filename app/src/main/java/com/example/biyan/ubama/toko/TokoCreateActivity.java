@@ -65,11 +65,12 @@ public class TokoCreateActivity extends AppCompatActivity {
     ScrollView layout;
 
     RequestQueue queue;
-    ProgressDialog loading;
-    String imagePath;
+    String imagePath ="";
 
     final int GALLERY_REQUEST = 1;
     final int PERMISSION_REQUEST_READ_STORAGE = 2;
+    @BindView(R.id.lewati)
+    Button lewati;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,21 +132,90 @@ public class TokoCreateActivity extends AppCompatActivity {
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         PERMISSION_REQUEST_READ_STORAGE);
             }
-        }
-        else{
+        } else {
             startGallery();
         }
     }
 
-    public void startGallery(){
+    public void startGallery() {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
     }
 
     @OnClick(R.id.simpan)
-    public void simpanToko() {
-        loading = new ProgressDialog(this);
+    public void onSimpanClicked() {
+        final ProgressDialog loading = new ProgressDialog(this);
+        loading.setIndeterminate(true);
+        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loading.setMessage("Mohon menunggu");
+        loading.show();
+        String url = UrlUbama.USER_BUAT_TOKO;
+        SimpleMultiPartRequest request = new SimpleMultiPartRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        loading.dismiss();
+                        Log.d("Response", response);
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            Boolean toko = jsonResponse.getBoolean("toko");
+                            if (toko) {
+                                Intent tokoUser = new Intent(TokoCreateActivity.this, TokoUserActivity.class);
+                                startActivity(tokoUser);
+                                finish();
+                            }
+
+                        } catch (JSONException e) {
+                            // JSON error
+                            e.printStackTrace();
+                            Log.e("JSONException TokoCreateActivity", e.toString());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loading.dismiss();
+                Log.e("Error Volley", error.getMessage());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", UserToken.getToken(getApplicationContext()));
+                params.put("Accept", "application/json");
+                return params;
+            }
+        };
+        if(!imagePath.equals("")){
+            request.addFile("gambar", imagePath);
+        }
+        request.addMultipartParam("nama", "text/plain", namaToko.getText().toString());
+        request.addMultipartParam("deskripsi", "text/plain", deskripsiToko.getText().toString());
+        request.addMultipartParam("slogan", "text/plain", sloganToko.getText().toString());
+        request.addMultipartParam("catatan_toko", "text/plain", catatanToko.getText().toString());
+        request.addMultipartParam("alamat", "text/plain", alamatToko.getText().toString());
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                30000,
+                0,  // maxNumRetries = 0 means no retry
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(request);
+    }
+
+    private String getRealPathFromURI(Uri contentUri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        CursorLoader loader = new CursorLoader(this, contentUri, proj, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String result = cursor.getString(column_index);
+        cursor.close();
+        return result;
+    }
+
+    @OnClick(R.id.lewati)
+    public void onLewatiClicked() {
+        final ProgressDialog loading = new ProgressDialog(this);
         loading.setIndeterminate(true);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon menunggu");
@@ -193,21 +263,11 @@ public class TokoCreateActivity extends AppCompatActivity {
         request.addMultipartParam("slogan", "text/plain", sloganToko.getText().toString());
         request.addMultipartParam("catatan_toko", "text/plain", catatanToko.getText().toString());
         request.addMultipartParam("alamat", "text/plain", alamatToko.getText().toString());
+        request.addMultipartParam("lewati", "text/plain", 1+"");
         request.setRetryPolicy(new DefaultRetryPolicy(
                 30000,
                 0,  // maxNumRetries = 0 means no retry
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(request);
-    }
-
-    private String getRealPathFromURI(Uri contentUri) {
-        String[] proj = {MediaStore.Images.Media.DATA};
-        CursorLoader loader = new CursorLoader(this, contentUri, proj, null, null, null);
-        Cursor cursor = loader.loadInBackground();
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        String result = cursor.getString(column_index);
-        cursor.close();
-        return result;
     }
 }

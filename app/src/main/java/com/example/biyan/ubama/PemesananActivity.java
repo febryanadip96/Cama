@@ -64,7 +64,6 @@ public class PemesananActivity extends AppCompatActivity {
     @BindView(R.id.catatan_pembeli)
     EditText catatanPembeli;
 
-    ProgressDialog loading;
     int idBarangJasa;
     int min_pesan;
     BarangJasa barangJasa;
@@ -105,20 +104,16 @@ public class PemesananActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
             this.finish();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     public void getDetailBarangJasa() {
-        loading = new ProgressDialog(this);
+        final ProgressDialog loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
@@ -150,7 +145,7 @@ public class PemesananActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loading.dismiss();
-                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+                Log.e("Error Volley", error.toString());
             }
         }) {
             @Override
@@ -192,10 +187,10 @@ public class PemesananActivity extends AppCompatActivity {
 
     @OnClick(R.id.pesan)
     public void MasukkanKeranjang() {
-        loading = new ProgressDialog(this);
-        loading.setIndeterminate(true);
+        final ProgressDialog loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        loading.setMessage("Mohon Tunggu");
+        loading.setMessage("Mohon Menunggu");
+        loading.setIndeterminate(true);
         loading.show();
         Map<String, String> params = new HashMap<String, String>();
         params.put("jumlah", jumlah.getText().toString());

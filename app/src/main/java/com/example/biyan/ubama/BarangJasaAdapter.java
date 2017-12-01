@@ -18,12 +18,8 @@ import java.util.Locale;
 
 
 public class BarangJasaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ImageView imageBarang;
-    private TextView namaBarang;
-    private TextView namaToko;
-    private TextView hargaBarang;
-    private Context context;
-    private List<BarangJasa> barangJasaList;
+    Context context;
+    List<BarangJasa> barangJasaList;
 
     public BarangJasaAdapter(List<BarangJasa> barangJasaList) {
         this.barangJasaList = barangJasaList;
@@ -45,10 +41,10 @@ public class BarangJasaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        imageBarang = (ImageView) holder.itemView.findViewById(R.id.image_barang);
-        namaBarang = (TextView) holder.itemView.findViewById(R.id.nama_barang);
-        hargaBarang = (TextView) holder.itemView.findViewById(R.id.harga_barang);
-        namaToko = (TextView) holder.itemView.findViewById(R.id.nama_toko);
+        ImageView imageBarang = (ImageView) holder.itemView.findViewById(R.id.image_barang);
+        TextView namaBarang = (TextView) holder.itemView.findViewById(R.id.nama_barang);
+        TextView hargaBarang = (TextView) holder.itemView.findViewById(R.id.harga_barang);
+        TextView namaToko = (TextView) holder.itemView.findViewById(R.id.nama_toko);
 
         if (barangJasaList.get(position).gambar.size() > 0) {
             Picasso.with(context).load(UrlUbama.URL_IMAGE + barangJasaList.get(position).gambar.get(0).url_gambar).fit().error(R.drawable.ic_error_image).into(imageBarang);

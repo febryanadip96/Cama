@@ -21,13 +21,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Biyan on 11/10/2017.
  */
 public class FeedTokoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private CircleImageView imageToko;
-    private TextView namaToko;
-    private RecyclerView recyclerFeed;
-    private Context context;
-    private List<Feed> feedList;
-    private RecyclerView.Adapter adapterFeed;
-    private RecyclerView.LayoutManager layoutManagerFeed;
+    CircleImageView imageToko;
+    TextView namaToko;
+    RecyclerView recyclerFeed;
+    Context context;
+    List<Feed> feedList;
+    RecyclerView.Adapter adapterFeed;
+    RecyclerView.LayoutManager layoutManagerFeed;
 
     public FeedTokoAdapter(List<Feed> feedList) {
         this.feedList = feedList;

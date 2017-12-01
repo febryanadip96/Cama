@@ -37,42 +37,71 @@
         android:layout_margin="16dp"
         android:orientation="vertical">
 
-        <TextView
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Slogan"/>
-        <EditText
-            android:id="@+id/slogan_toko"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edit_nama_toko"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nama Toko" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <TextView
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/slogan_toko"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Slogan"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Deskripsi Toko"/>
-        <EditText
-            android:id="@+id/deskripsi_toko"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/deskripsi_toko"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Deskripsi Toko"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <TextView
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/alamat_toko"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Alamat Toko" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Alamat Toko"/>
-        <EditText
-            android:id="@+id/alamat_toko"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Catatan Toko"/>
-        <EditText
-            android:id="@+id/catatan_toko"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/catatan_toko"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Catatan Toko"/>
+
+        </android.support.design.widget.TextInputLayout>
+
         <Button
             android:id="@+id/simpan"
             android:background="@color/colorPrimary"
             android:textColor="@android:color/white"
+            android:layout_marginTop="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Simpan"/>

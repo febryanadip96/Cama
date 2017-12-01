@@ -75,8 +75,7 @@
         </activity>
         <activity
             android:name=".BarangJasaActivity"
-            android:label="Detail Produk"
-            android:launchMode="singleTask" />
+            android:label="Detail Produk" />
         <activity
             android:name=".keranjang.KeranjangActivity"
             android:label="Keranjang">
@@ -99,22 +98,13 @@
             android:label="Fakultas" />
         <activity
             android:name=".beranda.SubkategoriActivity"
-            android:label="Subkategori"
-            android:launchMode="singleTask">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
+            android:label="Subkategori"></activity>
         <activity
             android:name=".beranda.HasilSubkategoriActivity"
             android:label="Subkategori" />
         <activity
             android:name=".pesanan.DetailPesananActivity"
-            android:label="Detail Pesanan">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".pesanan.PesananActivity" />
-        </activity>
+            android:label="Detail Pesanan"></activity>
         <activity
             android:name=".toko.TokoUserActivity"
             android:label="Toko">
@@ -129,40 +119,76 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".TokoActivity" />
-        <activity android:name=".komentar.KomentarActivity">
+        <activity
+            android:name=".TokoActivity"
+            android:label="Toko" />
+        <activity
+            android:name=".komentar.KomentarActivity"
+            android:label="Komentar" />
+        <activity
+            android:name=".tanyajawab.TanyaJawabActivity"
+            android:label="Tanya Jawab">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".BarangJasaActivity" />
         </activity>
-        <activity android:name=".tanyajawab.TanyaJawabActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".BarangJasaActivity" />
-        </activity>
-        <activity android:name=".tanyajawab.KirimPertanyaanActivity" />
-        <activity android:name=".toko.TokoJualProdukActivity" />
-        <activity android:name=".toko.TokoPengaturanActivity" />
+        <activity
+            android:name=".tanyajawab.KirimPertanyaanActivity"
+            android:label="Kirim Pertanyaan" />
+        <activity
+            android:name=".toko.TokoJualProdukActivity"
+            android:label="Jual Produk" />
+        <activity
+            android:name=".toko.TokoPengaturanActivity"
+            android:label="Pengaturan Toko" />
         <activity
             android:name=".toko.TokoProdukActivity"
-            android:label="Produk"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".toko.TokoPesananActivity"
-            android:label="Pesanan"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".toko.TokoTanyaJawabActivity"
-            android:label="Tanya Jawab"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".toko.TokoProdukPilihKategoriActivity" />
-        <activity android:name=".toko.TokoProdukPilihSubkategoriActivity" />
-        <activity android:name=".toko.TokoProdukPilihFakultasActivity" />
-        <activity android:name=".toko.TokoDetailPesananActivity" />
-        <activity android:name=".pesanan.KomentarPesananActivity" />
-        <activity android:name=".toko.TokoAlasanDitolakActivity" />
-        <activity android:name=".toko.TokoLihatProdukActivity" />
-        <activity android:name=".toko.TokoEditProdukActivity"></activity>
+        <activity
+            android:name=".toko.TokoProdukPilihKategoriActivity"
+            android:label="Pilih Kategori" />
+        <activity
+            android:name=".toko.TokoProdukPilihSubkategoriActivity"
+            android:label="Pilih Subkategori" />
+        <activity
+            android:name=".toko.TokoProdukPilihFakultasActivity"
+            android:label="Pilih Fakultas" />
+        <activity
+            android:name=".toko.TokoDetailPesananActivity"
+            android:label="Detail Pesanan" />
+        <activity
+            android:name=".pesanan.KomentarPesananActivity"
+            android:label="Komentar Pesanan" />
+        <activity
+            android:name=".toko.TokoAlasanDitolakActivity"
+            android:label="Tulis Alasan" />
+        <activity
+            android:name=".toko.TokoLihatProdukActivity"
+            android:label="Detail Produk" />
+        <activity
+            android:name=".toko.TokoEditProdukActivity"
+            android:label="Edit Produk" />
+        <activity
+            android:name=".toko.TokoJawabPertanyaanActivity"
+            android:label="Jawab Pertanyaan" />
+        <activity
+            android:name=".ProfileUserActivity"
+            android:label="Profil User" />
+        <activity
+            android:name=".PengaturanUserActivity"
+            android:label="Pengaturan User" />
+        <activity
+            android:name=".UbahPasswordUserActivity"
+            android:label="Ubah Password" />
+        <activity
+            android:name=".welcome.ResendVerificationActivity"
+            android:label="Verifikasi Ulang"></activity>
     </application>
 
 </manifest>

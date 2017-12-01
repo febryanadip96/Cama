@@ -100,6 +100,7 @@ public class FeedFragment extends Fragment {
                 return params;
             }
         };
+        request.setShouldCache(false);
         queue.add(request);
     }
 

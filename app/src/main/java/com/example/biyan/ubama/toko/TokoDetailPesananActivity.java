@@ -2,14 +2,17 @@ package com.example.biyan.ubama.toko;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -58,12 +61,27 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
     Button terimaPesanan;
     @BindView(R.id.tolak_pesanan)
     Button tolakPesanan;
+    @BindView(R.id.telepon)
+    LinearLayout telepon;
+    @BindView(R.id.sms)
+    LinearLayout sms;
+    @BindView(R.id.email)
+    LinearLayout email;
+    @BindView(R.id.layout_hubungi)
+    CardView layoutHubungi;
+    @BindView(R.id.alasan_ditolak)
+    TextView alasanDitolak;
+    @BindView(R.id.layout_ditolak)
+    CardView layoutDitolak;
 
     int idPesanan;
     Pesanan pesanan;
     RequestQueue queue;
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layoutManager;
+
+    String noTelpPembeli;
+    String emailPembeli;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,13 +150,19 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
                 logPesanan.setText(isiLog);
                 adapter = new TokoDetailPesananItemAdapter(pesanan.detail_pesanan);
                 recyclerItemDetailPesanan.setAdapter(adapter);
-                if(pesanan.status.equals("Diproses")){
+                if (pesanan.status.equals("Diproses")) {
                     terimaPesanan.setVisibility(View.GONE);
-                }
-                else if(pesanan.status.equals("Selesai") || pesanan.status.equals("Ditolak")){
+                } else if (pesanan.status.equals("Selesai") || pesanan.status.equals("Ditolak")) {
                     terimaPesanan.setVisibility(View.GONE);
                     tolakPesanan.setVisibility(View.GONE);
+                    layoutHubungi.setVisibility(View.GONE);
                 }
+                if(pesanan.status.equals("Ditolak")){
+                    layoutDitolak.setVisibility(View.VISIBLE);
+                }
+                alasanDitolak.setText(pesanan.alasan_ditolak);
+                noTelpPembeli = pesanan.pemesan.telepon;
+                emailPembeli = pesanan.pemesan.user.email;
             }
         }, new Response.ErrorListener() {
             @Override
@@ -160,6 +184,27 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
         queue.add(request);
     }
 
+    @OnClick(R.id.telepon)
+    public void onTeleponClicked() {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", noTelpPembeli, null));
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.sms)
+    public void onSmsClicked() {
+        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + noTelpPembeli));
+        intent.putExtra("sms_body", "UBAMA PESANAN ANDA ID " + idPesanan + "\n\n");
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.email)
+    public void onEmailClicked() {
+        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                "mailto", emailPembeli, null));
+        intent.putExtra(Intent.EXTRA_SUBJECT, "UBAMA PESANAN ANDA ID " + idPesanan);
+        startActivity(Intent.createChooser(intent, "Send Email"));
+    }
+
     @OnClick(R.id.terima_pesanan)
     public void onTerimaPesananClicked() {
         final ProgressDialog loading = new ProgressDialog(this);
@@ -174,7 +219,7 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
                 loading.dismiss();
                 try {
                     boolean terima = response.getBoolean("terima");
-                    if(terima){
+                    if (terima) {
                         finish();
                     }
                 } catch (JSONException e) {
@@ -204,7 +249,7 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
     @OnClick(R.id.tolak_pesanan)
     public void onTolakPesananClicked() {
         Intent intent = new Intent(this, TokoAlasanDitolakActivity.class);
-        intent.putExtra("idPesanan",idPesanan);
+        intent.putExtra("idPesanan", idPesanan);
         startActivity(intent);
     }
 }

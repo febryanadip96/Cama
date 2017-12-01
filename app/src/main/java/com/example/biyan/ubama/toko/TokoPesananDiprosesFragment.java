@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -42,6 +43,8 @@ public class TokoPesananDiprosesFragment extends Fragment {
 
     @BindView(R.id.recycler)
     RecyclerView recycler;
+    @BindView(R.id.empty)
+    TextView empty;
     Unbinder unbinder;
 
     List<Pesanan> pesananList;
@@ -73,7 +76,7 @@ public class TokoPesananDiprosesFragment extends Fragment {
         return view;
     }
 
-    public void getPesananDiproses(){
+    public void getPesananDiproses() {
         String url = UrlUbama.USER_TOKO_PESANAN_DIPROSES;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
@@ -83,6 +86,10 @@ public class TokoPesananDiprosesFragment extends Fragment {
                 }.getType());
                 adapter = new TokoPesananAdapter(pesananList);
                 recycler.setAdapter(adapter);
+                if (!(pesananList.size() > 0)) {
+                    recycler.setVisibility(View.GONE);
+                    empty.setVisibility(View.VISIBLE);
+                }
             }
         }, new Response.ErrorListener() {
             @Override

@@ -26,13 +26,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class FavoritAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ImageView imageBarang;
-    private TextView namaBarang;
-    private CircleImageView imageToko;
-    private TextView namaToko;
-    private TextView hargaBarang;
-    private Context context;
-    private List<Favorit> favoritList;
+    ImageView imageBarang;
+    TextView namaBarang;
+    CircleImageView imageToko;
+    TextView namaToko;
+    TextView hargaBarang;
+    Context context;
+    List<Favorit> favoritList;
 
     public FavoritAdapter(List<Favorit> favoritList) {
         this.favoritList = favoritList;

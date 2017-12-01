@@ -1,6 +1,7 @@
 package com.example.biyan.ubama;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -68,9 +70,6 @@ public class HasilPencarianActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
@@ -98,19 +97,30 @@ public class HasilPencarianActivity extends AppCompatActivity {
     }
 
     public void cari() {
+        final ProgressDialog loading = new ProgressDialog(this);
+        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loading.setMessage("Mohon Menunggu");
+        loading.setIndeterminate(true);
+        loading.show();
         String url = UrlUbama.CARI_BARANG_JASA + query;
         Log.d("cari", query+" "+orderQuery+" "+sortQuery+" "+filterQuery);
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                loading.dismiss();
                 barangJasaList = new Gson().fromJson(response.toString(), new TypeToken<List<BarangJasa>>() {
                 }.getType());
                 adapter = new BarangJasaAdapter(barangJasaList);
                 recycler.setAdapter(adapter);
+                if(!(barangJasaList.size()>0)){
+                    recycler.setVisibility(View.GONE);
+                    empty.setVisibility(View.VISIBLE);
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                loading.dismiss();
                 Log.e("Error Volley HasilPencarianActivity", error.toString());
             }
         }) {

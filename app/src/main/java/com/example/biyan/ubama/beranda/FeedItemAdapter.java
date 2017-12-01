@@ -23,11 +23,11 @@ import java.util.Locale;
  * Created by Biyan on 11/10/2017.
  */
 public class FeedItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ImageView imageBarang;
-    private TextView namaBarang;
-    private TextView hargaBarang;
-    private Context context;
-    private List<Feed.Barang_jasa> feedBarangJasaList;
+    ImageView imageBarang;
+    TextView namaBarang;
+    TextView hargaBarang;
+    Context context;
+    List<Feed.Barang_jasa> feedBarangJasaList;
 
     public FeedItemAdapter(List<Feed.Barang_jasa> feedBarangJasaList) {
         this.feedBarangJasaList = feedBarangJasaList;

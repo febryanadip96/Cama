@@ -22,13 +22,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class KeranjangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
-    private List<Keranjang> keranjangList;
-    private CircleImageView imageToko;
-    private TextView namaToko;
-    private RecyclerView recyclerItemKeranjang;
-    private RecyclerView.Adapter adapterItemKeranjang;
-    private RecyclerView.LayoutManager layoutManagerItemKeranjang;
-    private Context context;
+    List<Keranjang> keranjangList;
+    CircleImageView imageToko;
+    TextView namaToko;
+    RecyclerView recyclerItemKeranjang;
+    RecyclerView.Adapter adapterItemKeranjang;
+    RecyclerView.LayoutManager layoutManagerItemKeranjang;
+    Context context;
 
     public KeranjangAdapter(List<Keranjang> keranjangList){this.keranjangList = keranjangList;}
 

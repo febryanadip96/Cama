@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -64,9 +66,16 @@ public class DetailPesananActivity extends AppCompatActivity {
     @BindView(R.id.email)
     LinearLayout email;
     @BindView(R.id.layout_hubungi)
-    LinearLayout layoutHubungi;
+    CardView layoutHubungi;
+    @BindView(R.id.selesai)
+    Button selesai;
+    @BindView(R.id.beri_komentar)
+    Button beriKomentar;
+    @BindView(R.id.alasan_ditolak)
+    TextView alasanDitolak;
+    @BindView(R.id.layout_ditolak)
+    CardView layoutDitolak;
 
-    ProgressDialog loading;
     int idPesanan;
     Pesanan pesanan;
     RequestQueue queue;
@@ -75,17 +84,13 @@ public class DetailPesananActivity extends AppCompatActivity {
 
     String noTelpPenjual;
     String emailPenjual;
-    @BindView(R.id.selesai)
-    Button selesai;
-    @BindView(R.id.beri_komentar)
-    Button beriKomentar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_pesanan);
         ButterKnife.bind(this);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
         idPesanan = intent.getIntExtra("idPesanan", 0);
         layoutManager = new LinearLayoutManager(this);
@@ -95,8 +100,17 @@ public class DetailPesananActivity extends AppCompatActivity {
         getDetailPesanan();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void getDetailPesanan() {
-        loading = new ProgressDialog(this);
+        final ProgressDialog loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
@@ -137,16 +151,20 @@ public class DetailPesananActivity extends AppCompatActivity {
                 } else {
                     layoutHubungi.setVisibility(View.VISIBLE);
                 }
-                if(pesanan.status.equals("Selesai")){
+                if (pesanan.status.equals("Selesai")) {
+                    layoutDitolak.setVisibility(View.GONE);
                     selesai.setVisibility(View.GONE);
-                }
-                else if(pesanan.status.equals("Ditolak")){
+                    beriKomentar.setVisibility(View.VISIBLE);
+                } else if (pesanan.status.equals("Ditolak")) {
+                    layoutDitolak.setVisibility(View.VISIBLE);
                     selesai.setVisibility(View.GONE);
                     beriKomentar.setVisibility(View.GONE);
-                }
-                else{
+                } else {
+                    layoutDitolak.setVisibility(View.GONE);
                     beriKomentar.setVisibility(View.GONE);
+                    selesai.setVisibility(View.VISIBLE);
                 }
+                alasanDitolak.setText(pesanan.alasan_ditolak.toString());
                 noTelpPenjual = pesanan.detail_pesanan.get(0).barang_jasa.toko.pemilik.telepon;
                 emailPenjual = pesanan.detail_pesanan.get(0).barang_jasa.toko.pemilik.user.email;
                 loading.dismiss();
@@ -194,7 +212,7 @@ public class DetailPesananActivity extends AppCompatActivity {
 
     @OnClick(R.id.selesai)
     public void onSelesaiClicked() {
-        loading = new ProgressDialog(this);
+        final ProgressDialog loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
@@ -206,7 +224,7 @@ public class DetailPesananActivity extends AppCompatActivity {
                 loading.dismiss();
                 try {
                     boolean selesai = response.getBoolean("selesai");
-                    if(selesai){
+                    if (selesai) {
                         getDetailPesanan();
                     }
                 } catch (JSONException e) {

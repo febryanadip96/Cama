@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -30,8 +32,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PesananActivity extends AppCompatActivity {
+
     @BindView(R.id.recycler)
     RecyclerView recycler;
+    @BindView(R.id.empty)
+    TextView empty;
 
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layoutManager;
@@ -61,6 +66,10 @@ public class PesananActivity extends AppCompatActivity {
                 }.getType());
                 adapter = new PesananAdapter(pesananList);
                 recycler.setAdapter(adapter);
+                if (!(pesananList.size() > 0)) {
+                    recycler.setVisibility(View.GONE);
+                    empty.setVisibility(View.VISIBLE);
+                }
             }
         }, new Response.ErrorListener() {
             @Override

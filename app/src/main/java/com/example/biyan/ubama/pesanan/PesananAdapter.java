@@ -23,13 +23,13 @@ import java.util.List;
  * Created by Biyan on 11/10/2017.
  */
 public class PesananAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private TextView tanggalPesan;
-    private ImageView imageBarang;
-    private TextView idPesanan;
-    private TextView namaBarang;
-    private TextView statusPesanan;
-    private Context context;
-    private List<Pesanan> pesananList;
+    TextView tanggalPesan;
+    ImageView imageBarang;
+    TextView idPesanan;
+    TextView namaBarang;
+    TextView statusPesanan;
+    Context context;
+    List<Pesanan> pesananList;
 
     public PesananAdapter(List<Pesanan> pesananList) {
         this.pesananList = pesananList;

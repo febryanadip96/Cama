@@ -210,7 +210,7 @@ public class BarangJasaActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loading.dismiss();
-                Log.e("Error Volley BarangJasaAcitivty", error.toString());
+                Log.e("Error Volley", error.toString());
                 finish();
             }
         }) {
@@ -229,9 +229,9 @@ public class BarangJasaActivity extends AppCompatActivity {
     ImageListener imageListener = new ImageListener() {
         @Override
         public void setImageForPosition(int position, ImageView imageView) {
-            if (barangJasa.gambar.size() > 0) {
-                Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(position).url_gambar).fit().into(imageView);
-            }
+        if (barangJasa.gambar.size() > 0) {
+            Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(position).url_gambar).fit().into(imageView);
+        }
         }
     };
 

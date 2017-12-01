@@ -89,6 +89,18 @@ public class KomentarPesananActivity extends AppCompatActivity {
 
     public class FormKomentarAdapter extends BaseAdapter{
 
+        ImageView imageBarang;
+        TextView namaBarang;
+        ImageView star1;
+        ImageView star2;
+        ImageView star3;
+        ImageView star4;
+        ImageView star5 ;
+        TextView totalRating;
+        EditText komentar;
+        TextView isiKomentar;
+        Button simpan;
+
         List<Pesanan.Detail_pesanan> detailPesananList;
         Context context;
 
@@ -117,17 +129,17 @@ public class KomentarPesananActivity extends AppCompatActivity {
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.item_form_komentar, parent, false);
             }
-            ImageView imageBarang = (ImageView) convertView.findViewById(R.id.image_barang);
-            TextView namaBarang = (TextView) convertView.findViewById(R.id.nama_barang);
-            final ImageView star1 = (ImageView) convertView.findViewById(R.id.star_1);
-            final ImageView star2 = (ImageView) convertView.findViewById(R.id.star_2);
-            final ImageView star3 = (ImageView) convertView.findViewById(R.id.star_3);
-            final ImageView star4 = (ImageView) convertView.findViewById(R.id.star_4);
-            final ImageView star5 = (ImageView) convertView.findViewById(R.id.star_5);
-            final TextView totalRating = (TextView) convertView.findViewById(R.id.total_rating);
-            final EditText komentar = (EditText) convertView.findViewById(R.id.komentar);
-            TextView isiKomentar = (TextView) convertView.findViewById(R.id.isi_komentar);
-            Button simpan = (Button) convertView.findViewById(R.id.simpan);
+            imageBarang = (ImageView) convertView.findViewById(R.id.image_barang);
+            namaBarang = (TextView) convertView.findViewById(R.id.nama_barang);
+            star1 = (ImageView) convertView.findViewById(R.id.star_1);
+            star2 = (ImageView) convertView.findViewById(R.id.star_2);
+            star3 = (ImageView) convertView.findViewById(R.id.star_3);
+            star4 = (ImageView) convertView.findViewById(R.id.star_4);
+            star5 = (ImageView) convertView.findViewById(R.id.star_5);
+            totalRating = (TextView) convertView.findViewById(R.id.total_rating);
+            komentar = (EditText) convertView.findViewById(R.id.komentar);
+            isiKomentar = (TextView) convertView.findViewById(R.id.isi_komentar);
+            simpan = (Button) convertView.findViewById(R.id.simpan);
             if(detailPesananList.get(position).barang_jasa.gambar.size()>0){
                 Picasso.with(context).load(UrlUbama.URL_IMAGE+detailPesananList.get(position).barang_jasa.gambar.get(0).url_gambar).error(R.drawable.ic_error_image).into(imageBarang);
             }
