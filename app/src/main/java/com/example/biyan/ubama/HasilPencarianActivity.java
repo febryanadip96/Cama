@@ -24,6 +24,7 @@ import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.keranjang.KeranjangActivity;
 import com.example.biyan.ubama.models.BarangJasa;
+import com.example.biyan.ubama.produk.BarangJasaAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

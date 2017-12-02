@@ -20,7 +20,7 @@ import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.biyan.ubama.BarangJasaAdapter;
+import com.example.biyan.ubama.produk.BarangJasaAdapter;
 import com.example.biyan.ubama.R;
 import com.example.biyan.ubama.UrlUbama;
 import com.example.biyan.ubama.UserToken;

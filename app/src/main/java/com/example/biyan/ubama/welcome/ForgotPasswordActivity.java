@@ -29,7 +29,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ResendVerificationActivity extends AppCompatActivity {
+public class ForgotPasswordActivity extends AppCompatActivity {
+
 
     @BindView(R.id.email)
     EditText email;
@@ -41,7 +42,7 @@ public class ResendVerificationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_resend_verification);
+        setContentView(R.layout.activity_forgot_password);
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         queue = Volley.newRequestQueue(this);
@@ -50,8 +51,7 @@ public class ResendVerificationActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == android.R.id.home)
-        {
+        if (id == android.R.id.home) {
             this.finish();
         }
         return super.onOptionsItemSelected(item);
@@ -60,30 +60,30 @@ public class ResendVerificationActivity extends AppCompatActivity {
     @OnClick(R.id.kirim)
     public void onViewClicked() {
         if(email.getText().toString().equals("")){
-            Toast.makeText(ResendVerificationActivity.this, "Masukkan Email Anda.", Toast.LENGTH_LONG).show();
+            Toast.makeText(ForgotPasswordActivity.this, "Masukkan Email Anda.", Toast.LENGTH_LONG).show();
             return;
         }
-        resendVerification();
+        sendEmailLupaPassword();
     }
 
-    public void resendVerification(){
+    public void sendEmailLupaPassword(){
         final ProgressDialog loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
-        String url = UrlUbama.RESEND_VERIFICATION;
+        String url = UrlUbama.FORGOT_PASSWORD;
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                loading.dismiss();
                 try {
                     JSONObject hasil = new JSONObject(response);
                     String message = hasil.getString("message");
-                    Toast.makeText(ResendVerificationActivity.this, message, Toast.LENGTH_LONG).show();
+                    Toast.makeText(ForgotPasswordActivity.this, message, Toast.LENGTH_LONG).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                loading.dismiss();
                 finish();
             }
         }, new Response.ErrorListener() {

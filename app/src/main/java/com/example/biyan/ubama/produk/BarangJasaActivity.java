@@ -1,4 +1,4 @@
-package com.example.biyan.ubama;
+package com.example.biyan.ubama.produk;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,6 +18,9 @@ import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.biyan.ubama.R;
+import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.komentar.KomentarActivity;
 import com.example.biyan.ubama.models.BarangJasa;
 import com.example.biyan.ubama.tanyajawab.TanyaJawabActivity;
@@ -87,6 +89,7 @@ public class BarangJasaActivity extends AppCompatActivity {
     LinearLayout layoutTanyaJawab;
 
     int idBarangJasa;
+    int idToko;
     BarangJasa barangJasa;
     RequestQueue queue;
 
@@ -180,30 +183,7 @@ public class BarangJasaActivity extends AppCompatActivity {
                 jumlahFaq.setText(barangJasa.jumlah_faq + "");
                 deskripsi.setText(barangJasa.deskripsi);
                 catatanPenjual.setText(barangJasa.catatan_penjual);
-                layoutToko.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent toko = new Intent(BarangJasaActivity.this, TokoActivity.class);
-                        toko.putExtra("idToko", barangJasa.toko.id);
-                        startActivity(toko);
-                    }
-                });
-                layoutKomentar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent komentar = new Intent(BarangJasaActivity.this, KomentarActivity.class);
-                        komentar.putExtra("idBarangJasa", idBarangJasa);
-                        startActivity(komentar);
-                    }
-                });
-                layoutTanyaJawab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent tanyaJawab = new Intent(BarangJasaActivity.this, TanyaJawabActivity.class);
-                        tanyaJawab.putExtra("idBarangJasa", idBarangJasa);
-                        startActivity(tanyaJawab);
-                    }
-                });
+                idToko = barangJasa.toko.id;
                 loading.dismiss();
             }
         }, new Response.ErrorListener() {
@@ -229,9 +209,9 @@ public class BarangJasaActivity extends AppCompatActivity {
     ImageListener imageListener = new ImageListener() {
         @Override
         public void setImageForPosition(int position, ImageView imageView) {
-        if (barangJasa.gambar.size() > 0) {
-            Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(position).url_gambar).fit().into(imageView);
-        }
+            if (barangJasa.gambar.size() > 0) {
+                Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(position).url_gambar).fit().into(imageView);
+            }
         }
     };
 
@@ -273,5 +253,26 @@ public class BarangJasaActivity extends AppCompatActivity {
         Intent pesan = new Intent(this, PemesananActivity.class);
         pesan.putExtra("idBarangJasa", idBarangJasa);
         startActivity(pesan);
+    }
+
+    @OnClick({R.id.layout_komentar, R.id.jumlah_komentar})
+    public void onLayoutKomentarClicked() {
+        Intent komentar = new Intent(BarangJasaActivity.this, KomentarActivity.class);
+        komentar.putExtra("idBarangJasa", idBarangJasa);
+        startActivity(komentar);
+    }
+
+    @OnClick({R.id.layout_tanya_jawab, R.id.jumlah_faq})
+    public void onLayoutTanyaJawabClicked() {
+        Intent tanyaJawab = new Intent(BarangJasaActivity.this, TanyaJawabActivity.class);
+        tanyaJawab.putExtra("idBarangJasa", idBarangJasa);
+        startActivity(tanyaJawab);
+    }
+
+    @OnClick(R.id.layout_toko)
+    public void onLayoutTokoClicked() {
+        Intent toko = new Intent(BarangJasaActivity.this, TokoActivity.class);
+        toko.putExtra("idToko", barangJasa.toko.id);
+        startActivity(toko);
     }
 }

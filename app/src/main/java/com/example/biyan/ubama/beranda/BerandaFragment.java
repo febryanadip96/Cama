@@ -77,6 +77,13 @@ public class BerandaFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getKategori();
+        getFakultas();
+    }
+
     public void getKategori() {
         String url = UrlUbama.KATEGORI;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {

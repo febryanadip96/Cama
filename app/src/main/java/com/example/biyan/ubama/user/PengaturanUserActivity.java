@@ -1,4 +1,4 @@
-package com.example.biyan.ubama;
+package com.example.biyan.ubama.user;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -32,6 +32,9 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.SimpleMultiPartRequest;
 import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.biyan.ubama.R;
+import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.User;
 import com.google.gson.Gson;
 import com.squareup.picasso.MemoryPolicy;

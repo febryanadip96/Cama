@@ -71,6 +71,12 @@ public class FeedFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getFeed();
+    }
+
     public void getFeed() {
         String url = UrlUbama.USER_FEED;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {

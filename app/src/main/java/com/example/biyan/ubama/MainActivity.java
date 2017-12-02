@@ -37,6 +37,7 @@ import com.example.biyan.ubama.keranjang.KeranjangActivity;
 import com.example.biyan.ubama.pesanan.PesananActivity;
 import com.example.biyan.ubama.toko.TokoCreateActivity;
 import com.example.biyan.ubama.toko.TokoUserActivity;
+import com.example.biyan.ubama.user.ProfileUserActivity;
 import com.example.biyan.ubama.welcome.WelcomeActivity;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
@@ -162,12 +163,15 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.nav_home) {
             //tidak ada
+        } else if (id == R.id.nav_tanya_jawab) {
+            Intent intent = new Intent(this,TanyaJawabUserActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_keranjang) {
-            Intent keranjang = new Intent(this,KeranjangActivity.class);
-            startActivity(keranjang);
+            Intent intent = new Intent(this,KeranjangActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_pesanan) {
-            Intent pesanan = new Intent(this, PesananActivity.class);
-            startActivity(pesanan);
+            Intent intent = new Intent(this, PesananActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_toko) {
             cekToko();
         } else if (id == R.id.nav_logout) {

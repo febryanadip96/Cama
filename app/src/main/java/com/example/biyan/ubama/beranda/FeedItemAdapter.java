@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.biyan.ubama.BarangJasaActivity;
+import com.example.biyan.ubama.produk.BarangJasaActivity;
 import com.example.biyan.ubama.R;
 import com.example.biyan.ubama.UrlUbama;
 import com.example.biyan.ubama.models.Feed;

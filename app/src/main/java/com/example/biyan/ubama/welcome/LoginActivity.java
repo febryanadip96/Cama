@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -21,9 +22,9 @@ import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.MainActivity;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.messaging.SendToken;
 import com.example.biyan.ubama.UrlUbama;
 import com.example.biyan.ubama.UserToken;
+import com.example.biyan.ubama.messaging.SendToken;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
@@ -43,9 +44,12 @@ public class LoginActivity extends AppCompatActivity {
     EditText password;
     @BindView(R.id.login)
     Button login;
-    RequestQueue queue;
     @BindView(R.id.loginView)
     LinearLayout loginView;
+    @BindView(R.id.lupa_password)
+    TextView lupaPassword;
+
+    RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.login)
-    public void CekDataLogin() {
+    public void onLoginClicked() {
         if (email.getText().toString().equals("") || password.getText().toString().equals("")) {
             Snackbar snackbar = Snackbar
                     .make(loginView, "Harap masukkan email dan password Anda", Snackbar.LENGTH_LONG);
@@ -91,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (!UserToken.getToken(getApplicationContext()).equals("")) {
                             Toast.makeText(getApplicationContext(), "Login sukses", Toast.LENGTH_SHORT).show();
                             Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
-                            SendToken.sendRegistrationToServer(LoginActivity.this, FirebaseInstanceId.getInstance().getToken()+"");
+                            SendToken.sendRegistrationToServer(LoginActivity.this, FirebaseInstanceId.getInstance().getToken() + "");
                             startActivity(mainIntent);
                             WelcomeActivity.welcome.finish();
                             finish();
@@ -112,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingLogin.dismiss();
-                Log.e("Error Volley Login",error.toString());
+                Log.e("Error Volley Login", error.toString());
             }
         }) {
             @Override
@@ -130,8 +134,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
+    @OnClick(R.id.lupa_password)
+    public void onLupaPasswordClicked() {
+        Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+        startActivity(intent);
+    }
 }

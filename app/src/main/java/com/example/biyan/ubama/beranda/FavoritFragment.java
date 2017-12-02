@@ -57,7 +57,6 @@ public class FavoritFragment extends Fragment {
         return favoritFragment;
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -69,6 +68,12 @@ public class FavoritFragment extends Fragment {
         recycler.setLayoutManager(layoutManager);
         getFavorit();
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getFavorit();
     }
 
     public void getFavorit() {

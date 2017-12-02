@@ -1,6 +1,7 @@
 package com.example.biyan.ubama.beranda;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.biyan.ubama.R;
+import com.example.biyan.ubama.produk.TokoActivity;
 import com.example.biyan.ubama.UrlUbama;
 import com.example.biyan.ubama.models.Feed;
 import com.squareup.picasso.Picasso;
@@ -51,7 +53,7 @@ public class FeedTokoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         imageToko = (CircleImageView) holder.itemView.findViewById(R.id.image_toko);
         namaToko = (TextView) holder.itemView.findViewById(R.id.nama_toko);
         recyclerFeed = (RecyclerView) holder.itemView.findViewById(R.id.recycler_feed);
@@ -60,6 +62,15 @@ public class FeedTokoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         recyclerFeed.setAdapter(adapterFeed);
         Picasso.with(context).load(UrlUbama.URL_IMAGE + feedList.get(position).url_profile).into(imageToko);
         namaToko.setText(feedList.get(position).nama);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toko = new Intent(context, TokoActivity.class);
+                toko.putExtra("idToko", feedList.get(position).id);
+                context.startActivity(toko);
+            }
+        });
     }
 
     @Override

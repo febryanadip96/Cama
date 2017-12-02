@@ -19,7 +19,9 @@ public final class UrlUbama {
 
     public final static String REGISTER = URL_API+"register";
 
-    public final static String RESEND_VERIFICATION = URL_API+"resendVerification";
+    public final static String RESEND_VERIFICATION = URL_API+"resendverification";
+
+    public final static String FORGOT_PASSWORD = URL_API+"forgotpassword";
 
     //USER
 
@@ -36,6 +38,10 @@ public final class UrlUbama {
     public final static String USER_SEND_TOKEN = URL_API +"user/token";
 
     public final static String USER_UBAH_PASSWORD = URL_API+"user/ubahpassword";
+
+    public final static String USER_TANYA_JAWAB = URL_API+"user/tanyajawab";
+
+    public final static String USER_LIHAT_TANYA_JAWAB = URL_API+"user/tanyajawab/";
 
     //HOME
 

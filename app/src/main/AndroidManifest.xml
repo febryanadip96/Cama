@@ -74,7 +74,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BarangJasaActivity"
+            android:name=".produk.BarangJasaActivity"
             android:label="Detail Produk" />
         <activity
             android:name=".keranjang.KeranjangActivity"
@@ -91,20 +91,20 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".PemesananActivity"
+            android:name=".produk.PemesananActivity"
             android:label="Pemesanan Produk" />
         <activity
             android:name=".beranda.HasilFakultasActivity"
             android:label="Fakultas" />
         <activity
             android:name=".beranda.SubkategoriActivity"
-            android:label="Subkategori"></activity>
+            android:label="Subkategori" />
         <activity
             android:name=".beranda.HasilSubkategoriActivity"
             android:label="Subkategori" />
         <activity
             android:name=".pesanan.DetailPesananActivity"
-            android:label="Detail Pesanan"></activity>
+            android:label="Detail Pesanan" />
         <activity
             android:name=".toko.TokoUserActivity"
             android:label="Toko">
@@ -120,18 +120,14 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".TokoActivity"
+            android:name=".produk.TokoActivity"
             android:label="Toko" />
         <activity
             android:name=".komentar.KomentarActivity"
             android:label="Komentar" />
         <activity
             android:name=".tanyajawab.TanyaJawabActivity"
-            android:label="Tanya Jawab">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".BarangJasaActivity" />
-        </activity>
+            android:label="Tanya Jawab" />
         <activity
             android:name=".tanyajawab.KirimPertanyaanActivity"
             android:label="Kirim Pertanyaan" />
@@ -178,17 +174,26 @@
             android:name=".toko.TokoJawabPertanyaanActivity"
             android:label="Jawab Pertanyaan" />
         <activity
-            android:name=".ProfileUserActivity"
+            android:name=".user.ProfileUserActivity"
             android:label="Profil User" />
         <activity
-            android:name=".PengaturanUserActivity"
+            android:name=".user.PengaturanUserActivity"
             android:label="Pengaturan User" />
         <activity
-            android:name=".UbahPasswordUserActivity"
+            android:name=".user.UbahPasswordUserActivity"
             android:label="Ubah Password" />
         <activity
             android:name=".welcome.ResendVerificationActivity"
-            android:label="Verifikasi Ulang"></activity>
+            android:label="Verifikasi Ulang" />
+        <activity
+            android:name=".welcome.ForgotPasswordActivity"
+            android:label="Lupa Password" />
+        <activity
+            android:name=".TanyaJawabUserActivity"
+            android:label="Tanya Jawab"/>
+        <activity
+            android:name=".LihatTanyaJawabUserActivity"
+            android:label="Tanya Jawab"/>
     </application>
 
 </manifest>
