@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -97,19 +98,28 @@ public class TokoJualProdukActivity extends AppCompatActivity {
     TextView namaKategori;
     @BindView(R.id.nama_fakultas)
     TextView namaFakultas;
+    @BindView(R.id.layout_nama_produk)
+    TextInputLayout layoutNamaProduk;
+    @BindView(R.id.layout_harga)
+    TextInputLayout layoutHarga;
+    @BindView(R.id.layout_min_pembelian)
+    TextInputLayout layoutMinPembelian;
+    @BindView(R.id.layout_deskripsi_produk)
+    TextInputLayout layoutDeskripsiProduk;
+    @BindView(R.id.layout_catatan_penjual)
+    TextInputLayout layoutCatatanPenjual;
 
     int pilih = 0;
-    String imagePath1 = "", imagePath2 = "", imagePath3 = "", imagePath4 ="";
+    String imagePath1 = "", imagePath2 = "", imagePath3 = "", imagePath4 = "";
     final int GALLERY_REQUEST = 1;
     final int PERMISSION_REQUEST_READ_STORAGE = 2;
 
     final int PILIH_KATEGORI = 3;
     final int PILIH_FAKULTAS = 4;
 
-    int idSubkategori;
-    int idFakultas;
+    int idSubkategori = 0;
+    int idFakultas = 0;
 
-    ProgressDialog loading;
     int baruBekas = 1, jenisProduk = 1;
     RequestQueue queue;
 
@@ -185,13 +195,13 @@ public class TokoJualProdukActivity extends AppCompatActivity {
                 case PILIH_KATEGORI:
                     res = data.getExtras();
                     idSubkategori = res.getInt("idSubkategori");
-                    Log.d("Subkategori", idSubkategori+"");
+                    Log.d("Subkategori", idSubkategori + "");
                     namaKategori.setText(res.getString("namaSubkategori"));
                     break;
                 case PILIH_FAKULTAS:
                     res = data.getExtras();
                     idFakultas = res.getInt("idFakultas");
-                    Log.d("Fakultas", idFakultas+"");
+                    Log.d("Fakultas", idFakultas + "");
                     namaFakultas.setText(res.getString("namaFakultas"));
                     break;
             }
@@ -273,7 +283,44 @@ public class TokoJualProdukActivity extends AppCompatActivity {
 
     @OnClick(R.id.simpan)
     public void onSimpanClicked() {
-        loading = new ProgressDialog(this);
+        if(!(!imagePath1.equals("") || !imagePath2.equals("") || !imagePath3.equals("") || !imagePath4.equals(""))){
+            Toast.makeText(getApplicationContext(), "Masukkan gambar produk barang minimal 1", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (namaProduk.getText().toString().equals("")){
+            layoutNamaProduk.setError("Nama produk harus diisi");
+            return;
+        }
+        if(hargaProduk.getText().toString().equals("") || hargaProduk.getText().toString().equals("0")){
+            layoutHarga.setError("Harga produk tidak valid");
+            return;
+        }
+        if(minimalPembelian.getText().toString().equals("") || minimalPembelian.getText().toString().equals("0")){
+            minimalPembelian.setError("Minimal pembelian tidak valid");
+            return;
+        }
+        if(idFakultas == 0){
+            Toast.makeText(getApplicationContext(), "Pilihan fakultas tidak valid", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(idSubkategori == 0){
+            Toast.makeText(getApplicationContext(), "Pilihan Kategori tidak valid", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(deskripsiProduk.getText().toString().equals("")){
+            layoutDeskripsiProduk.setError("Deskripsi produk harus diisi");
+            return;
+        }
+        if(catatanPenjual.getText().toString().equals("")){
+            layoutCatatanPenjual.setError("Catatan penjual harus diisi");
+            return;
+        }
+
+        simpanProduk();
+    }
+
+    public void simpanProduk() {
+        final ProgressDialog loading = new ProgressDialog(this);
         loading.setIndeterminate(true);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon menunggu");
@@ -325,25 +372,25 @@ public class TokoJualProdukActivity extends AppCompatActivity {
                 return params;
             }
         };
-        if(!imagePath1.equals("")){
+        if (!imagePath1.equals("")) {
             request.addFile("gambar1", imagePath1);
         }
-        if(!imagePath2.equals("")){
+        if (!imagePath2.equals("")) {
             request.addFile("gambar2", imagePath2);
         }
-        if(!imagePath3.equals("")){
+        if (!imagePath3.equals("")) {
             request.addFile("gambar3", imagePath3);
         }
-        if(!imagePath4.equals("")){
+        if (!imagePath4.equals("")) {
             request.addFile("gambar4", imagePath4);
         }
         request.addMultipartParam("nama", "text/plain", namaProduk.getText().toString());
         request.addMultipartParam("harga", "text/plain", hargaProduk.getText().toString());
         request.addMultipartParam("min_pesan", "text/plain", minimalPembelian.getText().toString());
-        request.addMultipartParam("subkategori_id", "text/plain", idSubkategori+"");
-        request.addMultipartParam("fakultas_id", "text/plain", idFakultas+"");
-        request.addMultipartParam("baruBekas", "text/plain", baruBekas+"");
-        request.addMultipartParam("jenis", "text/plain", jenisProduk+"");
+        request.addMultipartParam("subkategori_id", "text/plain", idSubkategori + "");
+        request.addMultipartParam("fakultas_id", "text/plain", idFakultas + "");
+        request.addMultipartParam("baruBekas", "text/plain", baruBekas + "");
+        request.addMultipartParam("jenis", "text/plain", jenisProduk + "");
         request.addMultipartParam("deskripsi", "text/plain", deskripsiProduk.getText().toString());
         request.addMultipartParam("catatan_penjual", "text/plain", catatanPenjual.getText().toString());
         request.setRetryPolicy(new DefaultRetryPolicy(

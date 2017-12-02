@@ -1,4 +1,4 @@
-package com.example.biyan.ubama;
+package com.example.biyan.ubama.user;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.biyan.ubama.R;
+import com.example.biyan.ubama.UrlUbama;
 import com.example.biyan.ubama.models.TanyaJawab;
+import com.example.biyan.ubama.user.LihatTanyaJawabUserActivity;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;

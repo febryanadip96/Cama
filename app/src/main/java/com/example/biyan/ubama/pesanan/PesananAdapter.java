@@ -71,7 +71,7 @@ public class PesananAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         idPesanan.setText(pesananList.get(position).id+"");
         String itemBarang = "";
         for (Pesanan.Detail_pesanan itemDetailPesanan:pesananList.get(position).detail_pesanan) {
-            itemBarang += itemDetailPesanan.jumlah +"x "+itemDetailPesanan.barang_jasa.nama+"\n";
+            itemBarang += itemDetailPesanan.jumlah +"x "+itemDetailPesanan.barang_jasa.nama+System.getProperty("line.separator");
         }
         namaBarang.setText(itemBarang);
         statusPesanan.setText(pesananList.get(position).status.toString());

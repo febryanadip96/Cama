@@ -21,11 +21,10 @@ import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
 import com.example.biyan.ubama.UrlUbama;
 import com.example.biyan.ubama.UserToken;
-import com.example.biyan.ubama.komentar.KomentarActivity;
 import com.example.biyan.ubama.models.BarangJasa;
-import com.example.biyan.ubama.tanyajawab.TanyaJawabActivity;
 import com.google.gson.Gson;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
@@ -87,11 +86,18 @@ public class BarangJasaActivity extends AppCompatActivity {
     LinearLayout layoutKomentar;
     @BindView(R.id.layout_tanya_jawab)
     LinearLayout layoutTanyaJawab;
+    @BindView(R.id.jumlah_dilihat)
+    TextView jumlahDilihat;
+    @BindView(R.id.jumlah_terjual)
+    TextView jumlahTerjual;
+    @BindView(R.id.nama_pemilik)
+    TextView namaPemilik;
 
     int idBarangJasa;
     int idToko;
     BarangJasa barangJasa;
     RequestQueue queue;
+    int[] sampleImages = {R.drawable.ic_error_image};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,8 +138,11 @@ public class BarangJasaActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 barangJasa = new Gson().fromJson(response.toString(), BarangJasa.class);
-                carouselGambar = (CarouselView) findViewById(R.id.carousel_gambar);
-                carouselGambar.setPageCount((barangJasa.gambar.size()));
+                if (barangJasa.gambar.size() > 0) {
+                    carouselGambar.setPageCount((barangJasa.gambar.size()));
+                } else {
+                    carouselGambar.setPageCount(sampleImages.length);
+                }
                 carouselGambar.setImageListener(imageListener);
                 namaBarang.setText(barangJasa.nama);
                 NumberFormat currency = NumberFormat.getInstance(Locale.GERMANY);
@@ -149,6 +158,7 @@ public class BarangJasaActivity extends AppCompatActivity {
                     Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE + barangJasa.toko.url_profile).into(imageToko);
                 }
                 namaToko.setText(barangJasa.toko.nama);
+                namaPemilik.setText(barangJasa.toko.pemilik.user.name);
                 int rating = (int) Math.floor(barangJasa.total_rating);
                 switch (rating) {
                     case 1:
@@ -179,8 +189,10 @@ public class BarangJasaActivity extends AppCompatActivity {
                     default:
                         break;
                 }
-                jumlahKomentar.setText(barangJasa.jumlah_komentar + "");
-                jumlahFaq.setText(barangJasa.jumlah_faq + "");
+                jumlahKomentar.setText(currency.format(barangJasa.jumlah_komentar).toString());
+                jumlahFaq.setText(currency.format(barangJasa.jumlah_faq).toString());
+                jumlahDilihat.setText(currency.format(barangJasa.jumlah_dilihat).toString());
+                jumlahTerjual.setText(currency.format(barangJasa.jumlah_terjual).toString());
                 deskripsi.setText(barangJasa.deskripsi);
                 catatanPenjual.setText(barangJasa.catatan_penjual);
                 idToko = barangJasa.toko.id;
@@ -210,7 +222,10 @@ public class BarangJasaActivity extends AppCompatActivity {
         @Override
         public void setImageForPosition(int position, ImageView imageView) {
             if (barangJasa.gambar.size() > 0) {
-                Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(position).url_gambar).fit().into(imageView);
+                Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(position).url_gambar).fit().memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(imageView);
+            } else {
+                imageView.setImageResource(sampleImages[position]);
+                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             }
         }
     };

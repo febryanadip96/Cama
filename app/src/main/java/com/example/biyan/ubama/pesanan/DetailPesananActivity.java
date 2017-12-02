@@ -1,9 +1,11 @@
 package com.example.biyan.ubama.pesanan;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -75,6 +77,8 @@ public class DetailPesananActivity extends AppCompatActivity {
     TextView alasanDitolak;
     @BindView(R.id.layout_ditolak)
     CardView layoutDitolak;
+    @BindView(R.id.layout_tombol)
+    CardView layoutTombol;
 
     int idPesanan;
     Pesanan pesanan;
@@ -159,6 +163,7 @@ public class DetailPesananActivity extends AppCompatActivity {
                     layoutDitolak.setVisibility(View.VISIBLE);
                     selesai.setVisibility(View.GONE);
                     beriKomentar.setVisibility(View.GONE);
+                    layoutTombol.setVisibility(View.GONE);
                 } else {
                     layoutDitolak.setVisibility(View.GONE);
                     beriKomentar.setVisibility(View.GONE);
@@ -212,6 +217,23 @@ public class DetailPesananActivity extends AppCompatActivity {
 
     @OnClick(R.id.selesai)
     public void onSelesaiClicked() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        builder.setMessage("Anda ingin menyelesaikan pesanan ini?")
+                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        pesananSelesai();
+                    }
+                })
+                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    public void pesananSelesai(){
         final ProgressDialog loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");

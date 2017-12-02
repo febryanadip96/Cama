@@ -2,6 +2,7 @@ package com.example.biyan.ubama.welcome;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
@@ -33,28 +34,40 @@ import butterknife.OnClick;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    RequestQueue queue;
-    @BindView(R.id.namaLengkap)
+    @BindView(R.id.nama_lengkap)
     EditText namaLengkap;
-    @BindView(R.id.lakiLaki)
+    @BindView(R.id.layout_nama_lengkap)
+    TextInputLayout layoutNamaLengkap;
+    @BindView(R.id.laki_laki)
     RadioButton lakiLaki;
     @BindView(R.id.perempuan)
     RadioButton perempuan;
-    @BindView(R.id.jenisKelamin)
+    @BindView(R.id.jenis_kelamin)
     RadioGroup jenisKelamin;
     @BindView(R.id.telepon)
     EditText telepon;
+    @BindView(R.id.layout_telepon)
+    TextInputLayout layoutTelepon;
     @BindView(R.id.alamat)
     EditText alamat;
+    @BindView(R.id.layout_alamat)
+    TextInputLayout layoutAlamat;
     @BindView(R.id.email)
     EditText email;
+    @BindView(R.id.layout_email)
+    TextInputLayout layoutEmail;
     @BindView(R.id.password)
     EditText password;
-    @BindView(R.id.passwordConfirm)
-    EditText passwordConfirm;
+    @BindView(R.id.layout_password)
+    TextInputLayout layoutPassword;
+    @BindView(R.id.password_konfirmasi)
+    EditText passwordKonfirmasi;
+    @BindView(R.id.layout_password_konfirmasi)
+    TextInputLayout layoutPasswordKonfirmasi;
     @BindView(R.id.register)
     Button register;
 
+    RequestQueue queue;
     int jenis;
 
     @Override
@@ -64,26 +77,77 @@ public class RegisterActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         queue = Volley.newRequestQueue(this);
         lakiLaki.setChecked(true);
+        jenis = 1;
     }
 
     @OnClick(R.id.register)
     public void CekDataRegister() {
-        if (namaLengkap.getText().toString().equals("") || telepon.getText().toString().equals("") || alamat.getText().toString().equals("") || email.getText().toString().equals("")) {
-            Toast.makeText(getApplicationContext(), "Harap isi data dengan lengkap", Toast.LENGTH_SHORT).show();
+        if (namaLengkap.getText().toString().equals("")) {
+            layoutNamaLengkap.setError("Nama Lengkap harus diisi");
+            namaLengkap.requestFocus();
             return;
+        } else{
+            layoutNamaLengkap.setError(null);
         }
-        if (!password.getText().toString().equals(passwordConfirm.getText().toString())) {
-            Toast.makeText(getApplicationContext(), "Konfirmasi Password tidak sama dengan Password", Toast.LENGTH_SHORT).show();
+        if(telepon.getText().toString().equals("") ){
+            layoutTelepon.setError("Nomor Telepon harus diisi");
+            telepon.requestFocus();
+            return;
+        } else{
+            layoutTelepon.setError(null);
+        }
+        if(alamat.getText().toString().equals("")){
+            layoutAlamat.setError("Alamat harus diisi");
+            alamat.requestFocus();
+            return;
+        } else{
+            layoutAlamat.setError(null);
+        }
+        if(email.getText().toString().equals("")){
+            layoutEmail.setError("Email harus diisi");
+            email.requestFocus();
+            return;
+        } else{
+            layoutEmail.setError(null);
+        }
+        if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()){
+            layoutEmail.setError("Isikan dengan email yang valid");
+            email.requestFocus();
+            return;
+        } else{
+            layoutEmail.setError(null);
+        }
+        if(password.getText().toString().equals("")){
+            layoutPassword.setError("Password harus diisi");
             password.requestFocus();
             return;
+        } else{
+            password.setError(null);
         }
+        if(passwordKonfirmasi.getText().toString().equals("")){
+            layoutPasswordKonfirmasi.setError("Konfirmasi password harus diisi");
+            passwordKonfirmasi.requestFocus();
+            return;
+        } else{
+            layoutPasswordKonfirmasi.setError(null);
+        }
+        if (!password.getText().toString().equals(passwordKonfirmasi.getText().toString())) {
+            layoutPasswordKonfirmasi.setError("Konfirmasi password tidak sama dengan password");
+            passwordKonfirmasi.requestFocus();
+            return;
+        } else{
+            layoutPasswordKonfirmasi.setError(null);
+        }
+
         jenis = 1;
         int checkedRadioButtonId = jenisKelamin.getCheckedRadioButtonId();
-        if (checkedRadioButtonId == R.id.lakiLaki) {
-             jenis = 1;
+
+        if (checkedRadioButtonId == R.id.laki_laki) {
+            jenis = 1;
         } else if (checkedRadioButtonId == R.id.perempuan) {
             jenis = 2;
         }
+
         ProsesRegister();
     }
 
@@ -93,6 +157,7 @@ public class RegisterActivity extends AppCompatActivity {
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Proses Register");
         loading.show();
+
         Map<String, String> params = new HashMap<>();
         params.put("name", namaLengkap.getText().toString());
         params.put("email", email.getText().toString());
@@ -100,6 +165,7 @@ public class RegisterActivity extends AppCompatActivity {
         params.put("jenis_kelamin", jenis + "");
         params.put("telepon", telepon.getText().toString());
         params.put("alamat", alamat.getText().toString());
+
         String url = UrlUbama.REGISTER;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
@@ -124,7 +190,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loading.dismiss();
-                Log.e("Error Volley Register",error.toString());
+                Log.e("Error Volley Register", error.toString());
             }
         }) {
             @Override
@@ -136,8 +202,8 @@ public class RegisterActivity extends AppCompatActivity {
         };
         request.setRetryPolicy(new DefaultRetryPolicy(
                 30000,
-        0,  // maxNumRetries = 0 means no retry
-        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                0,  // maxNumRetries = 0 means no retry
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(request);
     }
 

@@ -1,10 +1,12 @@
-package com.example.biyan.ubama.tanyajawab;
+package com.example.biyan.ubama.produk;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -46,6 +48,8 @@ public class KirimPertanyaanActivity extends AppCompatActivity {
     EditText pertanyaan;
     @BindView(R.id.kirim)
     Button kirim;
+    @BindView(R.id.layout_pertanyaan)
+    TextInputLayout layoutPertanyaan;
 
     int idBarangJasa;
     RequestQueue queue;
@@ -56,10 +60,20 @@ public class KirimPertanyaanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kirim_pertanyaan);
         ButterKnife.bind(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
         idBarangJasa = intent.getIntExtra("idBarangJasa", 0);
         queue = Volley.newRequestQueue(this);
         getDataBarangJasa();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void getDataBarangJasa() {
@@ -70,6 +84,10 @@ public class KirimPertanyaanActivity extends AppCompatActivity {
                 barangJasa = new Gson().fromJson(response.toString(), BarangJasa.class);
                 if (barangJasa.gambar.size() > 0) {
                     Picasso.with(KirimPertanyaanActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar).into(imageBarang);
+                }
+                else{
+                    imageBarang.setImageResource(R.drawable.ic_error_image);
+                    imageBarang.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 }
                 namaBarang.setText(barangJasa.nama);
             }
@@ -94,6 +112,16 @@ public class KirimPertanyaanActivity extends AppCompatActivity {
 
     @OnClick(R.id.kirim)
     public void onViewClicked() {
+        if(pertanyaan.getText().toString().equals("")){
+            layoutPertanyaan.setError("Isikan pertanyaan Anda");
+            return;
+        } else{
+            layoutPertanyaan.setError(null);
+        }
+        kirimPertanyaan();
+    }
+
+    public void kirimPertanyaan() {
         final ProgressDialog loading = new ProgressDialog(this);
         loading.setIndeterminate(true);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);

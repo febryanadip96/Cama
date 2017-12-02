@@ -2,6 +2,7 @@ package com.example.biyan.ubama.user;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -40,6 +41,12 @@ public class UbahPasswordUserActivity extends AppCompatActivity {
     EditText konfirmasiPasswordBaru;
     @BindView(R.id.simpan)
     Button simpan;
+    @BindView(R.id.layout_password_lama)
+    TextInputLayout layoutPasswordLama;
+    @BindView(R.id.layout_password_baru)
+    TextInputLayout layoutPasswordBaru;
+    @BindView(R.id.layout_password_konfirmasi)
+    TextInputLayout layoutPasswordKonfirmasi;
 
     RequestQueue queue;
 
@@ -64,18 +71,41 @@ public class UbahPasswordUserActivity extends AppCompatActivity {
 
     @OnClick(R.id.simpan)
     public void onViewClicked() {
-        if(passwordLama.getText().toString().equals("") || passwordBaru.getText().toString().equals("") || konfirmasiPasswordBaru.getText().toString().equals("")){
-            Toast.makeText(UbahPasswordUserActivity.this, "Semua data harus diisi", Toast.LENGTH_LONG).show();
+        if (passwordLama.getText().toString().equals("")) {
+            layoutPasswordLama.setError("Password lama harus diisi");
+            passwordLama.requestFocus();
             return;
         }
-        else if(!passwordBaru.getText().toString().equals(konfirmasiPasswordBaru.getText().toString())){
-            Toast.makeText(UbahPasswordUserActivity.this, "Konfirmasi password baru salah", Toast.LENGTH_LONG).show();
+        else{
+            layoutPasswordLama.setError(null);
+        }
+        if( passwordBaru.getText().toString().equals("")){
+            layoutPasswordBaru.setError("Password baru harus diisi");
+            passwordBaru.requestFocus();
             return;
+        }
+        else{
+            layoutPasswordBaru.setError(null);
+        }
+        if(konfirmasiPasswordBaru.getText().toString().equals("")){
+            layoutPasswordKonfirmasi.setError("Konfirmasi password baru harus diisi");
+            konfirmasiPasswordBaru.requestFocus();
+            return;
+        }
+        else{
+            layoutPasswordKonfirmasi.setError(null);
+        }
+        if (!passwordBaru.getText().toString().equals(konfirmasiPasswordBaru.getText().toString())) {
+            layoutPasswordKonfirmasi.setError("Konfirmasi password baru tidak sama dengan password baru");
+            return;
+        }
+        else{
+            layoutPasswordKonfirmasi.setError(null);
         }
         requestUbahPassword();
     }
 
-    public void requestUbahPassword(){
+    public void requestUbahPassword() {
         final ProgressDialog loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
@@ -88,11 +118,10 @@ public class UbahPasswordUserActivity extends AppCompatActivity {
                 try {
                     JSONObject hasil = new JSONObject(response);
                     Boolean ubah = hasil.getBoolean("ubah");
-                    if(ubah){
+                    if (ubah) {
                         Toast.makeText(UbahPasswordUserActivity.this, "Password Anda berhasil diubah", Toast.LENGTH_LONG).show();
                         finish();
-                    }
-                    else{
+                    } else {
                         Toast.makeText(UbahPasswordUserActivity.this, "Password lama Anda salah", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {

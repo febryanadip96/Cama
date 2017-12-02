@@ -189,7 +189,15 @@ public class PemesananActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.pesan)
-    public void MasukkanKeranjang() {
+    public void onPesanClicked() {
+        if(jumlah.getText().toString().equals("0")){
+            Toast.makeText(getApplicationContext(),"Minimal Pmesanan produk "+min_pesan, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        masukkanKeranjang();
+    }
+
+    public void masukkanKeranjang(){
         final ProgressDialog loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");

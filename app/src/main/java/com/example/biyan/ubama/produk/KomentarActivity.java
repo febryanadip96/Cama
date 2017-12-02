@@ -1,4 +1,4 @@
-package com.example.biyan.ubama.komentar;
+package com.example.biyan.ubama.produk;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,11 +24,13 @@ import com.example.biyan.ubama.models.BarangJasa;
 import com.example.biyan.ubama.models.Komentar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,6 +94,7 @@ public class KomentarActivity extends AppCompatActivity {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                Log.d("hasil", response.toString());
                 try {
                     barangJasa = new Gson().fromJson(response.getJSONObject("barangJasa").toString(), BarangJasa.class);
                     komentarList = new Gson().fromJson(response.getJSONArray("komentar").toString(), new TypeToken<List<Komentar>>() {
@@ -100,10 +103,13 @@ public class KomentarActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 if(barangJasa.gambar.size()>0){
-                    Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE+barangJasa.gambar.get(0).url_gambar).into(imageBarang);
+                    Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE+barangJasa.gambar.get(0).url_gambar).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).into(imageBarang);
+                }
+                else{
+                    imageBarang.setImageResource(R.drawable.ic_error_image);
                 }
                 namaBarang.setText(barangJasa.nama);
-                totalRating.setText(barangJasa.total_rating+"");
+                totalRating.setText(new DecimalFormat("#.#").format(barangJasa.total_rating)+"");
                 int rating = (int) Math.floor(barangJasa.total_rating);
                 switch (rating){
                     case 1:
@@ -152,6 +158,7 @@ public class KomentarActivity extends AppCompatActivity {
                 return params;
             }
         };
+        request.setShouldCache(false);
         queue.add(request);
     }
 }

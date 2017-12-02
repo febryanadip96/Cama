@@ -1,9 +1,11 @@
 package com.example.biyan.ubama.toko;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -73,6 +75,8 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
     TextView alasanDitolak;
     @BindView(R.id.layout_ditolak)
     CardView layoutDitolak;
+    @BindView(R.id.layout_tombol)
+    CardView layoutTombol;
 
     int idPesanan;
     Pesanan pesanan;
@@ -152,13 +156,17 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
                 recyclerItemDetailPesanan.setAdapter(adapter);
                 if (pesanan.status.equals("Diproses")) {
                     terimaPesanan.setVisibility(View.GONE);
+                    layoutDitolak.setVisibility(View.GONE);
                 } else if (pesanan.status.equals("Selesai") || pesanan.status.equals("Ditolak")) {
                     terimaPesanan.setVisibility(View.GONE);
                     tolakPesanan.setVisibility(View.GONE);
                     layoutHubungi.setVisibility(View.GONE);
+                    layoutTombol.setVisibility(View.GONE);
                 }
-                if(pesanan.status.equals("Ditolak")){
+                if (pesanan.status.equals("Ditolak")) {
                     layoutDitolak.setVisibility(View.VISIBLE);
+                } else {
+                    layoutDitolak.setVisibility(View.GONE);
                 }
                 alasanDitolak.setText(pesanan.alasan_ditolak);
                 noTelpPembeli = pesanan.pemesan.telepon;
@@ -207,6 +215,24 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
 
     @OnClick(R.id.terima_pesanan)
     public void onTerimaPesananClicked() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        builder.setMessage("Anda akan menerima pesanan ini?")
+                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        terimaPesanan();
+                    }
+                })
+                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+
+    public void terimaPesanan(){
         final ProgressDialog loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
@@ -248,6 +274,23 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
 
     @OnClick(R.id.tolak_pesanan)
     public void onTolakPesananClicked() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        builder.setMessage("Anda ingin menolak pesanan ini?")
+                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        tolakPesanan();
+                    }
+                })
+                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    public void tolakPesanan(){
         Intent intent = new Intent(this, TokoAlasanDitolakActivity.class);
         intent.putExtra("idPesanan", idPesanan);
         startActivity(intent);

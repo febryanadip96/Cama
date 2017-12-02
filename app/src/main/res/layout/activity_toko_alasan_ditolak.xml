@@ -9,8 +9,10 @@
     tools:context="com.example.biyan.ubama.toko.TokoAlasanDitolakActivity">
 
     <android.support.design.widget.TextInputLayout
+        android:id="@+id/layout_alasan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:errorEnabled="true"
         app:counterEnabled="true"
         app:counterMaxLength="150">
 

@@ -1,4 +1,4 @@
-package com.example.biyan.ubama.tanyajawab;
+package com.example.biyan.ubama.produk;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -7,9 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -38,8 +38,6 @@ public class TanyaJawabActivity extends AppCompatActivity {
 
     @BindView(R.id.recycler)
     RecyclerView recycler;
-    @BindView(R.id.kirim_pertanyaan)
-    Button kirimPertanyaan;
 
     RequestQueue queue;
     RecyclerView.Adapter adapter;
@@ -59,14 +57,14 @@ public class TanyaJawabActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(layoutManager);
         getTanyaJawab();
-        kirimPertanyaan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent kirimPertanyaan = new Intent(TanyaJawabActivity.this, KirimPertanyaanActivity.class);
-                kirimPertanyaan.putExtra("idBarangJasa", idBarangJasa);
-                startActivity(kirimPertanyaan);
-            }
-        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.tanyajawab, menu);
+        return true;
     }
 
     @Override
@@ -74,6 +72,11 @@ public class TanyaJawabActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == android.R.id.home) {
             this.finish();
+        }
+        else if(id == R.id.tambah){
+            Intent kirimPertanyaan = new Intent(TanyaJawabActivity.this, KirimPertanyaanActivity.class);
+            kirimPertanyaan.putExtra("idBarangJasa", idBarangJasa);
+            startActivity(kirimPertanyaan);
         }
         return super.onOptionsItemSelected(item);
     }

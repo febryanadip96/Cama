@@ -24,7 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
 import com.example.biyan.ubama.UrlUbama;
 import com.example.biyan.ubama.UserToken;
-import com.example.biyan.ubama.komentar.KomentarActivity;
+import com.example.biyan.ubama.produk.KomentarActivity;
 import com.example.biyan.ubama.models.BarangJasa;
 import com.google.gson.Gson;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
@@ -83,10 +83,15 @@ public class TokoLihatProdukActivity extends AppCompatActivity {
     Button edit;
     @BindView(R.id.hapus)
     Button hapus;
+    @BindView(R.id.jumlah_dilihat)
+    TextView jumlahDilihat;
+    @BindView(R.id.jumlah_terjual)
+    TextView jumlahTerjual;
 
     BarangJasa barangJasa;
     int idBarangJasa;
     RequestQueue queue;
+    int[] sampleImages = {R.drawable.ic_error_image};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,22 +117,13 @@ public class TokoLihatProdukActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    ImageListener imageListener = new ImageListener() {
-        @Override
-        public void setImageForPosition(int position, ImageView imageView) {
-            if (barangJasa.gambar.size() > 0) {
-                Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(position).url_gambar).fit().memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(imageView);
-            }
-        }
-    };
-
     @Override
     protected void onResume() {
         super.onResume();
         getDetailBarangJasa();
     }
 
-    public void getDetailBarangJasa(){
+    public void getDetailBarangJasa() {
         final ProgressDialog loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
@@ -138,8 +134,11 @@ public class TokoLihatProdukActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 barangJasa = new Gson().fromJson(response.toString(), BarangJasa.class);
-                carouselGambar = (CarouselView) findViewById(R.id.carousel_gambar);
-                carouselGambar.setPageCount((barangJasa.gambar.size()));
+                if(barangJasa.gambar.size()>0){
+                    carouselGambar.setPageCount((barangJasa.gambar.size()));
+                }else{
+                    carouselGambar.setPageCount(sampleImages.length);
+                }
                 carouselGambar.setImageListener(imageListener);
                 namaBarang.setText(barangJasa.nama);
                 NumberFormat currency = NumberFormat.getInstance(Locale.GERMANY);
@@ -176,8 +175,10 @@ public class TokoLihatProdukActivity extends AppCompatActivity {
                     default:
                         break;
                 }
-                jumlahKomentar.setText(barangJasa.jumlah_komentar + "");
-                jumlahFaq.setText(barangJasa.jumlah_faq + "");
+                jumlahKomentar.setText(currency.format(barangJasa.jumlah_komentar).toString());
+                jumlahFaq.setText(currency.format(barangJasa.jumlah_faq).toString());
+                jumlahDilihat.setText(currency.format(barangJasa.jumlah_dilihat).toString());
+                jumlahTerjual.setText(currency.format(barangJasa.jumlah_terjual).toString());
                 deskripsi.setText(barangJasa.deskripsi);
                 catatanPenjual.setText(barangJasa.catatan_penjual);
                 layoutKomentar.setOnClickListener(new View.OnClickListener() {
@@ -210,6 +211,18 @@ public class TokoLihatProdukActivity extends AppCompatActivity {
         queue.add(request);
     }
 
+    ImageListener imageListener = new ImageListener() {
+        @Override
+        public void setImageForPosition(int position, ImageView imageView) {
+            if (barangJasa.gambar.size() > 0) {
+                Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(position).url_gambar).fit().memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(imageView);
+            }else{
+                imageView.setImageResource(sampleImages[position]);
+                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            }
+        }
+    };
+
     @OnClick(R.id.edit)
     public void onEditClicked() {
         Intent intent = new Intent(TokoLihatProdukActivity.this, TokoEditProdukActivity.class);
@@ -235,7 +248,7 @@ public class TokoLihatProdukActivity extends AppCompatActivity {
         alert.show();
     }
 
-    public void hapusBarangJasa(){
+    public void hapusBarangJasa() {
         final ProgressDialog loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
@@ -249,7 +262,7 @@ public class TokoLihatProdukActivity extends AppCompatActivity {
                 try {
                     JSONObject hasil = new JSONObject(response);
                     Boolean hapus = hasil.getBoolean("hapus");
-                    if(hapus){
+                    if (hapus) {
                         finish();
                     }
                 } catch (JSONException e) {

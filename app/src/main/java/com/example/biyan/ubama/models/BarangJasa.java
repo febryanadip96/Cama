@@ -106,6 +106,21 @@ public class BarangJasa {
         public String deleted_at;
     }
 
+    public static class User {
+        @SerializedName("id")
+        public int id;
+        @SerializedName("name")
+        public String name;
+        @SerializedName("email")
+        public String email;
+        @SerializedName("created_at")
+        public String created_at;
+        @SerializedName("updated_at")
+        public String updated_at;
+        @SerializedName("deleted_at")
+        public String deleted_at;
+    }
+
     public static class Gambar {
         @SerializedName("id")
         public int id;

@@ -57,6 +57,12 @@ public class PesananActivity extends AppCompatActivity {
         getPesanan();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getPesanan();
+    }
+
     public void getPesanan() {
         String url = UrlUbama.USER_PESANAN;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {

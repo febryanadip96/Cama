@@ -2,6 +2,7 @@ package com.example.biyan.ubama.welcome;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -31,11 +32,12 @@ import butterknife.OnClick;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 
-
     @BindView(R.id.email)
     EditText email;
     @BindView(R.id.kirim)
     Button kirim;
+    @BindView(R.id.layout_email)
+    TextInputLayout layoutEmail;
 
     RequestQueue queue;
 
@@ -59,14 +61,20 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     @OnClick(R.id.kirim)
     public void onViewClicked() {
-        if(email.getText().toString().equals("")){
-            Toast.makeText(ForgotPasswordActivity.this, "Masukkan Email Anda.", Toast.LENGTH_LONG).show();
+        if (email.getText().toString().equals("")) {
+            layoutEmail.setError("Email harus diisi");
+            email.requestFocus();
+            return;
+        }
+        if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()){
+            layoutEmail.setError("Isikan dengan email yang valid");
+            email.requestFocus();
             return;
         }
         sendEmailLupaPassword();
     }
 
-    public void sendEmailLupaPassword(){
+    public void sendEmailLupaPassword() {
         final ProgressDialog loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
@@ -93,7 +101,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 Log.e("Error Volley", error.toString());
                 finish();
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();

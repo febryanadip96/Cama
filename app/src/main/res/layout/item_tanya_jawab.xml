@@ -37,6 +37,7 @@
                 android:id="@+id/waktu_tanya"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="10sp"
                 android:text="Waktu"/>
 
             <TextView
@@ -82,6 +83,7 @@
                 android:id="@+id/waktu_jawab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="10sp"
                 android:text="Waktu"/>
 
             <TextView

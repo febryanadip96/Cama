@@ -1,4 +1,4 @@
-package com.example.biyan.ubama.tanyajawab;
+package com.example.biyan.ubama.produk;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +13,9 @@ import com.example.biyan.ubama.UrlUbama;
 import com.example.biyan.ubama.models.TanyaJawab;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -65,18 +68,32 @@ public class TanyaJawabAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHo
         Picasso.with(context).load(UrlUbama.URL_IMAGE+tanyaJawabList.get(position).penanya.url_profile).into(image_penanya);
         nama_penanya.setText(tanyaJawabList.get(position).penanya.user.name);
         pertanyaan.setText(tanyaJawabList.get(position).pertanyaan);
-        waktu_tanya.setText(tanyaJawabList.get(position).waktu_tanya);
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm");
+        Date date = null;
+        try {
+            date = inputFormat.parse(tanyaJawabList.get(position).waktu_tanya);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        waktu_tanya.setText(outputFormat.format(date));
         if(TextUtils.isEmpty(tanyaJawabList.get(position).waktu_jawab)){
             jawaban.setText("Belum Ada Jawaban");
-            nama_toko.setText("");
-            image_toko.setImageResource(android.R.color.transparent);
-            image_toko.setVisibility(View.INVISIBLE);
-            waktu_jawab.setText("");
+            nama_toko.setVisibility(View.GONE);
+            image_toko.setVisibility(View.GONE);
+            waktu_jawab.setVisibility(View.GONE);
         }
         else{
             jawaban.setText(tanyaJawabList.get(position).jawaban);
             nama_toko.setText(tanyaJawabList.get(position).barang_jasa.toko.nama);
-            waktu_jawab.setText(tanyaJawabList.get(position).waktu_jawab);
+            nama_toko.setVisibility(View.VISIBLE);
+            image_toko.setVisibility(View.VISIBLE);
+            try {
+                date = inputFormat.parse(tanyaJawabList.get(position).waktu_jawab);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            waktu_jawab.setText(outputFormat.format(date));
             Picasso.with(context).load(UrlUbama.URL_IMAGE+tanyaJawabList.get(position).barang_jasa.toko.url_profile).into(image_toko);
         }
     }

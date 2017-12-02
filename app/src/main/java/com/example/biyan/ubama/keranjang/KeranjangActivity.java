@@ -1,7 +1,9 @@
 package com.example.biyan.ubama.keranjang;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -52,7 +54,6 @@ public class KeranjangActivity extends AppCompatActivity {
 
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layoutManager;
-    ProgressDialog loading;
     RequestQueue queue;
     List<Keranjang> keranjangList;
     int tampungTotalHarga;
@@ -69,7 +70,7 @@ public class KeranjangActivity extends AppCompatActivity {
     }
 
     public void getKeranjang() {
-        loading = new ProgressDialog(this);
+        final ProgressDialog loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
@@ -121,8 +122,25 @@ public class KeranjangActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.proses)
-    public void prosesPesanan() {
-        loading = new ProgressDialog(this);
+    public void onProsesClicked() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(KeranjangActivity.this);
+        builder.setMessage("Anda ingin memulai proses pemesanan sekarang?")
+                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        prosesPesanan();
+                    }
+                })
+                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    public void prosesPesanan(){
+        final ProgressDialog loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);

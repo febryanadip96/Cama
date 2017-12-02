@@ -2,6 +2,7 @@ package com.example.biyan.ubama.welcome;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -35,6 +36,8 @@ public class ResendVerificationActivity extends AppCompatActivity {
     EditText email;
     @BindView(R.id.kirim)
     Button kirim;
+    @BindView(R.id.layout_email)
+    TextInputLayout layoutEmail;
 
     RequestQueue queue;
 
@@ -50,8 +53,7 @@ public class ResendVerificationActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == android.R.id.home)
-        {
+        if (id == android.R.id.home) {
             this.finish();
         }
         return super.onOptionsItemSelected(item);
@@ -59,14 +61,20 @@ public class ResendVerificationActivity extends AppCompatActivity {
 
     @OnClick(R.id.kirim)
     public void onViewClicked() {
-        if(email.getText().toString().equals("")){
-            Toast.makeText(ResendVerificationActivity.this, "Masukkan Email Anda.", Toast.LENGTH_LONG).show();
+        if (email.getText().toString().equals("")) {
+            layoutEmail.setError("Email harus diisi");
+            email.requestFocus();
+            return;
+        }
+        if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()){
+            layoutEmail.setError("Isikan dengan email yang valid");
+            email.requestFocus();
             return;
         }
         resendVerification();
     }
 
-    public void resendVerification(){
+    public void resendVerification() {
         final ProgressDialog loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
@@ -93,7 +101,7 @@ public class ResendVerificationActivity extends AppCompatActivity {
                 Log.e("Error Volley", error.toString());
                 finish();
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();

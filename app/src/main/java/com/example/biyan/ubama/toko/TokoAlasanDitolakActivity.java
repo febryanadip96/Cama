@@ -3,6 +3,7 @@ package com.example.biyan.ubama.toko;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -36,6 +37,8 @@ public class TokoAlasanDitolakActivity extends AppCompatActivity {
     EditText alasan;
     @BindView(R.id.simpan)
     Button simpan;
+    @BindView(R.id.layout_alasan)
+    TextInputLayout layoutAlasan;
 
     int idPesanan;
     RequestQueue queue;
@@ -61,7 +64,16 @@ public class TokoAlasanDitolakActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.simpan)
-    public void onViewClicked() {
+    public void onSimpanClicked() {
+        if(alasan.getText().toString().equals("")){
+            layoutAlasan.setError("Alasan penolakan harus diisi");
+            alasan.requestFocus();
+            return;
+        }
+        simpanAlasan();
+    }
+
+    public void simpanAlasan(){
         final ProgressDialog loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
@@ -74,7 +86,7 @@ public class TokoAlasanDitolakActivity extends AppCompatActivity {
                 loading.dismiss();
                 try {
                     JSONObject hasil = new JSONObject(response);
-                    if(hasil.getBoolean("tersimpan")){
+                    if (hasil.getBoolean("tersimpan")) {
                         finish();
                     }
                 } catch (JSONException e) {
@@ -100,7 +112,7 @@ public class TokoAlasanDitolakActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("alasan", alasan.getText()+"");
+                params.put("alasan", alasan.getText() + "");
                 return params;
             }
         };

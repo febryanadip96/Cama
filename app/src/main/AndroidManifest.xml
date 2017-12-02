@@ -10,7 +10,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service android:name=".messaging.MyFirebaseMessagingService">
@@ -123,13 +123,13 @@
             android:name=".produk.TokoActivity"
             android:label="Toko" />
         <activity
-            android:name=".komentar.KomentarActivity"
+            android:name=".produk.KomentarActivity"
             android:label="Komentar" />
         <activity
-            android:name=".tanyajawab.TanyaJawabActivity"
+            android:name=".produk.TanyaJawabActivity"
             android:label="Tanya Jawab" />
         <activity
-            android:name=".tanyajawab.KirimPertanyaanActivity"
+            android:name=".produk.KirimPertanyaanActivity"
             android:label="Kirim Pertanyaan" />
         <activity
             android:name=".toko.TokoJualProdukActivity"
@@ -189,10 +189,10 @@
             android:name=".welcome.ForgotPasswordActivity"
             android:label="Lupa Password" />
         <activity
-            android:name=".TanyaJawabUserActivity"
+            android:name=".user.TanyaJawabUserActivity"
             android:label="Tanya Jawab"/>
         <activity
-            android:name=".LihatTanyaJawabUserActivity"
+            android:name=".user.LihatTanyaJawabUserActivity"
             android:label="Tanya Jawab"/>
     </application>
 

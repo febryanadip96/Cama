@@ -3,12 +3,11 @@ package com.example.biyan.ubama.welcome;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,10 +43,12 @@ public class LoginActivity extends AppCompatActivity {
     EditText password;
     @BindView(R.id.login)
     Button login;
-    @BindView(R.id.loginView)
-    LinearLayout loginView;
     @BindView(R.id.lupa_password)
     TextView lupaPassword;
+    @BindView(R.id.layout_email)
+    TextInputLayout layoutEmail;
+    @BindView(R.id.layout_password)
+    TextInputLayout layoutPassword;
 
     RequestQueue queue;
 
@@ -61,11 +62,26 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.login)
     public void onLoginClicked() {
-        if (email.getText().toString().equals("") || password.getText().toString().equals("")) {
-            Snackbar snackbar = Snackbar
-                    .make(loginView, "Harap masukkan email dan password Anda", Snackbar.LENGTH_LONG);
-            snackbar.show();
+        if (email.getText().toString().equals("")) {
+            layoutEmail.setError("Email harus diisi");
+            email.requestFocus();
             return;
+        } else {
+            layoutEmail.setError(null);
+        }
+        if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()){
+            layoutEmail.setError("Isikan dengan email yang valid");
+            email.requestFocus();
+            return;
+        } else{
+            layoutEmail.setError(null);
+        }
+        if (password.getText().toString().equals("")) {
+            layoutPassword.setError("Password harus diisi");
+            password.requestFocus();
+            return;
+        } else {
+            layoutPassword.setError(null);
         }
         ProsesLogin();
     }
@@ -86,10 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                 loadingLogin.dismiss();
                 try {
                     if (!response.isNull("message")) {
-                        //Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
-                        Snackbar snackbar = Snackbar
-                                .make(loginView, response.getString("message"), Snackbar.LENGTH_LONG);
-                        snackbar.show();
+                        Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
                     } else if (!(response.isNull("access_token") || response.isNull("token_type"))) {
                         UserToken.setToken(getApplicationContext(), response.getString("token_type") + " " + response.getString("access_token"));
                         if (!UserToken.getToken(getApplicationContext()).equals("")) {
@@ -100,9 +113,7 @@ public class LoginActivity extends AppCompatActivity {
                             WelcomeActivity.welcome.finish();
                             finish();
                         } else {
-                            Snackbar snackbar = Snackbar
-                                    .make(loginView, "Login gagal", Snackbar.LENGTH_LONG);
-                            snackbar.show();
+                            Toast.makeText(getApplicationContext(), "Login gagal", Toast.LENGTH_SHORT).show();
                         }
 
                     }

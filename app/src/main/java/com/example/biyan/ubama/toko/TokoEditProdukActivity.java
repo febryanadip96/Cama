@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -102,25 +103,34 @@ public class TokoEditProdukActivity extends AppCompatActivity {
     EditText catatanPenjual;
     @BindView(R.id.simpan)
     Button simpan;
+    @BindView(R.id.layout_nama_produk)
+    TextInputLayout layoutNamaProduk;
+    @BindView(R.id.layout_harga)
+    TextInputLayout layoutHarga;
+    @BindView(R.id.layout_min_pembelian)
+    TextInputLayout layoutMinPembelian;
+    @BindView(R.id.layout_deskripsi_produk)
+    TextInputLayout layoutDeskripsiProduk;
+    @BindView(R.id.layout_catatan_penjual)
+    TextInputLayout layoutCatatanPenjual;
 
     BarangJasa barangJasa;
     int idBarangJasa;
     RequestQueue queue;
 
     int pilih = 0;
-    String imagePath1 = "", imagePath2 = "", imagePath3 = "", imagePath4 ="";
+    String imagePath1 = "", imagePath2 = "", imagePath3 = "", imagePath4 = "";
     final int GALLERY_REQUEST = 1;
     final int PERMISSION_REQUEST_READ_STORAGE = 2;
 
     final int PILIH_KATEGORI = 3;
     final int PILIH_FAKULTAS = 4;
 
-    int idSubkategori;
-    int idFakultas;
+    int idSubkategori = 0;
+    int idFakultas = 0;
 
 
     int baruBekas = 1, jenisProduk = 1;
-    ProgressDialog loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +139,7 @@ public class TokoEditProdukActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
-        idBarangJasa = intent.getIntExtra("idBarangJasa",0);
+        idBarangJasa = intent.getIntExtra("idBarangJasa", 0);
         queue = Volley.newRequestQueue(this);
         getDetailBarangJasa();
     }
@@ -143,7 +153,7 @@ public class TokoEditProdukActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void getDetailBarangJasa(){
+    public void getDetailBarangJasa() {
         final ProgressDialog loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
@@ -154,59 +164,57 @@ public class TokoEditProdukActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 barangJasa = new Gson().fromJson(response.toString(), BarangJasa.class);
-                if(barangJasa.gambar.size()>0){
+                if (barangJasa.gambar.size() > 0) {
                     int jumlah = barangJasa.gambar.size();
-                    switch (jumlah){
+                    switch (jumlah) {
                         case 1:
-                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE+barangJasa.gambar.get(0).url_gambar)
+                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar)
                                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(image1);
                             break;
                         case 2:
-                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE+barangJasa.gambar.get(0).url_gambar)
+                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar)
                                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(image1);
-                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE+barangJasa.gambar.get(1).url_gambar)
+                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(1).url_gambar)
                                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(image2);
                             break;
                         case 3:
-                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE+barangJasa.gambar.get(0).url_gambar)
+                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar)
                                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(image1);
-                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE+barangJasa.gambar.get(1).url_gambar)
+                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(1).url_gambar)
                                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(image2);
-                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE+barangJasa.gambar.get(2).url_gambar)
+                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(2).url_gambar)
                                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(image3);
                             break;
                         case 4:
-                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE+barangJasa.gambar.get(0).url_gambar)
+                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar)
                                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(image1);
-                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE+barangJasa.gambar.get(1).url_gambar)
+                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(1).url_gambar)
                                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(image2);
-                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE+barangJasa.gambar.get(2).url_gambar)
+                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(2).url_gambar)
                                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(image3);
-                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE+barangJasa.gambar.get(3).url_gambar)
+                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(3).url_gambar)
                                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(image4);
                             break;
                     }
                 }
                 namaProduk.setText(barangJasa.nama);
-                hargaProduk.setText(barangJasa.harga+"");
-                minimalPembelian.setText(barangJasa.min_pesan+"");
-                namaKategori.setText(barangJasa.subkategori.kategori.nama+" > "+barangJasa.subkategori.nama);
+                hargaProduk.setText(barangJasa.harga + "");
+                minimalPembelian.setText(barangJasa.min_pesan + "");
+                namaKategori.setText(barangJasa.subkategori.kategori.nama + " > " + barangJasa.subkategori.nama);
                 idSubkategori = barangJasa.subkategori.id;
                 idFakultas = barangJasa.fakultas.id;
                 namaFakultas.setText(barangJasa.fakultas.nama);
-                if(barangJasa.baruBekas.equals("Baru")){
+                if (barangJasa.baruBekas.equals("Baru")) {
                     baru.setChecked(true);
                     baruBekas = 1;
-                }
-                else{
+                } else {
                     bekas.setChecked(true);
                     baruBekas = 2;
                 }
-                if(barangJasa.jenis.equals("Barang")){
+                if (barangJasa.jenis.equals("Barang")) {
                     barang.setChecked(true);
                     jenisProduk = 1;
-                }
-                else{
+                } else {
                     jasa.setChecked(true);
                     jenisProduk = 2;
                 }
@@ -288,13 +296,13 @@ public class TokoEditProdukActivity extends AppCompatActivity {
                 case PILIH_KATEGORI:
                     res = data.getExtras();
                     idSubkategori = res.getInt("idSubkategori");
-                    Log.d("Subkategori", idSubkategori+"");
+                    Log.d("Subkategori", idSubkategori + "");
                     namaKategori.setText(res.getString("namaSubkategori"));
                     break;
                 case PILIH_FAKULTAS:
                     res = data.getExtras();
                     idFakultas = res.getInt("idFakultas");
-                    Log.d("Fakultas", idFakultas+"");
+                    Log.d("Fakultas", idFakultas + "");
                     namaFakultas.setText(res.getString("namaFakultas"));
                     break;
             }
@@ -397,7 +405,39 @@ public class TokoEditProdukActivity extends AppCompatActivity {
 
     @OnClick(R.id.simpan)
     public void onSimpanClicked() {
-        loading = new ProgressDialog(this);
+        if (namaProduk.getText().toString().equals("")){
+            layoutNamaProduk.setError("Nama produk harus diisi");
+            return;
+        }
+        if(hargaProduk.getText().toString().equals("") || hargaProduk.getText().toString().equals("0")){
+            layoutHarga.setError("Harga produk tidak valid");
+            return;
+        }
+        if(minimalPembelian.getText().toString().equals("") || minimalPembelian.getText().toString().equals("0")){
+            minimalPembelian.setError("Minimal pembelian tidak valid");
+            return;
+        }
+        if(idFakultas == 0){
+            Toast.makeText(getApplicationContext(), "Pilihan fakultas tidak valid", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(idSubkategori == 0){
+            Toast.makeText(getApplicationContext(), "Pilihan Kategori tidak valid", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(deskripsiProduk.getText().toString().equals("")){
+            layoutDeskripsiProduk.setError("Deskripsi produk harus diisi");
+            return;
+        }
+        if(catatanPenjual.getText().toString().equals("")){
+            layoutCatatanPenjual.setError("Catatan penjual harus diisi");
+            return;
+        }
+        simpanDataProduk();
+    }
+
+    public void simpanDataProduk() {
+        final ProgressDialog loading = new ProgressDialog(this);
         loading.setIndeterminate(true);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon menunggu");
@@ -414,7 +454,7 @@ public class TokoEditProdukActivity extends AppCompatActivity {
         } else if (checkedRadioButtonIdJenis == R.id.jasa) {
             jenisProduk = 2;
         }
-        String url = UrlUbama.USER_TOKO_UPDATE_PRODUK+idBarangJasa;
+        String url = UrlUbama.USER_TOKO_UPDATE_PRODUK + idBarangJasa;
         SimpleMultiPartRequest request = new SimpleMultiPartRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -449,25 +489,25 @@ public class TokoEditProdukActivity extends AppCompatActivity {
                 return params;
             }
         };
-        if(!imagePath1.equals("")){
+        if (!imagePath1.equals("")) {
             request.addFile("gambar1", imagePath1);
         }
-        if(!imagePath2.equals("")){
+        if (!imagePath2.equals("")) {
             request.addFile("gambar2", imagePath2);
         }
-        if(!imagePath3.equals("")){
+        if (!imagePath3.equals("")) {
             request.addFile("gambar3", imagePath3);
         }
-        if(!imagePath4.equals("")){
+        if (!imagePath4.equals("")) {
             request.addFile("gambar4", imagePath4);
         }
         request.addMultipartParam("nama", "text/plain", namaProduk.getText().toString());
         request.addMultipartParam("harga", "text/plain", hargaProduk.getText().toString());
         request.addMultipartParam("min_pesan", "text/plain", minimalPembelian.getText().toString());
-        request.addMultipartParam("subkategori_id", "text/plain", idSubkategori+"");
-        request.addMultipartParam("fakultas_id", "text/plain", idFakultas+"");
-        request.addMultipartParam("baruBekas", "text/plain", baruBekas+"");
-        request.addMultipartParam("jenis", "text/plain", jenisProduk+"");
+        request.addMultipartParam("subkategori_id", "text/plain", idSubkategori + "");
+        request.addMultipartParam("fakultas_id", "text/plain", idFakultas + "");
+        request.addMultipartParam("baruBekas", "text/plain", baruBekas + "");
+        request.addMultipartParam("jenis", "text/plain", jenisProduk + "");
         request.addMultipartParam("deskripsi", "text/plain", deskripsiProduk.getText().toString());
         request.addMultipartParam("catatan_penjual", "text/plain", catatanPenjual.getText().toString());
         request.setRetryPolicy(new DefaultRetryPolicy(

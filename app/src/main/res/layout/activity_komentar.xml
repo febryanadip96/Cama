@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.biyan.ubama.komentar.KomentarActivity">
+    tools:context="com.example.biyan.ubama.produk.KomentarActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,7 +21,9 @@
             <ImageView
                 android:id="@+id/image_barang"
                 android:layout_width="70dp"
-                android:layout_height="70dp" />
+                android:layout_height="70dp"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/ic_error_image"/>
 
             <TextView
                 android:id="@+id/nama_barang"
@@ -41,6 +43,12 @@
             android:orientation="vertical"
             android:layout_alignParentEnd="true"
             android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="Total Rating"/>
 
             <TextView
                 android:id="@+id/total_rating"

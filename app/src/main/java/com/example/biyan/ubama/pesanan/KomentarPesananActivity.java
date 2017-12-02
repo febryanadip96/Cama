@@ -3,8 +3,10 @@ package com.example.biyan.ubama.pesanan;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
@@ -54,10 +56,20 @@ public class KomentarPesananActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_komentar_pesanan);
         ButterKnife.bind(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         queue = Volley.newRequestQueue(this);
         Intent intent = getIntent();
         idPesanan = intent.getIntExtra("idPesanan", 0);
         getDetailPesanan();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void getDetailPesanan(){
@@ -97,6 +109,7 @@ public class KomentarPesananActivity extends AppCompatActivity {
         ImageView star4;
         ImageView star5 ;
         TextView totalRating;
+        TextInputLayout layoutKomentar;
         EditText komentar;
         TextView isiKomentar;
         Button simpan;
@@ -138,6 +151,7 @@ public class KomentarPesananActivity extends AppCompatActivity {
             star5 = (ImageView) convertView.findViewById(R.id.star_5);
             totalRating = (TextView) convertView.findViewById(R.id.total_rating);
             komentar = (EditText) convertView.findViewById(R.id.komentar);
+            layoutKomentar = (TextInputLayout) convertView.findViewById(R.id.layout_komentar);
             isiKomentar = (TextView) convertView.findViewById(R.id.isi_komentar);
             simpan = (Button) convertView.findViewById(R.id.simpan);
             if(detailPesananList.get(position).barang_jasa.gambar.size()>0){
@@ -204,6 +218,16 @@ public class KomentarPesananActivity extends AppCompatActivity {
                 simpan.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if(totalRating.getText().toString().equals("")){
+                            layoutKomentar.setError("Rating harus diisi");
+                            return;
+                        }
+                        if(komentar.getText().toString().equals("")){
+                            layoutKomentar.setError("Komentar harus diisi");
+                            komentar.requestFocus();
+                            return;
+                        }
+
                         queue = Volley.newRequestQueue(context);
                         String url = UrlUbama.SIMPAN_KOMENTAR;
                         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -248,6 +272,7 @@ public class KomentarPesananActivity extends AppCompatActivity {
                 });
             }
             else{
+                layoutKomentar.setVisibility(View.GONE);
                 komentar.setVisibility(View.GONE);
                 simpan.setVisibility(View.GONE);
                 isiKomentar.setVisibility(View.VISIBLE);

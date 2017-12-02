@@ -38,6 +38,7 @@ import com.example.biyan.ubama.pesanan.PesananActivity;
 import com.example.biyan.ubama.toko.TokoCreateActivity;
 import com.example.biyan.ubama.toko.TokoUserActivity;
 import com.example.biyan.ubama.user.ProfileUserActivity;
+import com.example.biyan.ubama.user.TanyaJawabUserActivity;
 import com.example.biyan.ubama.welcome.WelcomeActivity;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;

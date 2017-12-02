@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -118,7 +119,7 @@ public class TokoJawabPertanyaanActivity extends AppCompatActivity {
                 if (!tanyaJawab.penanya.url_profile.equals("")) {
                     Picasso.with(TokoJawabPertanyaanActivity.this).load(UrlUbama.URL_IMAGE + tanyaJawab.penanya.url_profile).into(imagePenanya);
                 } else {
-                    imagePenanya.setImageResource(R.drawable.ic_error_image);
+                    imagePenanya.setImageResource(R.drawable.ic_user);
                 }
                 namaPenanya.setText(tanyaJawab.penanya.user.name);
                 pertanyaan.setText(tanyaJawab.pertanyaan);
@@ -178,6 +179,15 @@ public class TokoJawabPertanyaanActivity extends AppCompatActivity {
 
     @OnClick(R.id.kirim)
     public void onKirimClicked() {
+        if(isiJawaban.getText().toString().equals("")){
+            isiJawaban.requestFocus();
+            Toast.makeText(TokoJawabPertanyaanActivity.this,"Isi jawaban Anda", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        kirimJawaban();
+    }
+
+    public void kirimJawaban(){
         String url = UrlUbama.USER_TOKO_JAWAB_TANYA_JAWAB + idTanyaJawab;
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -191,7 +201,6 @@ public class TokoJawabPertanyaanActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override

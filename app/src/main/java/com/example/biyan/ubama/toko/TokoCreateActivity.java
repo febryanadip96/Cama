@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -63,14 +65,24 @@ public class TokoCreateActivity extends AppCompatActivity {
     Button simpan;
     @BindView(R.id.layout)
     ScrollView layout;
+    @BindView(R.id.lewati)
+    Button lewati;
+    @BindView(R.id.layout_nama_toko)
+    TextInputLayout layoutNamaToko;
+    @BindView(R.id.layout_slogan_toko)
+    TextInputLayout layoutSloganToko;
+    @BindView(R.id.layout_deskripsi_toko)
+    TextInputLayout layoutDeskripsiToko;
+    @BindView(R.id.layout_alamat_toko)
+    TextInputLayout layoutAlamatToko;
+    @BindView(R.id.layout_catatan_toko)
+    TextInputLayout layoutCatatanToko;
 
     RequestQueue queue;
-    String imagePath ="";
+    String imagePath = "";
 
     final int GALLERY_REQUEST = 1;
     final int PERMISSION_REQUEST_READ_STORAGE = 2;
-    @BindView(R.id.lewati)
-    Button lewati;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +157,39 @@ public class TokoCreateActivity extends AppCompatActivity {
 
     @OnClick(R.id.simpan)
     public void onSimpanClicked() {
+        if(imagePath.toString().equals("")){
+            Toast.makeText(getApplicationContext(),"Masukkan gambar profil untuk toko", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (namaToko.getText().toString().equals("")){
+            layoutNamaToko.setError("Nama toko harus diisi");
+            namaToko.requestFocus();
+            return;
+        }
+        if(sloganToko.getText().toString().equals("")){
+            layoutSloganToko.setError("Slogan toko harus diisi");
+            sloganToko.requestFocus();
+            return;
+        }
+        if(deskripsiToko.getText().toString().equals("")){
+            layoutDeskripsiToko.setError("Deskripsi toko harus diisi");
+            deskripsiToko.requestFocus();
+            return;
+        }
+        if(catatanToko.getText().toString().equals("")){
+            layoutCatatanToko.setError("Catatan toko harus diisi");
+            catatanToko.requestFocus();
+            return;
+        }
+        if(alamatToko.getText().toString().equals("")){
+            layoutAlamatToko.setError("Alamat toko harus diisi");
+            alamatToko.requestFocus();
+            return;
+        }
+        simpanDataToko();
+    }
+
+    public void simpanDataToko() {
         final ProgressDialog loading = new ProgressDialog(this);
         loading.setIndeterminate(true);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -187,7 +232,7 @@ public class TokoCreateActivity extends AppCompatActivity {
                 return params;
             }
         };
-        if(!imagePath.equals("")){
+        if (!imagePath.equals("")) {
             request.addFile("gambar", imagePath);
         }
         request.addMultipartParam("nama", "text/plain", namaToko.getText().toString());
@@ -263,7 +308,7 @@ public class TokoCreateActivity extends AppCompatActivity {
         request.addMultipartParam("slogan", "text/plain", sloganToko.getText().toString());
         request.addMultipartParam("catatan_toko", "text/plain", catatanToko.getText().toString());
         request.addMultipartParam("alamat", "text/plain", alamatToko.getText().toString());
-        request.addMultipartParam("lewati", "text/plain", 1+"");
+        request.addMultipartParam("lewati", "text/plain", 1 + "");
         request.setRetryPolicy(new DefaultRetryPolicy(
                 30000,
                 0,  // maxNumRetries = 0 means no retry
