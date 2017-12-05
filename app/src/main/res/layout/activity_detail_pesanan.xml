@@ -287,12 +287,16 @@
                     android:id="@+id/selesai"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@android:color/white"
                     android:text="Selesai"/>
 
                 <Button
                     android:id="@+id/beri_komentar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@android:color/white"
                     android:text="Beri Komentar"/>
 
             </LinearLayout>

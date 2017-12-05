@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -70,7 +71,7 @@ public class TokoJawabPertanyaanActivity extends AppCompatActivity {
     @BindView(R.id.isi_jawaban)
     EditText isiJawaban;
     @BindView(R.id.kirim)
-    ImageView kirim;
+    ImageButton kirim;
 
     TanyaJawab tanyaJawab;
     int idTanyaJawab;

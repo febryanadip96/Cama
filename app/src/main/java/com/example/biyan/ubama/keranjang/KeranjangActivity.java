@@ -153,6 +153,7 @@ public class KeranjangActivity extends AppCompatActivity {
                     if (response.getBoolean("proses")) {
                         loading.dismiss();
                         getKeranjang();
+                        pesanInfo();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -176,5 +177,17 @@ public class KeranjangActivity extends AppCompatActivity {
         };
         request.setShouldCache(false);
         queue.add(request);
+    }
+
+    public void pesanInfo(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(KeranjangActivity.this);
+        builder.setMessage("Pesanan Anda sudah diteruskan ke penjual. Silahkan melihat status pesanan Anda di menu pesanan.")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

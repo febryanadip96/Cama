@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.example.biyan.ubama.R;
 import com.example.biyan.ubama.UrlUbama;
 import com.example.biyan.ubama.models.TanyaJawab;
-import com.example.biyan.ubama.user.LihatTanyaJawabUserActivity;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -27,8 +26,10 @@ import java.util.List;
 public class TanyaJawabUserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     ImageView imageBarang;
     TextView namaToko;
-    TextView isi;
-    TextView waktu;
+    TextView pertanyaan;
+    TextView waktuTanya;
+    TextView jawaban;
+    TextView waktuJawab;
     List<TanyaJawab> tanyaJawabList;
     Context context;
 
@@ -54,30 +55,35 @@ public class TanyaJawabUserAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         imageBarang = (ImageView) holder.itemView.findViewById(R.id.image_barang);
         namaToko = (TextView) holder.itemView.findViewById(R.id.nama_toko);
-        waktu = (TextView) holder.itemView.findViewById(R.id.waktu);
-        isi = (TextView) holder.itemView.findViewById(R.id.isi);
+        pertanyaan = (TextView) holder.itemView.findViewById(R.id.pertanyaan);
+        waktuTanya = (TextView) holder.itemView.findViewById(R.id.waktu_tanya);
+        jawaban = (TextView) holder.itemView.findViewById(R.id.jawaban);
+        waktuJawab = (TextView) holder.itemView.findViewById(R.id.waktu_jawab);
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm");
+        Date date = null;
         if(tanyaJawabList.get(position).barang_jasa.gambar.size()>0){
             Picasso.with(context).load(UrlUbama.URL_IMAGE+tanyaJawabList.get(position).barang_jasa.gambar.get(0).url_gambar).into(imageBarang);
         }
         namaToko.setText(tanyaJawabList.get(position).barang_jasa.toko.nama);
-        isi.setText(tanyaJawabList.get(position).pertanyaan);
-        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm");
-        Date date = null;
+        pertanyaan.setText(tanyaJawabList.get(position).pertanyaan);
         try {
             date = inputFormat.parse(tanyaJawabList.get(position).waktu_tanya);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        waktu.setText(outputFormat.format(date));
+        waktuTanya.setText(outputFormat.format(date));
         if(tanyaJawabList.get(position).jawaban !=null){
-            isi.setText(tanyaJawabList.get(position).jawaban);
+            jawaban.setText(tanyaJawabList.get(position).jawaban);
             try {
                 date = inputFormat.parse(tanyaJawabList.get(position).waktu_jawab);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            waktu.setText(outputFormat.format(date));
+            waktuJawab.setText(outputFormat.format(date));
+        }
+        else{
+            waktuJawab.setVisibility(View.GONE);
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -51,7 +51,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="16dp"
+            android:layout_height="5dp"
             android:background="@color/background"/>
 
         <LinearLayout
@@ -66,13 +66,14 @@
                 android:orientation="horizontal"
                 android:gravity="center">
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/kurang"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:background="@color/colorPrimary"
-                    android:src="@drawable/ic_minus" />
+                    android:clickable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_minus_red" />
 
                 <LinearLayout
                     android:layout_width="80dp"
@@ -95,20 +96,24 @@
 
                 </LinearLayout>
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/tambah"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:background="@color/colorPrimary"
-                    android:src="@drawable/ic_plus"/>
+                    android:clickable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_plus_red"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="5dp">
 
                 <EditText
                     android:id="@+id/catatan_pembeli"
@@ -122,7 +127,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="16dp"
+            android:layout_height="5dp"
             android:background="@color/background"/>
 
         <LinearLayout
@@ -143,7 +148,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lines="5"
-                android:background="@android:color/darker_gray"
+                android:background="@drawable/border_rectangle"
                 android:text="Alamat"/>
 
         </LinearLayout>
@@ -171,7 +176,7 @@
 
         <Button
             android:id="@+id/pesan"
-            android:layout_marginTop="16dp"
+            android:layout_margin="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"

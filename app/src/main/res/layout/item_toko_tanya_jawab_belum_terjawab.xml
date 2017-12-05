@@ -19,12 +19,6 @@
             android:orientation="vertical"
             android:gravity="center_horizontal">
 
-            <TextView
-                android:id="@+id/waktu_tanya"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Waktu"/>
-
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_alignParentEnd="true"
                 android:layout_margin="5dp"
@@ -64,14 +58,22 @@
                     android:ellipsize="end"
                     android:text="Pertanyaan"/>
 
+                <TextView
+                    android:id="@+id/waktu_tanya"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:text="Waktu"/>
+
             </LinearLayout>
 
         </LinearLayout>
 
         <ImageView
             android:id="@+id/image_barang"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:src="@drawable/ic_error_image"/>
 
     </LinearLayout>

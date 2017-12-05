@@ -120,6 +120,8 @@ public final class UrlUbama {
 
     public final static String USER_TOKO_PRODUK_BARANG = URL_API+"user/toko/produk/barang";
 
+    public final static String USER_TOKO_PRODUK_DETAIL = URL_API+"user/toko/produk/detail/";
+
     public final static String USER_TOKO_HAPUS_PRODUK = URL_API+"user/toko/produk/hapus/";
 
     public final static String USER_TOKO_UPDATE_PRODUK = URL_API+"user/toko/produk/update/";

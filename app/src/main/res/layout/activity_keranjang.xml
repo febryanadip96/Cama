@@ -11,16 +11,15 @@
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8"></android.support.v7.widget.RecyclerView>
+        android:layout_weight="10"></android.support.v7.widget.RecyclerView>
 
     <LinearLayout
         android:id="@+id/layout_lanjut_pesan"
-        android:visibility="gone"
-        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
         android:orientation="vertical">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -28,20 +27,25 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:gravity="center_vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:text="Total Harga:"/>
+
             <TextView
                 android:id="@+id/total_harga"
                 android:layout_alignParentEnd="true"
-                android:textColor="@android:color/white"
                 android:textStyle="bold"
+                android:textColor="@android:color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rp."/>
+
         </RelativeLayout>
+
+
         <Button
             android:id="@+id/proses"
             android:background="@color/colorPrimary"

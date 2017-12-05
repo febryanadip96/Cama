@@ -33,6 +33,7 @@ public class TokoTanyaJawabAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     TextView pertanyaan;
     TextView waktuTanya;
     TextView jawaban;
+    TextView waktuJawab;
     Context context;
 
     final static int BELUM_TERJAWAB = 1;
@@ -69,9 +70,10 @@ public class TokoTanyaJawabAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         waktuTanya = (TextView) holder.itemView.findViewById(R.id.waktu_tanya);
         if(tanyaJawabList.get(position).jawaban!=null){
             jawaban = (TextView) holder.itemView.findViewById(R.id.jawaban);
+            waktuJawab = (TextView) holder.itemView.findViewById(R.id.waktu_jawab);
         }
         final SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy HH:mm");
         Date date = null;
         if(tanyaJawabList.get(position).barang_jasa.gambar.size()>0){
             Picasso.with(context).load(UrlUbama.URL_IMAGE+tanyaJawabList.get(position).barang_jasa.gambar.get(0).url_gambar).into(imageBarang);
@@ -95,6 +97,12 @@ public class TokoTanyaJawabAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         waktuTanya.setText(outputFormat.format(date));
         if(tanyaJawabList.get(position).jawaban!=null){
             jawaban.setText(tanyaJawabList.get(position).jawaban);
+            try {
+                date = inputFormat.parse(tanyaJawabList.get(position).waktu_tanya);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            waktuJawab.setText(outputFormat.format(date));
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

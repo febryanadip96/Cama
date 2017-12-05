@@ -172,7 +172,8 @@
             android:label="Edit Produk" />
         <activity
             android:name=".toko.TokoJawabPertanyaanActivity"
-            android:label="Jawab Pertanyaan" />
+            android:label="Jawab Pertanyaan"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".user.ProfileUserActivity"
             android:label="Profil User" />
@@ -190,10 +191,11 @@
             android:label="Lupa Password" />
         <activity
             android:name=".user.TanyaJawabUserActivity"
-            android:label="Tanya Jawab"/>
+            android:label="Tanya Jawab" />
         <activity
             android:name=".user.LihatTanyaJawabUserActivity"
-            android:label="Tanya Jawab"/>
+            android:label="Tanya Jawab" />
+
     </application>
 
 </manifest>

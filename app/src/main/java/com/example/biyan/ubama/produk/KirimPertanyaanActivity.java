@@ -125,7 +125,7 @@ public class KirimPertanyaanActivity extends AppCompatActivity {
         final ProgressDialog loading = new ProgressDialog(this);
         loading.setIndeterminate(true);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        loading.setMessage("Proses Login");
+        loading.setMessage("Mohon menunggu");
         loading.show();
         Map<String, String> params = new HashMap<String, String>();
         params.put("pertanyaan", pertanyaan.getText().toString());

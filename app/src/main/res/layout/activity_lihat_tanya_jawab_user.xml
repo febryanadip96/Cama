@@ -31,21 +31,15 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/nama_barang"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
+                    android:textStyle="bold"
                     android:text="Nama Barang"/>
-
-                <TextView
-                    android:id="@+id/jenis_barang"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:text="Jenis Barang"/>
 
             </LinearLayout>
 
@@ -95,12 +89,6 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/waktu_tanya"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Waktu"/>
-
-                    <TextView
                         android:id="@+id/nama_penanya"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -112,6 +100,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Pertanyaan"/>
+
+                    <TextView
+                        android:id="@+id/waktu_tanya"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10dp"
+                        android:text="Waktu"/>
 
                 </LinearLayout>
 
@@ -163,12 +159,6 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/waktu_jawab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Waktu"/>
-
-                    <TextView
                         android:id="@+id/nama_toko"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -181,11 +171,24 @@
                         android:layout_height="wrap_content"
                         android:text="Jawaban"/>
 
+                    <TextView
+                        android:id="@+id/waktu_jawab"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10dp"
+                        android:text="Waktu"/>
+
                 </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background" />
 
     </LinearLayout>
 

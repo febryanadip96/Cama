@@ -19,4 +19,5 @@
     <string name="title_activity_toko_produk">Produk</string>
     <string name="title_activity_toko_pesanan">Pesanan</string>
     <string name="title_activity_toko_tanya_jawab">TokoTanyaJawabActivity</string>
+    <string name="title_activity_alamat">Alamat</string>
 </resources>

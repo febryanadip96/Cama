@@ -128,6 +128,7 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 loading.dismiss();
+                Log.d("hasil", response.toString());
                 pesanan = new Gson().fromJson(response.toString(), Pesanan.class);
                 nomorPesanan.setText(pesanan.id + "");
                 NumberFormat currency = NumberFormat.getInstance(Locale.GERMANY);
@@ -154,23 +155,35 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
                 logPesanan.setText(isiLog);
                 adapter = new TokoDetailPesananItemAdapter(pesanan.detail_pesanan);
                 recyclerItemDetailPesanan.setAdapter(adapter);
+                alasanDitolak.setText(pesanan.alasan_ditolak);
+                noTelpPembeli = pesanan.pemesan.telepon;
+                emailPembeli = pesanan.pemesan.user.email;
+
                 if (pesanan.status.equals("Diproses")) {
-                    terimaPesanan.setVisibility(View.GONE);
                     layoutDitolak.setVisibility(View.GONE);
-                } else if (pesanan.status.equals("Selesai") || pesanan.status.equals("Ditolak")) {
+                    terimaPesanan.setVisibility(View.GONE);
+                    tolakPesanan.setVisibility(View.VISIBLE);
+                    layoutHubungi.setVisibility(View.VISIBLE);
+                    layoutTombol.setVisibility(View.VISIBLE);
+                } else if (pesanan.status.equals("Selesai")) {
+                    layoutDitolak.setVisibility(View.GONE);
                     terimaPesanan.setVisibility(View.GONE);
                     tolakPesanan.setVisibility(View.GONE);
                     layoutHubungi.setVisibility(View.GONE);
                     layoutTombol.setVisibility(View.GONE);
-                }
-                if (pesanan.status.equals("Ditolak")) {
+                } else if (pesanan.status.equals("Ditolak")) {
                     layoutDitolak.setVisibility(View.VISIBLE);
+                    terimaPesanan.setVisibility(View.GONE);
+                    tolakPesanan.setVisibility(View.GONE);
+                    layoutHubungi.setVisibility(View.GONE);
+                    layoutTombol.setVisibility(View.GONE);
                 } else {
                     layoutDitolak.setVisibility(View.GONE);
+                    terimaPesanan.setVisibility(View.VISIBLE);
+                    tolakPesanan.setVisibility(View.VISIBLE);
+                    layoutHubungi.setVisibility(View.VISIBLE);
+                    layoutTombol.setVisibility(View.VISIBLE);
                 }
-                alasanDitolak.setText(pesanan.alasan_ditolak);
-                noTelpPembeli = pesanan.pemesan.telepon;
-                emailPembeli = pesanan.pemesan.user.email;
             }
         }, new Response.ErrorListener() {
             @Override
@@ -215,7 +228,7 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
 
     @OnClick(R.id.terima_pesanan)
     public void onTerimaPesananClicked() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(TokoDetailPesananActivity.this);
         builder.setMessage("Anda akan menerima pesanan ini?")
                 .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -274,7 +287,7 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
 
     @OnClick(R.id.tolak_pesanan)
     public void onTolakPesananClicked() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(TokoDetailPesananActivity.this);
         builder.setMessage("Anda ingin menolak pesanan ini?")
                 .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

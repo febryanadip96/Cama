@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:background="?attr/selectableItemBackground"
     android:gravity="center_vertical">
 
     <ImageView
@@ -10,6 +11,8 @@
         android:layout_marginStart="10dp"
         android:layout_width="20dp"
         android:layout_height="20dp"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_hapus"/>
 
     <ImageView
@@ -21,8 +24,9 @@
 
     <LinearLayout
         android:layout_marginLeft="10dp"
-        android:layout_width="150dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:padding="5dp"
         android:orientation="vertical">
 
         <TextView
@@ -38,6 +42,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Harga Barang" />
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Catatan Pembeli:"/>
+
+        <TextView
+            android:id="@+id/catatan_pembeli"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:text="Catatan Pembeli"/>
 
     </LinearLayout>
 

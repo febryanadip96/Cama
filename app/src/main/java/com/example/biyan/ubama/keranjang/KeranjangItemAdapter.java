@@ -43,6 +43,7 @@ public class KeranjangItemAdapter extends RecyclerView.Adapter<RecyclerView.View
     ImageView gambarBarang;
     TextView namaBarang;
     TextView hargaBarang;
+    TextView catatanPembeli;
     TextView jumlah;
     List<Keranjang.BarangJasa> barangJasaList;
     Context context;
@@ -74,6 +75,7 @@ public class KeranjangItemAdapter extends RecyclerView.Adapter<RecyclerView.View
         gambarBarang = (ImageView) holder.itemView.findViewById(R.id.gambar_barang);
         namaBarang = (TextView) holder.itemView.findViewById(R.id.nama_barang);
         hargaBarang = (TextView) holder.itemView.findViewById(R.id.harga_barang);
+        catatanPembeli = (TextView) holder.itemView.findViewById(R.id.catatan_pembeli);
         jumlah = (TextView) holder.itemView.findViewById(R.id.jumlah);
         if(barangJasaList.get(position).gambar.size()>0){
             Picasso.with(context).load(UrlUbama.URL_IMAGE+barangJasaList.get(position).gambar.get(0).url_gambar).into(gambarBarang);
@@ -82,6 +84,7 @@ public class KeranjangItemAdapter extends RecyclerView.Adapter<RecyclerView.View
         NumberFormat currency = NumberFormat.getInstance(Locale.GERMANY);
         hargaBarang.setText("Rp. " + currency.format(barangJasaList.get(position).harga).toString());
         jumlah.setText(barangJasaList.get(position).data_keranjang.jumlah+"");
+        catatanPembeli.setText(barangJasaList.get(position).data_keranjang.catatan_pembeli);
         hapus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

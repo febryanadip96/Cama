@@ -143,9 +143,11 @@ public class TokoPengaturanActivity extends AppCompatActivity {
                 namaToko.setText(toko.nama);
                 if (toko.lewati == 1) {
                     editNamaToko.setVisibility(View.VISIBLE);
+                    layoutNamaToko.setVisibility(View.VISIBLE);
                     editNamaToko.setText(toko.nama);
                 } else {
                     editNamaToko.setVisibility(View.GONE);
+                    layoutNamaToko.setVisibility(View.GONE);
                 }
                 sloganToko.setText(toko.slogan);
                 deskripsiToko.setText(toko.deskripsi);

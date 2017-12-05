@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -24,8 +25,8 @@ import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
 import com.example.biyan.ubama.UrlUbama;
 import com.example.biyan.ubama.UserToken;
-import com.example.biyan.ubama.produk.KomentarActivity;
 import com.example.biyan.ubama.models.BarangJasa;
+import com.example.biyan.ubama.produk.KomentarActivity;
 import com.google.gson.Gson;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.picasso.MemoryPolicy;
@@ -129,7 +130,7 @@ public class TokoLihatProdukActivity extends AppCompatActivity {
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
-        String url = UrlUbama.BARANG_JASA + idBarangJasa;
+        String url = UrlUbama.USER_TOKO_PRODUK_DETAIL + idBarangJasa;
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -208,6 +209,10 @@ public class TokoLihatProdukActivity extends AppCompatActivity {
             }
         };
         request.setShouldCache(false);
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                30000,
+                0,  // maxNumRetries = 0 means no retry
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(request);
     }
 

@@ -150,28 +150,35 @@ public class DetailPesananActivity extends AppCompatActivity {
                 logPesanan.setText(isiLog);
                 adapter = new DetailPesananItemAdapter(pesanan.detail_pesanan);
                 recyclerItemDetailPesanan.setAdapter(adapter);
-                if (pesanan.status.equals("Selesai") || pesanan.status.equals("Ditolak")) {
-                    layoutHubungi.setVisibility(View.GONE);
-                } else {
-                    layoutHubungi.setVisibility(View.VISIBLE);
-                }
+                alasanDitolak.setText(pesanan.alasan_ditolak.toString());
+                noTelpPenjual = pesanan.detail_pesanan.get(0).barang_jasa.toko.pemilik.telepon;
+                emailPenjual = pesanan.detail_pesanan.get(0).barang_jasa.toko.pemilik.user.email;
+
                 if (pesanan.status.equals("Selesai")) {
+                    layoutHubungi.setVisibility(View.GONE);
                     layoutDitolak.setVisibility(View.GONE);
                     selesai.setVisibility(View.GONE);
                     beriKomentar.setVisibility(View.VISIBLE);
+                    layoutTombol.setVisibility(View.VISIBLE);
                 } else if (pesanan.status.equals("Ditolak")) {
+                    layoutHubungi.setVisibility(View.GONE);
                     layoutDitolak.setVisibility(View.VISIBLE);
                     selesai.setVisibility(View.GONE);
                     beriKomentar.setVisibility(View.GONE);
                     layoutTombol.setVisibility(View.GONE);
-                } else {
+                } else if(pesanan.status.equals("Diproses")){
+                    layoutHubungi.setVisibility(View.VISIBLE);
                     layoutDitolak.setVisibility(View.GONE);
                     beriKomentar.setVisibility(View.GONE);
                     selesai.setVisibility(View.VISIBLE);
+                    layoutTombol.setVisibility(View.VISIBLE);
+                } else{
+                    layoutHubungi.setVisibility(View.VISIBLE);
+                    layoutDitolak.setVisibility(View.GONE);
+                    beriKomentar.setVisibility(View.GONE);
+                    selesai.setVisibility(View.GONE);
+                    layoutTombol.setVisibility(View.GONE);
                 }
-                alasanDitolak.setText(pesanan.alasan_ditolak.toString());
-                noTelpPenjual = pesanan.detail_pesanan.get(0).barang_jasa.toko.pemilik.telepon;
-                emailPenjual = pesanan.detail_pesanan.get(0).barang_jasa.toko.pemilik.user.email;
                 loading.dismiss();
             }
         }, new Response.ErrorListener() {

@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,11 +52,11 @@ public class PemesananActivity extends AppCompatActivity {
     @BindView(R.id.harga_barang)
     TextView hargaBarang;
     @BindView(R.id.kurang)
-    ImageButton kurang;
+    ImageView kurang;
     @BindView(R.id.jumlah)
     EditText jumlah;
     @BindView(R.id.tambah)
-    ImageButton tambah;
+    ImageView tambah;
     @BindView(R.id.alamat_tujuan)
     TextView alamatTujuan;
     @BindView(R.id.total_harga)

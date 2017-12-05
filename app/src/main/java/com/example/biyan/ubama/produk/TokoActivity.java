@@ -25,6 +25,8 @@ import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.Toko;
 import com.google.gson.Gson;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,9 +36,16 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TokoActivity extends AppCompatActivity {
 
+    @BindView(R.id.image_toko)
+    CircleImageView imageToko;
+    @BindView(R.id.email_pemilik)
+    TextView emailPemilik;
+    @BindView(R.id.slogan_toko)
+    TextView sloganToko;
     @BindView(R.id.nama_toko)
     TextView namaToko;
     @BindView(R.id.nama_pemilik)
@@ -83,27 +92,33 @@ public class TokoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void getDataToko(){
+    public void getDataToko() {
         final ProgressDialog loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
-        String url = UrlUbama.TOKO+idToko;
+        String url = UrlUbama.TOKO + idToko;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 loading.dismiss();
                 toko = new Gson().fromJson(response.toString(), Toko.class);
+                if(!toko.url_profile.equals("")){
+                    Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE+toko.url_profile).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).into(imageToko);
+                } else{
+                    imageToko.setImageResource(R.drawable.ic_error_image);
+                }
                 namaToko.setText(toko.nama);
                 namaPemilik.setText(toko.pemilik.user.name);
+                emailPemilik.setText(toko.pemilik.user.email);
                 alamatToko.setText(toko.alamat);
-                if(toko.favorit){
+                if (toko.favorit) {
                     favoritToko.setImageResource(R.drawable.ic_favorite_red);
-                }
-                else{
+                } else {
                     favoritToko.setImageResource(R.drawable.ic_favorite_border_grey);
                 }
+                sloganToko.setText(toko.slogan);
                 deskripsiToko.setText(toko.deskripsi);
                 catatanToko.setText(toko.catatan_toko);
                 adapter = new TokoBarangJasaAdapter(toko.barang_jasa);
@@ -134,7 +149,7 @@ public class TokoActivity extends AppCompatActivity {
         queue.add(request);
     }
 
-    public void UbahFavoritToko(){
+    public void UbahFavoritToko() {
         String url = UrlUbama.USER_UBAH_FAVORIT_TOKO + idToko;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
