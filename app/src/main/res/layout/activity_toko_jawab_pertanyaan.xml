@@ -11,47 +11,49 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingBottom="10dp"
-            android:paddingLeft="16dp"
-            android:paddingTop="10dp">
-
-            <ImageView
-                android:id="@+id/gambar_barang"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/ic_error_image" />
+            android:layout_height="wrap_content">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:paddingLeft="16dp"
+                android:paddingBottom="10dp"
+                android:gravity="center_vertical">
 
-                <TextView
-                    android:id="@+id/nama_barang"
+                <ImageView
+                    android:id="@+id/gambar_barang"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/ic_error_image"/>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
-                    android:textStyle="bold"
-                    android:text="Nama Barang" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/nama_barang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="Nama Barang"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background" />
+        </android.support.v7.widget.CardView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -93,19 +95,28 @@
                         android:text="Nama Penanya"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/pertanyaan"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pertanyaan" />
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:background="@drawable/border_round">
 
-                    <TextView
-                        android:id="@+id/waktu_tanya"
-                        android:layout_marginTop="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="10sp"
-                        android:text="Waktu" />
+                        <TextView
+                            android:id="@+id/pertanyaan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Pertanyaan"/>
+
+                        <TextView
+                            android:id="@+id/waktu_tanya"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="10dp"
+                            android:text="Waktu"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -113,15 +124,11 @@
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -163,19 +170,28 @@
                         android:text="Nama Toko"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/jawaban"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Jawaban" />
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:background="@drawable/border_round">
 
-                    <TextView
-                        android:id="@+id/waktu_jawab"
-                        android:layout_marginTop="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="10sp"
-                        android:text="Waktu" />
+                        <TextView
+                            android:id="@+id/jawaban"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Jawaban"/>
+
+                        <TextView
+                            android:id="@+id/waktu_jawab"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="10dp"
+                            android:text="Waktu"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

@@ -80,7 +80,7 @@ public class PesananActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Error Volley PesananActivity", error.toString());
+                Log.e("Error Volley", error.toString());
             }
         }) {
             @Override

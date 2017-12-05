@@ -1,9 +1,11 @@
 package com.example.biyan.ubama.toko;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
@@ -11,7 +13,6 @@ import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -58,10 +59,15 @@ public class TokoProdukPilihSubkategoriActivity extends AppCompatActivity {
     }
 
     public void getSubkategori(){
+        final ProgressDialog loading = new ProgressDialog(this);
+        loading.setIndeterminate(true);
+        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loading.show();
         String url = UrlUbama.KATEGORI_SUBKATEGORI + idKategori;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                loading.dismiss();
                 subkategoriList = new Gson().fromJson(response.toString(), new TypeToken<List<Subkategori>>() {
                 }.getType());
                 adapter = new SubkategoriAdapter(TokoProdukPilihSubkategoriActivity.this, subkategoriList);
@@ -70,7 +76,8 @@ public class TokoProdukPilihSubkategoriActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplication(), error.toString(), Toast.LENGTH_LONG).show();
+                loading.dismiss();
+                Log.e("Error Volley", error.toString());
             }
         }) {
             @Override

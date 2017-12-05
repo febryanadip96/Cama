@@ -30,10 +30,8 @@ public class TokoTanyaJawabAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     ImageView imageBarang;
     CircleImageView imagePenanya;
     TextView namaPenanya;
-    TextView pertanyaan;
-    TextView waktuTanya;
-    TextView jawaban;
-    TextView waktuJawab;
+    TextView isi;
+    TextView waktu;
     Context context;
 
     final static int BELUM_TERJAWAB = 1;
@@ -66,12 +64,8 @@ public class TokoTanyaJawabAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         imageBarang = (ImageView) holder.itemView.findViewById(R.id.image_barang);
         imagePenanya = (CircleImageView) holder.itemView.findViewById(R.id.image_penanya);
         namaPenanya = (TextView) holder.itemView.findViewById(R.id.nama_penanya);
-        pertanyaan = (TextView) holder.itemView.findViewById(R.id.pertanyaan);
-        waktuTanya = (TextView) holder.itemView.findViewById(R.id.waktu_tanya);
-        if(tanyaJawabList.get(position).jawaban!=null){
-            jawaban = (TextView) holder.itemView.findViewById(R.id.jawaban);
-            waktuJawab = (TextView) holder.itemView.findViewById(R.id.waktu_jawab);
-        }
+        isi = (TextView) holder.itemView.findViewById(R.id.isi);
+        waktu = (TextView) holder.itemView.findViewById(R.id.waktu);
         final SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy HH:mm");
         Date date = null;
@@ -88,21 +82,21 @@ public class TokoTanyaJawabAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             imagePenanya.setImageResource(R.drawable.ic_error_image);
         }
         namaPenanya.setText(tanyaJawabList.get(position).penanya.user.name);
-        pertanyaan.setText(tanyaJawabList.get(position).pertanyaan);
+        isi.setText(tanyaJawabList.get(position).pertanyaan);
         try {
             date = inputFormat.parse(tanyaJawabList.get(position).waktu_tanya);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        waktuTanya.setText(outputFormat.format(date));
+        waktu.setText(outputFormat.format(date));
         if(tanyaJawabList.get(position).jawaban!=null){
-            jawaban.setText(tanyaJawabList.get(position).jawaban);
+            isi.setText(tanyaJawabList.get(position).jawaban);
             try {
                 date = inputFormat.parse(tanyaJawabList.get(position).waktu_tanya);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            waktuJawab.setText(outputFormat.format(date));
+            waktu.setText(outputFormat.format(date));
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

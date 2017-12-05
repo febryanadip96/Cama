@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
+            android:maxLines="1"
             android:hint="Email"/>
 
     </android.support.design.widget.TextInputLayout>
@@ -35,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
+            android:maxLines="1"
             android:hint="Password"/>
 
     </android.support.design.widget.TextInputLayout>
@@ -57,4 +59,5 @@
         android:textColor="@color/colorPrimary"
         android:layout_gravity="right"
         android:text="Lupa Password?"/>
+
 </LinearLayout>

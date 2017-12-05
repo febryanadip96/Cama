@@ -11,6 +11,8 @@ public class Subkategori {
     public int id;
     @SerializedName("nama")
     public String nama;
+    @SerializedName("url_gambar")
+    public String url_gambar;
     @SerializedName("kategori_id")
     public int kategori_id;
     @SerializedName("kategori")

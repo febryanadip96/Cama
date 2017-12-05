@@ -90,7 +90,7 @@ public class BerandaFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Error Volley BerandaFragment", error.toString());
+                Log.e("Error Volley", error.toString());
             }
         }) {
             @Override

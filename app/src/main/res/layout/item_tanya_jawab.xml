@@ -30,7 +30,6 @@
                 android:id="@+id/nama_penanya"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:text="Nama Penanya"/>
 
             <TextView
@@ -76,7 +75,6 @@
                 android:id="@+id/nama_toko"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:text="Nama Toko"/>
 
             <TextView

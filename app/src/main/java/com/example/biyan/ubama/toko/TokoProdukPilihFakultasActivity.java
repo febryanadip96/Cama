@@ -1,6 +1,7 @@
 package com.example.biyan.ubama.toko;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -55,10 +56,15 @@ public class TokoProdukPilihFakultasActivity extends AppCompatActivity {
     }
 
     public void getFakultas(){
+        final ProgressDialog loading = new ProgressDialog(this);
+        loading.setIndeterminate(true);
+        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loading.show();
         String url = UrlUbama.FAKULTAS;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                loading.dismiss();
                 fakultasList = new Gson().fromJson(response.toString(), new TypeToken<List<Fakultas>>() {
                 }.getType());
                 adapter = new FakultasAdapter(TokoProdukPilihFakultasActivity.this, fakultasList);
@@ -67,6 +73,7 @@ public class TokoProdukPilihFakultasActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                loading.dismiss();
                 Log.e("Error Volley ", error.toString());
                 return;
             }

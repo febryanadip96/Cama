@@ -26,10 +26,9 @@ import java.util.List;
 public class TanyaJawabUserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     ImageView imageBarang;
     TextView namaToko;
-    TextView pertanyaan;
-    TextView waktuTanya;
-    TextView jawaban;
-    TextView waktuJawab;
+    TextView isi;
+    ImageView cek;
+    TextView waktu;
     List<TanyaJawab> tanyaJawabList;
     Context context;
 
@@ -55,10 +54,9 @@ public class TanyaJawabUserAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         imageBarang = (ImageView) holder.itemView.findViewById(R.id.image_barang);
         namaToko = (TextView) holder.itemView.findViewById(R.id.nama_toko);
-        pertanyaan = (TextView) holder.itemView.findViewById(R.id.pertanyaan);
-        waktuTanya = (TextView) holder.itemView.findViewById(R.id.waktu_tanya);
-        jawaban = (TextView) holder.itemView.findViewById(R.id.jawaban);
-        waktuJawab = (TextView) holder.itemView.findViewById(R.id.waktu_jawab);
+        isi = (TextView) holder.itemView.findViewById(R.id.isi);
+        waktu = (TextView) holder.itemView.findViewById(R.id.waktu);
+        cek = (ImageView) holder.itemView.findViewById(R.id.cek);
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm");
         Date date = null;
@@ -66,24 +64,23 @@ public class TanyaJawabUserAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             Picasso.with(context).load(UrlUbama.URL_IMAGE+tanyaJawabList.get(position).barang_jasa.gambar.get(0).url_gambar).into(imageBarang);
         }
         namaToko.setText(tanyaJawabList.get(position).barang_jasa.toko.nama);
-        pertanyaan.setText(tanyaJawabList.get(position).pertanyaan);
+        isi.setText(tanyaJawabList.get(position).pertanyaan);
         try {
             date = inputFormat.parse(tanyaJawabList.get(position).waktu_tanya);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        waktuTanya.setText(outputFormat.format(date));
+        waktu.setText(outputFormat.format(date));
+        cek.setVisibility(View.GONE);
         if(tanyaJawabList.get(position).jawaban !=null){
-            jawaban.setText(tanyaJawabList.get(position).jawaban);
+            isi.setText(tanyaJawabList.get(position).jawaban);
             try {
                 date = inputFormat.parse(tanyaJawabList.get(position).waktu_jawab);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            waktuJawab.setText(outputFormat.format(date));
-        }
-        else{
-            waktuJawab.setVisibility(View.GONE);
+            waktu.setText(outputFormat.format(date));
+            cek.setVisibility(View.VISIBLE);
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

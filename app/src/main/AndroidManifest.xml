@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -75,7 +76,12 @@
         </activity>
         <activity
             android:name=".produk.BarangJasaActivity"
-            android:label="Detail Produk" />
+            android:label="Detail Produk"
+            android:windowSoftInputMode="adjustNothing" >
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".HasilPencarianActivity" />
+        </activity>
         <activity
             android:name=".keranjang.KeranjangActivity"
             android:label="Keranjang">

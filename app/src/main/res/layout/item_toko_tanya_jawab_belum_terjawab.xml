@@ -51,16 +51,17 @@
                     android:text="Nama Penanya"/>
 
                 <TextView
-                    android:id="@+id/pertanyaan"
+                    android:id="@+id/isi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     android:singleLine="true"
                     android:ellipsize="end"
                     android:text="Pertanyaan"/>
 
                 <TextView
-                    android:id="@+id/waktu_tanya"
-                    android:layout_marginTop="5dp"
+                    android:id="@+id/waktu"
+                    android:layout_marginBottom="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="10sp"
@@ -72,8 +73,8 @@
 
         <ImageView
             android:id="@+id/image_barang"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/ic_error_image"/>
 
     </LinearLayout>

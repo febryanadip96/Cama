@@ -127,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingLogin.dismiss();
-                Log.e("Error Volley Login", error.toString());
+                Log.e("Error Volley", error.toString());
             }
         }) {
             @Override

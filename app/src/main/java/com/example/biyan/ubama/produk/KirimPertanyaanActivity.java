@@ -94,7 +94,7 @@ public class KirimPertanyaanActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Error Volley KirimPertanyaanActivity", error.toString());
+                Log.e("Error Volley", error.toString());
                 finish();
             }
         }) {
@@ -147,7 +147,7 @@ public class KirimPertanyaanActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loading.dismiss();
-                Log.e("Error Volley Login", error.toString());
+                Log.e("Error Volley", error.toString());
                 Toast.makeText(KirimPertanyaanActivity.this, "Pertanyaan gagal terkirim", Toast.LENGTH_LONG).show();
             }
         }) {

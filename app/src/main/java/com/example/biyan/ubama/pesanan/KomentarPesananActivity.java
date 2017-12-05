@@ -84,7 +84,7 @@ public class KomentarPesananActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Error Volley BerandaFragment", error.toString());
+                Log.e("Error Volley", error.toString());
             }
         }) {
             @Override
@@ -246,7 +246,7 @@ public class KomentarPesananActivity extends AppCompatActivity {
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Log.e("Error Volley BerandaFragment", error.toString());
+                                Log.e("Error Volley", error.toString());
                             }
                         }) {
                             @Override

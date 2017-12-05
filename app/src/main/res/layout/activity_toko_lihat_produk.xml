@@ -49,14 +49,12 @@
                         android:layout_height="wrap_content"
                         android:maxLines="2"
                         android:ellipsize="end"
-                        android:layout_marginRight="100dp"
                         android:text="Nama Barang"/>
 
                     <TextView
                         android:id="@+id/harga_barang"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="100dp"
                         android:textColor="@color/colorPrimary"
                         android:text="Harga Barang"/>
 
@@ -64,7 +62,7 @@
                         android:id="@+id/jenis_barang"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="100dp"
+                        android:layout_marginTop="10dp"
                         android:text="Jenis Barang"/>
 
                 </LinearLayout>
@@ -135,10 +133,12 @@
                             android:id="@+id/jumlah_komentar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/colorPrimary"
                             android:text="0"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/colorPrimary"
                             android:text=" Komentar"/>
 
                     </LinearLayout>
@@ -177,11 +177,13 @@
                             android:id="@+id/jumlah_faq"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/colorPrimary"
                             android:text="0"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/colorPrimary"
                             android:text=" FAQ"/>
 
                     </LinearLayout>
@@ -213,6 +215,7 @@
                         android:id="@+id/kondisi_barang"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/colorPrimary"
                         android:text="Kondisi"/>
 
                 </LinearLayout>
@@ -234,9 +237,7 @@
                     android:layout_weight="1"
                     android:padding="10dp"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:clickable="true"
-                    android:background="?attr/selectableItemBackground">
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="30dp"
@@ -262,9 +263,7 @@
                     android:layout_weight="1"
                     android:padding="10dp"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:clickable="true"
-                    android:background="?attr/selectableItemBackground">
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="30dp"
@@ -298,7 +297,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
                     android:text="Deskripisi"/>
 
                 <com.ms.square.android.expandabletextview.ExpandableTextView
@@ -326,6 +325,7 @@
                         android:background="@android:color/transparent"/>
 
                 </com.ms.square.android.expandabletextview.ExpandableTextView>
+
             </LinearLayout>
 
             <View
@@ -345,7 +345,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
                     android:text="Catatan Penjual"/>
 
                 <com.ms.square.android.expandabletextview.ExpandableTextView
@@ -373,6 +373,7 @@
                         android:background="@android:color/transparent"/>
 
                 </com.ms.square.android.expandabletextview.ExpandableTextView>
+
             </LinearLayout>
 
             <View
@@ -387,7 +388,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="?attr/selectableItemBackground">
+        android:clickable="true"
+        android:background="?attr/selectableItemBackgroundBorderless">
 
         <Button
             android:id="@+id/edit"
@@ -396,7 +398,6 @@
             android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:textColor="@android:color/white"
-            android:clickable="true"
             android:text="Edit"/>
 
         <Button
@@ -406,7 +407,6 @@
             android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:textColor="@android:color/white"
-            android:clickable="true"
             android:text="Hapus"/>
 
     </LinearLayout>

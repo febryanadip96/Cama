@@ -185,7 +185,7 @@ public class DetailPesananActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loading.dismiss();
-                Log.e("Error Volley DetailPesananActivity", error.toString());
+                Log.e("Error Volley", error.toString());
                 finish();
             }
         }) {

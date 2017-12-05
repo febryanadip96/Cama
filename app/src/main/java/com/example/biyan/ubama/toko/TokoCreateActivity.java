@@ -221,7 +221,7 @@ public class TokoCreateActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loading.dismiss();
-                Log.e("Error Volley", error.getMessage());
+                Log.e("Error Volley", error.toString());
             }
         }) {
             @Override
@@ -291,7 +291,7 @@ public class TokoCreateActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loading.dismiss();
-                Log.e("Error Volley", error.getMessage());
+                Log.e("Error Volley", error.toString());
             }
         }) {
             @Override

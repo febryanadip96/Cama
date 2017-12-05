@@ -64,14 +64,16 @@ public class PesananAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             e.printStackTrace();
         }
         SimpleDateFormat outputFormat= new SimpleDateFormat("dd MMMM yyyy");
-        tanggalPesan.setText(outputFormat.format(date));
+        tanggalPesan.setText("Dipesan pada "+outputFormat.format(date));
         if (pesananList.get(position).detail_pesanan.get(0).barang_jasa.gambar.size() > 0) {
             Picasso.with(context).load(UrlUbama.URL_IMAGE + pesananList.get(position).detail_pesanan.get(0).barang_jasa.gambar.get(0).url_gambar).into(imageBarang);
+        } else {
+            imageBarang.setImageResource(R.drawable.ic_error_image);
         }
         idPesanan.setText(pesananList.get(position).id+"");
         String itemBarang = "";
         for (Pesanan.Detail_pesanan itemDetailPesanan:pesananList.get(position).detail_pesanan) {
-            itemBarang += itemDetailPesanan.jumlah +"x "+itemDetailPesanan.barang_jasa.nama+System.getProperty("line.separator");
+            itemBarang += itemDetailPesanan.barang_jasa.nama+System.getProperty("line.separator");
         }
         namaBarang.setText(itemBarang);
         statusPesanan.setText(pesananList.get(position).status.toString());

@@ -315,7 +315,7 @@ public class MainActivity extends AppCompatActivity
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Error Volley Cek Toko", error.toString());
+                Log.e("Error Volley", error.toString());
                 return;
             }
         }) {
@@ -344,7 +344,7 @@ public class MainActivity extends AppCompatActivity
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Error Volley Cek Toko", error.toString());
+                Log.e("Error Volley", error.toString());
             }
         }) {
             @Override

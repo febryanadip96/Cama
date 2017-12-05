@@ -21,14 +21,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pesanan #"/>
+                    android:textColor="@android:color/black"
+                    android:text="Pesanan "/>
 
                 <TextView
                     android:id="@+id/id_pesanan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:text="id Pesanan"/>
+                    android:textColor="@color/colorPrimary"
+                    android:text="ID"/>
 
             </LinearLayout>
 
@@ -37,6 +38,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="10sp"
                 android:text="Tanggal Pesan"/>
 
         </RelativeLayout>
@@ -62,13 +64,13 @@
                 android:layout_gravity="center_vertical"
                 android:orientation="vertical">
 
-
                 <TextView
                     android:id="@+id/nama_pemesan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:singleLine="true"
+                    android:textColor="@android:color/black"
                     android:text="Nama Pemesan" />
 
                 <TextView

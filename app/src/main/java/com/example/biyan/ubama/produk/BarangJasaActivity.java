@@ -1,14 +1,18 @@
 package com.example.biyan.ubama.produk;
 
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -21,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
 import com.example.biyan.ubama.UrlUbama;
 import com.example.biyan.ubama.UserToken;
+import com.example.biyan.ubama.keranjang.KeranjangActivity;
 import com.example.biyan.ubama.models.BarangJasa;
 import com.google.gson.Gson;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
@@ -119,9 +124,23 @@ public class BarangJasaActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false);
+        searchView.requestFocus();
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == android.R.id.home) {
+        if (id == R.id.keranjang) {
+            Intent keranjang = new Intent(this,KeranjangActivity.class);
+            startActivity(keranjang);
+        } else if (id == android.R.id.home) {
             this.finish();
         }
         return super.onOptionsItemSelected(item);
@@ -249,7 +268,7 @@ public class BarangJasaActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Error Volley Ubah Favorit", error.toString());
+                Log.e("Error Volley", error.toString());
             }
         }) {
             @Override

@@ -1,6 +1,7 @@
 package com.example.biyan.ubama.toko;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -69,10 +70,15 @@ public class TokoProdukPilihKategoriActivity extends AppCompatActivity {
     }
 
     public void getKategori() {
+        final ProgressDialog loading = new ProgressDialog(this);
+        loading.setIndeterminate(true);
+        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loading.show();
         String url = UrlUbama.KATEGORI;
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                loading.dismiss();
                 kategoriList = new Gson().fromJson(response.toString(), new TypeToken<List<Kategori>>() {
                 }.getType());
                 Adapter adapter = new KategoriAdapter(kategoriList);
@@ -81,7 +87,8 @@ public class TokoProdukPilihKategoriActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Error Volley BerandaFragment", error.toString());
+                loading.dismiss();
+                Log.e("Error Volley", error.toString());
             }
         }) {
             @Override

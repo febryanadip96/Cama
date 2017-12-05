@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -51,7 +52,7 @@ public class TokoUserActivity extends AppCompatActivity {
     @BindView(R.id.tanya_jawab)
     LinearLayout tanyaJawab;
     @BindView(R.id.pengaturan)
-    LinearLayout pengaturan;
+    ImageView pengaturan;
 
     RequestQueue queue;
 
@@ -78,7 +79,7 @@ public class TokoUserActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Error Volley Ubah Favorit", error.toString());
+                Log.e("Error Volley", error.toString());
             }
         }) {
             @Override

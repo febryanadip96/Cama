@@ -14,8 +14,8 @@
         android:padding="0dp">
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_width="150dp"
+            android:layout_height="150dp">
 
             <ImageView
                 android:layout_margin="5dp"
@@ -37,13 +37,13 @@
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:ellipsize="end"
+                android:textColor="@android:color/black"
                 android:text="Nama Barang"/>
 
             <TextView
                 android:id="@+id/harga_barang"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
                 android:textColor="@android:color/holo_red_light"
                 android:text="Harga" />
 

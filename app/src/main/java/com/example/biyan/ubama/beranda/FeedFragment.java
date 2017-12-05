@@ -94,7 +94,7 @@ public class FeedFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Error Volley FeedFragment", error.toString());
+                Log.e("Error Volley", error.toString());
                 return;
             }
         }) {

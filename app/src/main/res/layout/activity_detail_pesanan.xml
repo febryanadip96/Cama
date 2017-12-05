@@ -27,14 +27,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
                         android:text="Pesanan " />
+
                     <TextView
                         android:id="@+id/nomor_pesanan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
                         android:text="" />
                 </LinearLayout>
 
@@ -50,7 +54,7 @@
                         android:id="@+id/total_harga"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
                         android:text="" />
                 </LinearLayout>
 
@@ -58,6 +62,7 @@
                     android:id="@+id/tanggal_pesan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="10sp"
                     android:text="Tanggal" />
             </LinearLayout>
 
@@ -77,7 +82,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
                     android:layout_marginBottom="3dp"
                     android:text="Alamat Pengiriman" />
 
@@ -85,6 +90,7 @@
                     android:id="@+id/alamat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
                     android:text="" />
 
             </LinearLayout>
@@ -111,13 +117,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="10sp"
                         android:text="Dijual oleh " />
 
                     <TextView
                         android:id="@+id/nama_toko"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimary"
                         android:text="Nama Toko" />
 
                 </LinearLayout>
@@ -228,7 +235,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
                     android:text="Log Pemesanan" />
 
                 <TextView
@@ -236,6 +243,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
                     android:text="" />
 
             </LinearLayout>
@@ -257,7 +265,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
                     android:text="Alasan Ditolak" />
 
                 <TextView
@@ -265,6 +273,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
                     android:text="" />
 
             </LinearLayout>

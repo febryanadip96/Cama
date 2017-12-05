@@ -3,7 +3,7 @@ package com.example.biyan.ubama.beranda;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -45,7 +45,7 @@ public class SubkategoriActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_kategori);
+        setContentView(R.layout.activity_subkategori);
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
@@ -53,7 +53,7 @@ public class SubkategoriActivity extends AppCompatActivity {
         setTitle(intent.getStringExtra("namaKategori"));
 
         queue = Volley.newRequestQueue(this);
-        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new GridLayoutManager(this, 3);
         recycler.setLayoutManager(layoutManager);
         getSubkategoriKategori();
     }

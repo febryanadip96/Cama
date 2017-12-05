@@ -226,7 +226,7 @@ public class TokoEditProdukActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loading.dismiss();
-                Log.e("Error Volley BarangJasaAcitivty", error.toString());
+                Log.e("Error Volley", error.toString());
                 finish();
             }
         }) {
@@ -478,7 +478,7 @@ public class TokoEditProdukActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loading.dismiss();
-                Log.e("Error Volley", error.getMessage());
+                Log.e("Error Volley", error.toString());
             }
         }) {
             @Override

@@ -107,7 +107,7 @@ public class TanyaJawabActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loading.dismiss();
-                Log.e("Error Volley FavoritFragment", error.toString());
+                Log.e("Error Volley", error.toString());
                 return;
             }
         }) {

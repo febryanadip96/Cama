@@ -361,7 +361,7 @@ public class TokoJualProdukActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loading.dismiss();
-                Log.e("Error Volley", error.getMessage());
+                Log.e("Error Volley", error.toString());
             }
         }) {
             @Override

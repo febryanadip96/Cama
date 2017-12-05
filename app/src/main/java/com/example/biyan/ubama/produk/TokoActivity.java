@@ -167,7 +167,7 @@ public class TokoActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Error Volley Ubah Favorit", error.toString());
+                Log.e("Error Volley", error.toString());
             }
         }) {
             @Override

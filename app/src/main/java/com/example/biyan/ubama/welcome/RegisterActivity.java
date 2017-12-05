@@ -190,7 +190,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loading.dismiss();
-                Log.e("Error Volley Register", error.toString());
+                Log.e("Error Volley", error.toString());
             }
         }) {
             @Override
