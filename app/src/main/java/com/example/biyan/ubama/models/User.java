@@ -31,6 +31,12 @@ public class User {
         public String telepon;
         @SerializedName("alamat")
         public String alamat;
+        @SerializedName("alamat_map")
+        public String alamatMap;
+        @SerializedName("latitude")
+        public double latitude;
+        @SerializedName("longitude")
+        public double longitude;
         @SerializedName("notif_number")
         public String notif_number;
         @SerializedName("url_profile")

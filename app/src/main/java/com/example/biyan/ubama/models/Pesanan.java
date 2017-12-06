@@ -17,6 +17,12 @@ public class Pesanan {
     public int jumlah_barang;
     @SerializedName("alamat")
     public String alamat;
+    @SerializedName("alamat_map")
+    public String alamatMap;
+    @SerializedName("latitude")
+    public double latitude;
+    @SerializedName("longitude")
+    public double longitude;
     @SerializedName("alasan_ditolak")
     public String alasan_ditolak;
     @SerializedName("status")

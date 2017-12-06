@@ -1,5 +1,6 @@
 package com.example.biyan.ubama.user;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.CursorLoader;
@@ -12,12 +13,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,6 +35,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.SimpleMultiPartRequest;
 import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.biyan.ubama.gps.AlamatActivity;
 import com.example.biyan.ubama.R;
 import com.example.biyan.ubama.UrlUbama;
 import com.example.biyan.ubama.UserToken;
@@ -64,14 +68,20 @@ public class PengaturanUserActivity extends AppCompatActivity {
     EditText telepon;
     @BindView(R.id.alamat)
     EditText alamat;
+    @BindView(R.id.alamat_map)
+    EditText alamatMap;
+    @BindView(R.id.layout_alamat_map)
+    TextInputLayout layoutAlamatMap;
     @BindView(R.id.simpan)
     Button simpan;
 
     RequestQueue queue;
     User user;
-    String imagePath ="";
+    String imagePath = "";
     final int GALLERY_REQUEST = 1;
     final int PERMISSION_REQUEST_READ_STORAGE = 2;
+    final int MAP_REQUEST = 2;
+    double latitude = 0, longitude = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,11 +92,20 @@ public class PengaturanUserActivity extends AppCompatActivity {
         setTitle("Ubah Data Diri");
         queue = Volley.newRequestQueue(this);
         getDataUser();
+        alamatMap.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                alamatMap.setShowSoftInputOnFocus(false);
+                Intent intent = new Intent(PengaturanUserActivity.this, AlamatActivity.class);
+                startActivityForResult(intent, MAP_REQUEST);
+            }
+        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Bundle res;
         if (resultCode == Activity.RESULT_OK)
             switch (requestCode) {
                 case GALLERY_REQUEST:
@@ -98,6 +117,12 @@ public class PengaturanUserActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         Log.i("TAG", "Some exception " + e);
                     }
+                    break;
+                case MAP_REQUEST:
+                    res = data.getExtras();
+                    latitude = res.getDouble("latitude");
+                    longitude = res.getDouble("longitude");
+                    alamatMap.setText(res.getString("alamatMap"));
                     break;
             }
     }
@@ -152,11 +177,14 @@ public class PengaturanUserActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 loading.dismiss();
                 user = new Gson().fromJson(response.toString(), User.class);
-                Picasso.with(PengaturanUserActivity.this).load(UrlUbama.URL_IMAGE + user.pengguna.url_profile).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).into(imageUser);
+                Picasso.with(PengaturanUserActivity.this).load(UrlUbama.URL_IMAGE + user.pengguna.url_profile).memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(imageUser);
                 nama.setText(user.name);
                 email.setText(user.email);
                 telepon.setText(user.pengguna.telepon);
                 alamat.setText(user.pengguna.alamat);
+                latitude = user.pengguna.latitude;
+                longitude = user.pengguna.longitude;
+                alamatMap.setText(user.pengguna.alamatMap);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -179,14 +207,14 @@ public class PengaturanUserActivity extends AppCompatActivity {
 
     @OnClick(R.id.image_user)
     public void onImageUserClicked() {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
                 ActivityCompat.requestPermissions(this,
-                        new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         PERMISSION_REQUEST_READ_STORAGE);
             } else {
                 ActivityCompat.requestPermissions(this,
-                        new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         PERMISSION_REQUEST_READ_STORAGE);
             }
         } else {
@@ -196,7 +224,7 @@ public class PengaturanUserActivity extends AppCompatActivity {
 
     @OnClick(R.id.simpan)
     public void onSimpanClicked() {
-        if(alamat.getText().toString().equals("") || telepon.getText().equals("")){
+        if (alamat.getText().toString().equals("") || telepon.getText().equals("")) {
             Toast.makeText(PengaturanUserActivity.this, "Data harus diisi dengan benar", Toast.LENGTH_LONG).show();
             return;
         }
@@ -216,7 +244,7 @@ public class PengaturanUserActivity extends AppCompatActivity {
         alert.show();
     }
 
-    public void updateDataUser(){
+    public void updateDataUser() {
         final ProgressDialog loading = new ProgressDialog(this);
         loading.setIndeterminate(true);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -257,10 +285,13 @@ public class PengaturanUserActivity extends AppCompatActivity {
                 return params;
             }
         };
-        if(!imagePath.equals("")){
+        if (!imagePath.equals("")) {
             request.addFile("gambar", imagePath);
         }
         request.addMultipartParam("alamat", "text/plain", alamat.getText().toString());
+        request.addMultipartParam("alamat_map", "text/plain", alamatMap.getText().toString());
+        request.addMultipartParam("latitude", "text/plain", latitude+"");
+        request.addMultipartParam("longitude", "text/plain", longitude+"");
         request.addMultipartParam("telepon", "text/plain", telepon.getText().toString());
         request.setRetryPolicy(new DefaultRetryPolicy(
                 30000,
@@ -268,5 +299,12 @@ public class PengaturanUserActivity extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         request.setShouldCache(false);
         queue.add(request);
+    }
+
+    @OnClick(R.id.alamat_map)
+    public void onAlamatMapClicked() {
+        alamatMap.setShowSoftInputOnFocus(false);
+        Intent intent = new Intent(PengaturanUserActivity.this, AlamatActivity.class);
+        startActivityForResult(intent,MAP_REQUEST);
     }
 }

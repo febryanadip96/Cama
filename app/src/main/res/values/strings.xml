@@ -7,4 +7,6 @@
     <string name="keranjang_title">keranjang</string>
     <string name="search_title">Cari</string>
     <string name="search_hint">Cari</string>
+    <string name="title_activity_alamat">Alamat</string>
+    <string name="title_activity_route">Pengiriman</string>
 </resources>

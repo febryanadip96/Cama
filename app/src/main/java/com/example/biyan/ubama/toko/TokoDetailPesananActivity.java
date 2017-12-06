@@ -25,6 +25,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
+import com.example.biyan.ubama.gps.RouteActivity;
 import com.example.biyan.ubama.UrlUbama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.Pesanan;
@@ -55,6 +56,8 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
     TextView tanggalPesan;
     @BindView(R.id.alamat)
     TextView alamat;
+    @BindView(R.id.map)
+    Button map;
     @BindView(R.id.recycler_item_detail_pesanan)
     RecyclerView recyclerItemDetailPesanan;
     @BindView(R.id.log_pesanan)
@@ -86,6 +89,8 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
 
     String noTelpPembeli;
     String emailPembeli;
+
+    double latitudePembeli = 0, longitudePembeli = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +148,8 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
                 }
                 tanggalPesan.setText(outputFormat.format(date));
                 alamat.setText(pesanan.alamat);
+                latitudePembeli = pesanan.latitude;
+                longitudePembeli = pesanan.longitude;
                 String isiLog = "";
                 for (Pesanan.Log_pesanan log : pesanan.log_pesanan) {
                     try {
@@ -245,7 +252,7 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
     }
 
 
-    public void terimaPesanan(){
+    public void terimaPesanan() {
         final ProgressDialog loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
@@ -303,9 +310,17 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
         alert.show();
     }
 
-    public void tolakPesanan(){
+    public void tolakPesanan() {
         Intent intent = new Intent(this, TokoAlasanDitolakActivity.class);
         intent.putExtra("idPesanan", idPesanan);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.map)
+    public void onMapClicked() {
+        Intent intent = new Intent(this, RouteActivity.class);
+        intent.putExtra("latitude", latitudePembeli);
+        intent.putExtra("longitude", longitudePembeli);
         startActivity(intent);
     }
 }

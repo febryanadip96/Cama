@@ -152,7 +152,6 @@ public class TokoJualProdukActivity extends AppCompatActivity {
                     switch (pilih) {
                         case 1:
                             imagePath1 = getRealPathFromURI(selectedImage);
-                            Log.d("image1", imagePath1);
                             try {
                                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                                 image1.setImageBitmap(bitmap);
@@ -162,7 +161,6 @@ public class TokoJualProdukActivity extends AppCompatActivity {
                             break;
                         case 2:
                             imagePath2 = getRealPathFromURI(selectedImage);
-                            Log.d("image2", imagePath2);
                             try {
                                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                                 image2.setImageBitmap(bitmap);
@@ -172,7 +170,6 @@ public class TokoJualProdukActivity extends AppCompatActivity {
                             break;
                         case 3:
                             imagePath3 = getRealPathFromURI(selectedImage);
-                            Log.d("image3", imagePath3);
                             try {
                                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                                 image3.setImageBitmap(bitmap);
@@ -182,7 +179,6 @@ public class TokoJualProdukActivity extends AppCompatActivity {
                             break;
                         case 4:
                             imagePath4 = getRealPathFromURI(selectedImage);
-                            Log.d("image4", imagePath4);
                             try {
                                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                                 image4.setImageBitmap(bitmap);
@@ -195,13 +191,11 @@ public class TokoJualProdukActivity extends AppCompatActivity {
                 case PILIH_KATEGORI:
                     res = data.getExtras();
                     idSubkategori = res.getInt("idSubkategori");
-                    Log.d("Subkategori", idSubkategori + "");
                     namaKategori.setText(res.getString("namaSubkategori"));
                     break;
                 case PILIH_FAKULTAS:
                     res = data.getExtras();
                     idFakultas = res.getInt("idFakultas");
-                    Log.d("Fakultas", idFakultas + "");
                     namaFakultas.setText(res.getString("namaFakultas"));
                     break;
             }

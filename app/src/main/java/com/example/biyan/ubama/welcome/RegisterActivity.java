@@ -1,10 +1,14 @@
 package com.example.biyan.ubama.welcome;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Patterns;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -19,6 +23,7 @@ import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.biyan.ubama.gps.AlamatActivity;
 import com.example.biyan.ubama.R;
 import com.example.biyan.ubama.UrlUbama;
 
@@ -50,6 +55,10 @@ public class RegisterActivity extends AppCompatActivity {
     TextInputLayout layoutTelepon;
     @BindView(R.id.alamat)
     EditText alamat;
+    @BindView(R.id.alamat_map)
+    EditText alamatMap;
+    @BindView(R.id.layout_alamat_map)
+    TextInputLayout layoutAlamatMap;
     @BindView(R.id.layout_alamat)
     TextInputLayout layoutAlamat;
     @BindView(R.id.email)
@@ -69,6 +78,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     RequestQueue queue;
     int jenis;
+    final static int MAP_REQUEST = 1;
+    double latitude = 0, longitude = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +89,30 @@ public class RegisterActivity extends AppCompatActivity {
         queue = Volley.newRequestQueue(this);
         lakiLaki.setChecked(true);
         jenis = 1;
+        alamatMap.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                alamatMap.setShowSoftInputOnFocus(false);
+                Intent intent = new Intent(RegisterActivity.this, AlamatActivity.class);
+                startActivityForResult(intent, MAP_REQUEST);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bundle res;
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case MAP_REQUEST:
+                    res = data.getExtras();
+                    latitude = res.getDouble("latitude");
+                    longitude = res.getDouble("longitude");
+                    alamatMap.setText(res.getString("alamatMap"));
+                    break;
+            }
+        }
     }
 
     @OnClick(R.id.register)
@@ -86,56 +121,62 @@ public class RegisterActivity extends AppCompatActivity {
             layoutNamaLengkap.setError("Nama Lengkap harus diisi");
             namaLengkap.requestFocus();
             return;
-        } else{
+        } else {
             layoutNamaLengkap.setError(null);
         }
-        if(telepon.getText().toString().equals("") ){
+        if (telepon.getText().toString().equals("")) {
             layoutTelepon.setError("Nomor Telepon harus diisi");
             telepon.requestFocus();
             return;
-        } else{
+        } else {
             layoutTelepon.setError(null);
         }
-        if(alamat.getText().toString().equals("")){
+        if (alamat.getText().toString().equals("")) {
             layoutAlamat.setError("Alamat harus diisi");
             alamat.requestFocus();
             return;
-        } else{
+        } else {
             layoutAlamat.setError(null);
         }
-        if(email.getText().toString().equals("")){
+        if(longitude == 0 || latitude == 0 || alamatMap.getText().toString().equals("")){
+            layoutAlamatMap.setError("Harap memasukkan posisi Anda");
+        }
+        else{
+            layoutAlamatMap.setError(null);
+        }
+        if (email.getText().toString().equals("")) {
             layoutEmail.setError("Email harus diisi");
             email.requestFocus();
             return;
-        } else{
+        } else {
             layoutEmail.setError(null);
         }
-        if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()){
+        if (!Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()) {
             layoutEmail.setError("Isikan dengan email yang valid");
             email.requestFocus();
             return;
-        } else{
+        } else {
             layoutEmail.setError(null);
         }
-        if(password.getText().toString().equals("")){
+        if (password.getText().toString().equals("")) {
             layoutPassword.setError("Password harus diisi");
             password.requestFocus();
             return;
-        } else{
+        } else {
             password.setError(null);
         }
-        if(passwordKonfirmasi.getText().toString().equals("")){
+        if (passwordKonfirmasi.getText().toString().equals("")) {
             layoutPasswordKonfirmasi.setError("Konfirmasi password harus diisi");
             passwordKonfirmasi.requestFocus();
             return;
-        } else{
+        } else {
             layoutPasswordKonfirmasi.setError(null);
         }
         if (!password.getText().toString().equals(passwordKonfirmasi.getText().toString())) {
             layoutPasswordKonfirmasi.setError("Konfirmasi password tidak sama dengan password");
             passwordKonfirmasi.requestFocus();
             return;
-        } else{
+        } else {
             layoutPasswordKonfirmasi.setError(null);
         }
 
@@ -165,6 +206,9 @@ public class RegisterActivity extends AppCompatActivity {
         params.put("jenis_kelamin", jenis + "");
         params.put("telepon", telepon.getText().toString());
         params.put("alamat", alamat.getText().toString());
+        params.put("alamat_map", alamatMap.getText().toString());
+        params.put("latitude", latitude+"");
+        params.put("longitude", longitude+"");
 
         String url = UrlUbama.REGISTER;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
@@ -208,4 +252,10 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
+    @OnClick(R.id.alamat_map)
+    public void onAlamatMapClicked() {
+        alamatMap.setShowSoftInputOnFocus(false);
+        Intent intent = new Intent(RegisterActivity.this, AlamatActivity.class);
+        startActivityForResult(intent,MAP_REQUEST);
+    }
 }
