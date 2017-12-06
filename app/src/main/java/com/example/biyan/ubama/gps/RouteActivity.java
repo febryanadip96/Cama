@@ -47,28 +47,24 @@ public class RouteActivity extends FragmentActivity implements OnMapReadyCallbac
         com.google.android.gms.location.LocationListener {
 
     private GoogleMap mMap;
+    GoogleApiClient mGoogleApiClient;
+    Marker mCurrLocationMarker;
+    LocationRequest mLocationRequest;
     final static int MY_PERMISSIONS_REQUEST_LOCATION = 1;
     Location start;
     Location finish;
     LatLng origin;
     LatLng destination;
-    GoogleApiClient mGoogleApiClient;
-    Marker mCurrLocationMarker;
-    LocationRequest mLocationRequest;
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_LOCATION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    if (ContextCompat.checkSelfPermission(this,
-                            android.Manifest.permission.ACCESS_FINE_LOCATION)
-                            == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                         if(mGoogleApiClient == null) {
-                        buildGoogleApiClient();
-                    }
+                            buildGoogleApiClient();
+                        }
                         mMap.setMyLocationEnabled(true);
                     }
                 } else {
@@ -83,10 +79,6 @@ public class RouteActivity extends FragmentActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkLocationPermission();
-        }
         Intent intent = getIntent();
         finish = new Location("");
         finish.setLatitude(intent.getDoubleExtra("latitude",0));
@@ -97,19 +89,10 @@ public class RouteActivity extends FragmentActivity implements OnMapReadyCallbac
     }
 
     public boolean checkLocationPermission(){
-        if (ContextCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    android.Manifest.permission.ACCESS_FINE_LOCATION)) {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_LOCATION);
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
             } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_LOCATION);
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
             }
             return false;
         } else {
@@ -121,36 +104,32 @@ public class RouteActivity extends FragmentActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                buildGoogleApiClient();
+            if(checkLocationPermission()){
                 mMap.setMyLocationEnabled(true);
+                buildGoogleApiClient();
             }
-        }
-        else {
-            buildGoogleApiClient();
-            mMap.setMyLocationEnabled(true);
         }
         mMap.animateCamera(CameraUpdateFactory.zoomTo(20));
     }
 
     @Override
     public void onLocationChanged(Location location) {
+        //hapus gambar di map
+        mMap.clear();
+
+        //lokasi saat ini
         start = location;
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
-        mMap.clear();
-
-        //Place current location marker
         origin = new LatLng(start.getLatitude(), start.getLongitude());
         destination = new LatLng(finish.getLatitude(), finish.getLongitude());
+
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(origin);
         markerOptions.title("Posisi Anda");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
-
-        //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLng(origin));
 
         markerOptions = new MarkerOptions();
@@ -161,23 +140,13 @@ public class RouteActivity extends FragmentActivity implements OnMapReadyCallbac
 
         String url = getUrl(origin, destination);
         FetchUrl FetchUrl = new FetchUrl();
-
         // Start downloading json data from Google Directions API
         FetchUrl.execute(url);
         //stop location updates
+
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient,  this);
         }
-    }
-
-    private String getUrl(LatLng origin, LatLng dest) {
-        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
-        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
-        String sensor = "sensor=false";
-        String parameters = str_origin + "&" + str_dest + "&" + sensor;
-        String output = "json";
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
-        return url;
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -192,8 +161,8 @@ public class RouteActivity extends FragmentActivity implements OnMapReadyCallbac
     @Override
     public void onConnected(Bundle bundle) {
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(5000);
-        mLocationRequest.setFastestInterval(4000);
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setFastestInterval(5000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
         if (ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -211,6 +180,17 @@ public class RouteActivity extends FragmentActivity implements OnMapReadyCallbac
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
+    }
+
+    //polyline
+    private String getUrl(LatLng origin, LatLng dest) {
+        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
+        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
+        String sensor = "sensor=false";
+        String parameters = str_origin + "&" + str_dest + "&" + sensor;
+        String output = "json";
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
+        return url;
     }
 
     /**

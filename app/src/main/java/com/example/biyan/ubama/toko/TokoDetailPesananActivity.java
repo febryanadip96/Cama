@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -57,7 +58,7 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
     @BindView(R.id.alamat)
     TextView alamat;
     @BindView(R.id.map)
-    Button map;
+    ImageView map;
     @BindView(R.id.recycler_item_detail_pesanan)
     RecyclerView recyclerItemDetailPesanan;
     @BindView(R.id.log_pesanan)

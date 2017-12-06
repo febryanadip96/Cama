@@ -109,7 +109,7 @@ public class RegisterActivity extends AppCompatActivity {
                     res = data.getExtras();
                     latitude = res.getDouble("latitude");
                     longitude = res.getDouble("longitude");
-                    alamatMap.setText(res.getString("alamatMap"));
+                    alamatMap.setText(res.getString("alamat_map"));
                     break;
             }
         }

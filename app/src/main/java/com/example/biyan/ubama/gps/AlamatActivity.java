@@ -27,7 +27,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
@@ -40,26 +39,22 @@ public class AlamatActivity extends FragmentActivity implements OnMapReadyCallba
 
     private GoogleMap mMap;
     GoogleApiClient mGoogleApiClient;
-    Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     final static int MY_PERMISSIONS_REQUEST_LOCATION = 1;
     Button set;
     LatLng position;
     String alamatMap = "";
+    LatLng origin;
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_LOCATION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    if (ContextCompat.checkSelfPermission(this,
-                            android.Manifest.permission.ACCESS_FINE_LOCATION)
-                            == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                         if(mGoogleApiClient == null) {
-                        buildGoogleApiClient();
-                    }
+                            buildGoogleApiClient();
+                        }
                         mMap.setMyLocationEnabled(true);
                     }
                 } else {
@@ -74,9 +69,6 @@ public class AlamatActivity extends FragmentActivity implements OnMapReadyCallba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alamat);
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkLocationPermission();
-        }
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -94,26 +86,35 @@ public class AlamatActivity extends FragmentActivity implements OnMapReadyCallba
         });
     }
 
+    public boolean checkLocationPermission(){
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if(checkLocationPermission()){
                 mMap.setMyLocationEnabled(true);
                 buildGoogleApiClient();
             }
-        }
-        else {
-            mMap.setMyLocationEnabled(true);
-            buildGoogleApiClient();
         }
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
                 mMap.clear();
                 MarkerOptions markerOptions = new MarkerOptions();
-                // Setting the position of the marker
                 markerOptions.position(latLng);
+                //alamat
                 Geocoder geocoder;
                 List<Address> addresses = null;
                 geocoder = new Geocoder(AlamatActivity.this, Locale.getDefault());
@@ -134,31 +135,29 @@ public class AlamatActivity extends FragmentActivity implements OnMapReadyCallba
         });
     }
 
-    public boolean checkLocationPermission(){
-        if (ContextCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    android.Manifest.permission.ACCESS_FINE_LOCATION)) {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_LOCATION);
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_LOCATION);
-            }
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     @Override
     public void onLocationChanged(Location location) {
-        LatLng origin = new LatLng(location.getLatitude(), location.getLongitude());
+        origin = new LatLng(location.getLatitude(), location.getLongitude());
         mMap.moveCamera(CameraUpdateFactory.newLatLng(origin));
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(origin);
+        //alamat
+        Geocoder geocoder;
+        List<Address> addresses = null;
+        geocoder = new Geocoder(AlamatActivity.this, Locale.getDefault());
+
+        try {
+            addresses = geocoder.getFromLocation(origin.latitude, origin.longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String address = addresses.get(0).getAddressLine(0);
+        markerOptions.title(address);
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+        mMap.addMarker(markerOptions);
+        position = origin;
+        alamatMap = address;
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -173,8 +172,6 @@ public class AlamatActivity extends FragmentActivity implements OnMapReadyCallba
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(5000);
-        mLocationRequest.setFastestInterval(4000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
         if (ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION)

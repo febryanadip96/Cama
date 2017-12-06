@@ -122,7 +122,8 @@ public class PengaturanUserActivity extends AppCompatActivity {
                     res = data.getExtras();
                     latitude = res.getDouble("latitude");
                     longitude = res.getDouble("longitude");
-                    alamatMap.setText(res.getString("alamatMap"));
+                    alamatMap.setText(res.getString("alamat_map"));
+                    Log.d("Hasil", latitude+","+longitude+","+alamat);
                     break;
             }
     }
