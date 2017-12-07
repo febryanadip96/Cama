@@ -92,9 +92,11 @@ public class RegisterActivity extends AppCompatActivity {
         alamatMap.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                alamatMap.setShowSoftInputOnFocus(false);
-                Intent intent = new Intent(RegisterActivity.this, AlamatActivity.class);
-                startActivityForResult(intent, MAP_REQUEST);
+                if(hasFocus){
+                    alamatMap.setShowSoftInputOnFocus(false);
+                    Intent intent = new Intent(RegisterActivity.this, AlamatActivity.class);
+                    startActivityForResult(intent, MAP_REQUEST);
+                }
             }
         });
     }
@@ -140,6 +142,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
         if(longitude == 0 || latitude == 0 || alamatMap.getText().toString().equals("")){
             layoutAlamatMap.setError("Harap memasukkan posisi Anda");
+            return;
         }
         else{
             layoutAlamatMap.setError(null);

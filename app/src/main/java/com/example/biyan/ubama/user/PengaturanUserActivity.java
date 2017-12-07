@@ -95,9 +95,11 @@ public class PengaturanUserActivity extends AppCompatActivity {
         alamatMap.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                alamatMap.setShowSoftInputOnFocus(false);
-                Intent intent = new Intent(PengaturanUserActivity.this, AlamatActivity.class);
-                startActivityForResult(intent, MAP_REQUEST);
+                if(hasFocus){
+                    alamatMap.setShowSoftInputOnFocus(false);
+                    Intent intent = new Intent(PengaturanUserActivity.this, AlamatActivity.class);
+                    startActivityForResult(intent, MAP_REQUEST);
+                }
             }
         });
     }
