@@ -3,6 +3,7 @@ package com.example.biyan.ubama.toko;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -43,6 +44,8 @@ public class TokoPesananDiprosesFragment extends Fragment {
 
     @BindView(R.id.recycler)
     RecyclerView recycler;
+    @BindView(R.id.swiperefresh)
+    SwipeRefreshLayout swiperefresh;
     @BindView(R.id.empty)
     TextView empty;
     Unbinder unbinder;
@@ -58,12 +61,6 @@ public class TokoPesananDiprosesFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        getPesananDiproses();
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -72,6 +69,14 @@ public class TokoPesananDiprosesFragment extends Fragment {
         queue = Volley.newRequestQueue(getContext());
         layoutManager = new LinearLayoutManager(getContext());
         recycler.setLayoutManager(layoutManager);
+        swiperefresh.setOnRefreshListener(
+            new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    getPesananDiproses();
+                }
+            }
+        );
         getPesananDiproses();
         return view;
     }
@@ -81,12 +86,13 @@ public class TokoPesananDiprosesFragment extends Fragment {
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                Log.d("Response", response.toString());
+                swiperefresh.setRefreshing(false);
                 pesananList = new Gson().fromJson(response.toString(), new TypeToken<List<Pesanan>>() {
                 }.getType());
                 adapter = new TokoPesananAdapter(pesananList);
                 recycler.setAdapter(adapter);
                 if (!(pesananList.size() > 0)) {
+                    swiperefresh.setVisibility(View.GONE);
                     recycler.setVisibility(View.GONE);
                     empty.setVisibility(View.VISIBLE);
                 }
@@ -94,6 +100,7 @@ public class TokoPesananDiprosesFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                swiperefresh.setRefreshing(false);
                 Log.e("Error Volley ", error.toString());
                 return;
             }

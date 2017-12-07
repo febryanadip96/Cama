@@ -1,5 +1,6 @@
 package com.example.biyan.ubama.toko;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -55,6 +56,7 @@ public class TokoUserActivity extends AppCompatActivity {
     ImageView pengaturan;
 
     RequestQueue queue;
+    final static int RESULT_PENGATURAN = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,19 @@ public class TokoUserActivity extends AppCompatActivity {
         queue = Volley.newRequestQueue(this);
 
         getTokoUser();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bundle res;
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case RESULT_PENGATURAN:
+                    getTokoUser();
+                    break;
+            }
+        }
     }
 
     public void getTokoUser() {
@@ -94,12 +109,6 @@ public class TokoUserActivity extends AppCompatActivity {
         queue.add(request);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getTokoUser();
-    }
-
     @OnClick(R.id.jual_produk)
     public void onJualProdukClicked() {
         Intent jualProduk = new Intent(TokoUserActivity.this, TokoJualProdukActivity.class);
@@ -127,6 +136,6 @@ public class TokoUserActivity extends AppCompatActivity {
     @OnClick(R.id.pengaturan)
     public void onPengaturanClicked() {
         Intent pengaturan = new Intent(TokoUserActivity.this, TokoPengaturanActivity.class);
-        startActivity(pengaturan);
+        startActivityForResult(pengaturan, RESULT_PENGATURAN);
     }
 }

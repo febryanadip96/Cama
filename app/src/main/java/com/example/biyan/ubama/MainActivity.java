@@ -1,5 +1,6 @@
 package com.example.biyan.ubama;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -66,6 +67,8 @@ public class MainActivity extends AppCompatActivity
 
     MenuItem keranjang;
 
+    final static int RESULT_PENGATURAN = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +97,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ProfileUserActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, RESULT_PENGATURAN);
             }
         });
         imageProfile = (CircleImageView) headerView.findViewById(R.id.imageProfile);
@@ -103,6 +106,19 @@ public class MainActivity extends AppCompatActivity
         queue = Volley.newRequestQueue(this);
         isiHeaderUser();
         cekKeranjang();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bundle res;
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case RESULT_PENGATURAN:
+                    isiHeaderUser();
+                    break;
+            }
+        }
     }
 
     @Override
@@ -120,7 +136,6 @@ public class MainActivity extends AppCompatActivity
     {
         super.onResume();
         cekKeranjang();
-        isiHeaderUser();
         final SharedPreferences sp = getSharedPreferences("pager",
                 android.content.Context.MODE_PRIVATE);
         pagerBeranda.setCurrentItem(sp.getInt("currentPage", 0));

@@ -48,8 +48,6 @@ public class TokoJawabPertanyaanActivity extends AppCompatActivity {
     ImageView gambarBarang;
     @BindView(R.id.nama_barang)
     TextView namaBarang;
-    @BindView(R.id.jenis_barang)
-    TextView jenisBarang;
     @BindView(R.id.image_penanya)
     CircleImageView imagePenanya;
     @BindView(R.id.waktu_tanya)
@@ -116,7 +114,6 @@ public class TokoJawabPertanyaanActivity extends AppCompatActivity {
                     gambarBarang.setImageResource(R.drawable.ic_error_image);
                 }
                 namaBarang.setText(tanyaJawab.barang_jasa.nama);
-                jenisBarang.setText(tanyaJawab.barang_jasa.jenis);
                 if (!tanyaJawab.penanya.url_profile.equals("")) {
                     Picasso.with(TokoJawabPertanyaanActivity.this).load(UrlUbama.URL_IMAGE + tanyaJawab.penanya.url_profile).into(imagePenanya);
                 } else {

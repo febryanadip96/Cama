@@ -71,6 +71,8 @@ public class DetailPesananActivity extends AppCompatActivity {
     CardView layoutHubungi;
     @BindView(R.id.selesai)
     Button selesai;
+    @BindView(R.id.batal)
+    Button batal;
     @BindView(R.id.beri_komentar)
     Button beriKomentar;
     @BindView(R.id.alasan_ditolak)
@@ -158,26 +160,37 @@ public class DetailPesananActivity extends AppCompatActivity {
                     layoutHubungi.setVisibility(View.GONE);
                     layoutDitolak.setVisibility(View.GONE);
                     selesai.setVisibility(View.GONE);
+                    batal.setVisibility(View.GONE);
                     beriKomentar.setVisibility(View.VISIBLE);
                     layoutTombol.setVisibility(View.VISIBLE);
                 } else if (pesanan.status.equals("Ditolak")) {
                     layoutHubungi.setVisibility(View.GONE);
                     layoutDitolak.setVisibility(View.VISIBLE);
                     selesai.setVisibility(View.GONE);
+                    batal.setVisibility(View.GONE);
                     beriKomentar.setVisibility(View.GONE);
                     layoutTombol.setVisibility(View.GONE);
-                } else if(pesanan.status.equals("Diproses")){
+                } else if (pesanan.status.equals("Diproses")) {
                     layoutHubungi.setVisibility(View.VISIBLE);
                     layoutDitolak.setVisibility(View.GONE);
                     beriKomentar.setVisibility(View.GONE);
                     selesai.setVisibility(View.VISIBLE);
+                    batal.setVisibility(View.VISIBLE);
                     layoutTombol.setVisibility(View.VISIBLE);
-                } else{
+                }else if(pesanan.status.equals("Batal")){
+                    layoutHubungi.setVisibility(View.GONE);
+                    layoutDitolak.setVisibility(View.GONE);
+                    selesai.setVisibility(View.GONE);
+                    batal.setVisibility(View.GONE);
+                    beriKomentar.setVisibility(View.GONE);
+                    layoutTombol.setVisibility(View.GONE);
+                } else {
                     layoutHubungi.setVisibility(View.VISIBLE);
                     layoutDitolak.setVisibility(View.GONE);
                     beriKomentar.setVisibility(View.GONE);
                     selesai.setVisibility(View.GONE);
-                    layoutTombol.setVisibility(View.GONE);
+                    batal.setVisibility(View.VISIBLE);
+                    layoutTombol.setVisibility(View.VISIBLE);
                 }
                 loading.dismiss();
             }
@@ -224,7 +237,7 @@ public class DetailPesananActivity extends AppCompatActivity {
 
     @OnClick(R.id.selesai)
     public void onSelesaiClicked() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(DetailPesananActivity.this);
         builder.setMessage("Anda ingin menyelesaikan pesanan ini?")
                 .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -240,7 +253,7 @@ public class DetailPesananActivity extends AppCompatActivity {
         alert.show();
     }
 
-    public void pesananSelesai(){
+    public void pesananSelesai() {
         final ProgressDialog loading = new ProgressDialog(this);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
@@ -285,5 +298,63 @@ public class DetailPesananActivity extends AppCompatActivity {
         Intent intent = new Intent(this, KomentarPesananActivity.class);
         intent.putExtra("idPesanan", idPesanan);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.batal)
+    public void onBatalClicked() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(DetailPesananActivity.this);
+        builder.setMessage("Anda ingin membatalkan pesanan ini?")
+                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        pesananBatal();
+                    }
+                })
+                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    public void pesananBatal(){
+        final ProgressDialog loading = new ProgressDialog(this);
+        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loading.setMessage("Mohon Menunggu");
+        loading.setIndeterminate(true);
+        loading.show();
+        String url = UrlUbama.PESANAN_BATAL + idPesanan;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                loading.dismiss();
+                try {
+                    boolean selesai = response.getBoolean("batal");
+                    if (selesai) {
+                        getDetailPesanan();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loading.dismiss();
+                Log.e("Error Volley", error.toString());
+                finish();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", UserToken.getToken(getApplicationContext()));
+                params.put("Accept", "application/json");
+                return params;
+            }
+        };
+        request.setShouldCache(false);
+        queue.add(request);
     }
 }

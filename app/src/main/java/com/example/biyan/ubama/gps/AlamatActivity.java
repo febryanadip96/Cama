@@ -115,17 +115,19 @@ public class AlamatActivity extends FragmentActivity implements OnMapReadyCallba
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(latLng);
                 //alamat
-                Geocoder geocoder;
                 List<Address> addresses = null;
-                geocoder = new Geocoder(AlamatActivity.this, Locale.getDefault());
+                String address = "";
+                Geocoder geocoder = new Geocoder(AlamatActivity.this, Locale.getDefault());
 
                 try {
                     addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                    address = addresses.get(0).getAddressLine(0);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-                String address = addresses.get(0).getAddressLine(0);
+                if(address.equals("")){
+                    address = latLng.latitude+", "+latLng.longitude;
+                }
                 markerOptions.title(address);
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                 mMap.addMarker(markerOptions);
@@ -142,17 +144,21 @@ public class AlamatActivity extends FragmentActivity implements OnMapReadyCallba
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(origin);
         //alamat
-        Geocoder geocoder;
+
         List<Address> addresses = null;
-        geocoder = new Geocoder(AlamatActivity.this, Locale.getDefault());
+        String address = "";
+        Geocoder geocoder = new Geocoder(AlamatActivity.this, Locale.getDefault());
 
         try {
             addresses = geocoder.getFromLocation(origin.latitude, origin.longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+            address = addresses.get(0).getAddressLine(0);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        String address = addresses.get(0).getAddressLine(0);
+        if(address.equals("")){
+            address = origin.latitude+", "+origin.longitude;
+        }
         markerOptions.title(address);
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         mMap.addMarker(markerOptions);

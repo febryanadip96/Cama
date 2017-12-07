@@ -1,6 +1,7 @@
 package com.example.biyan.ubama.pesanan;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +36,8 @@ public class PesananActivity extends AppCompatActivity {
 
     @BindView(R.id.recycler)
     RecyclerView recycler;
+    @BindView(R.id.swiperefresh)
+    SwipeRefreshLayout swiperefresh;
     @BindView(R.id.empty)
     TextView empty;
 
@@ -50,16 +53,16 @@ public class PesananActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         queue = Volley.newRequestQueue(this);
         this.setTitle("Pesanan");
-
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recycler.setLayoutManager(layoutManager);
-
-        getPesanan();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
+        swiperefresh.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        getPesanan();
+                    }
+                }
+        );
         getPesanan();
     }
 
@@ -68,18 +71,21 @@ public class PesananActivity extends AppCompatActivity {
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                swiperefresh.setRefreshing(false);
                 pesananList = new Gson().fromJson(response.toString(), new TypeToken<List<Pesanan>>() {
                 }.getType());
                 adapter = new PesananAdapter(pesananList);
                 recycler.setAdapter(adapter);
                 if (!(pesananList.size() > 0)) {
                     recycler.setVisibility(View.GONE);
+                    swiperefresh.setVisibility(View.GONE);
                     empty.setVisibility(View.VISIBLE);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                swiperefresh.setRefreshing(false);
                 Log.e("Error Volley", error.toString());
             }
         }) {

@@ -1,5 +1,6 @@
 package com.example.biyan.ubama.user;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -52,6 +53,8 @@ public class ProfileUserActivity extends AppCompatActivity {
     RequestQueue queue;
     User user;
 
+    final static int RESULT_PENGATURAN = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,15 +66,23 @@ public class ProfileUserActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        getUserData();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bundle res;
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case RESULT_PENGATURAN:
+                    getUserData();
+                    break;
+            }
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
+            this.setResult(RESULT_OK);
             this.finish();
         }
         return super.onOptionsItemSelected(item);
@@ -117,7 +128,7 @@ public class ProfileUserActivity extends AppCompatActivity {
     @OnClick(R.id.pengaturan)
     public void onPengaturanClicked() {
         Intent intent = new Intent(ProfileUserActivity.this, PengaturanUserActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent,RESULT_PENGATURAN);
     }
 
     @OnClick(R.id.ubah_password)

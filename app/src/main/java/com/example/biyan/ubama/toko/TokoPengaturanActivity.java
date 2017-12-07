@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -267,7 +268,9 @@ public class TokoPengaturanActivity extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             Boolean update = jsonResponse.getBoolean("update");
                             if (update) {
-
+                                Toast.makeText(TokoPengaturanActivity.this, "Data Toko telah diperbarui.", Toast.LENGTH_LONG).show();
+                                Intent intent = getIntent();
+                                setResult(RESULT_OK, intent);
                                 finish();
                             }
 

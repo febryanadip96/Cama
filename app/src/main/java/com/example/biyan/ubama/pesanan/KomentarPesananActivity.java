@@ -1,5 +1,6 @@
 package com.example.biyan.ubama.pesanan;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -212,7 +213,7 @@ public class KomentarPesananActivity extends AppCompatActivity {
                         star3.setImageResource(R.drawable.ic_star_yellow);
                         star4.setImageResource(R.drawable.ic_star_yellow);
                         star5.setImageResource(R.drawable.ic_star_yellow);
-                        totalRating.setText(2+"");
+                        totalRating.setText(5+"");
                     }
                 });
                 simpan.setOnClickListener(new View.OnClickListener() {
@@ -227,13 +228,18 @@ public class KomentarPesananActivity extends AppCompatActivity {
                             komentar.requestFocus();
                             return;
                         }
-
+                        final ProgressDialog loading = new ProgressDialog(KomentarPesananActivity.this);
+                        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                        loading.setMessage("Mohon Menunggu");
+                        loading.setIndeterminate(true);
+                        loading.show();
                         queue = Volley.newRequestQueue(context);
                         String url = UrlUbama.SIMPAN_KOMENTAR;
                         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
                                 try {
+                                    loading.dismiss();
                                     JSONObject hasil = new JSONObject(response);
                                     if(hasil.getBoolean("tersimpan")) {
                                         ((KomentarPesananActivity) context).getDetailPesanan();
@@ -246,6 +252,7 @@ public class KomentarPesananActivity extends AppCompatActivity {
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
+                                loading.dismiss();
                                 Log.e("Error Volley", error.toString());
                             }
                         }) {

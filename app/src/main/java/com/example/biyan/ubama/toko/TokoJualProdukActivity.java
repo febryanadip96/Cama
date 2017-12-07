@@ -130,6 +130,21 @@ public class TokoJualProdukActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         queue = Volley.newRequestQueue(this);
+        minimalPembelian.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    int tertulis = Integer.parseInt(minimalPembelian.getText().toString()) + 0;
+                    if (tertulis < 1) {
+                        tertulis = 1;
+                        minimalPembelian.setText(tertulis + "");
+                        Toast.makeText(TokoJualProdukActivity.this, "Pemesanan minimal 1", Toast.LENGTH_LONG).show();
+                    } else {
+                        minimalPembelian.setText(tertulis + "");
+                    }
+                }
+            }
+        });
     }
 
     @Override

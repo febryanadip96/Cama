@@ -185,6 +185,12 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
                     tolakPesanan.setVisibility(View.GONE);
                     layoutHubungi.setVisibility(View.GONE);
                     layoutTombol.setVisibility(View.GONE);
+                } else if(pesanan.status.equals("Batal")){
+                    layoutDitolak.setVisibility(View.GONE);
+                    terimaPesanan.setVisibility(View.GONE);
+                    tolakPesanan.setVisibility(View.GONE);
+                    layoutHubungi.setVisibility(View.GONE);
+                    layoutTombol.setVisibility(View.GONE);
                 } else {
                     layoutDitolak.setVisibility(View.GONE);
                     terimaPesanan.setVisibility(View.VISIBLE);

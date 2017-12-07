@@ -38,7 +38,6 @@ import butterknife.OnClick;
 
 public class HasilPencarianActivity extends AppCompatActivity {
 
-
     @BindView(R.id.sort)
     LinearLayout sort;
     @BindView(R.id.filter)

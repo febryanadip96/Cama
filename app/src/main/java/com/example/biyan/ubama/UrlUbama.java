@@ -142,7 +142,11 @@ public final class UrlUbama {
 
     public final static String USER_TOKO_TOLAK_PESANAN = URL_API+"user/toko/tolak/pesanan/";
 
+    //USER PESANAN
+
     public final static String PESANAN_SELESAI = URL_API+"user/pesanan/selesai/";
+
+    public final static String PESANAN_BATAL = URL_API+"user/pesanan/batal/";
 
     public final static String PESANAN_FORM_KOMENTAR = URL_API+"user/pesanan/formkomentar/";
 

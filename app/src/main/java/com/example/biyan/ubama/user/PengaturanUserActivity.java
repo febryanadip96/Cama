@@ -35,10 +35,10 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.SimpleMultiPartRequest;
 import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.biyan.ubama.gps.AlamatActivity;
 import com.example.biyan.ubama.R;
 import com.example.biyan.ubama.UrlUbama;
 import com.example.biyan.ubama.UserToken;
+import com.example.biyan.ubama.gps.AlamatActivity;
 import com.example.biyan.ubama.models.User;
 import com.google.gson.Gson;
 import com.squareup.picasso.MemoryPolicy;
@@ -123,7 +123,6 @@ public class PengaturanUserActivity extends AppCompatActivity {
                     latitude = res.getDouble("latitude");
                     longitude = res.getDouble("longitude");
                     alamatMap.setText(res.getString("alamat_map"));
-                    Log.d("Hasil", latitude+","+longitude+","+alamat);
                     break;
             }
     }
@@ -263,6 +262,7 @@ public class PengaturanUserActivity extends AppCompatActivity {
                             Boolean tersimpan = jsonResponse.getBoolean("tersimpan");
                             if (tersimpan) {
                                 Toast.makeText(PengaturanUserActivity.this, "Data baru telah tersimpan", Toast.LENGTH_LONG).show();
+                                setResult(RESULT_OK);
                                 finish();
                             }
                         } catch (JSONException e) {
