@@ -83,7 +83,7 @@ public class KirimPertanyaanActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 barangJasa = new Gson().fromJson(response.toString(), BarangJasa.class);
                 if (barangJasa.gambar.size() > 0) {
-                    Picasso.with(KirimPertanyaanActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar).into(imageBarang);
+                    Picasso.with(KirimPertanyaanActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar).fit().into(imageBarang);
                 }
                 else{
                     imageBarang.setImageResource(R.drawable.ic_error_image);

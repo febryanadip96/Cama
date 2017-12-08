@@ -100,7 +100,7 @@ public class ProfileUserActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 loading.dismiss();
                 user = new Gson().fromJson(response.toString(), User.class);
-                Picasso.with(ProfileUserActivity.this).load(UrlUbama.URL_IMAGE+user.pengguna.url_profile).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).into(imageUser);
+                Picasso.with(ProfileUserActivity.this).load(UrlUbama.URL_IMAGE+user.pengguna.url_profile).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).fit().into(imageUser);
                 nama.setText(user.name);
                 email.setText(user.email);
                 telepon.setText(user.pengguna.telepon);

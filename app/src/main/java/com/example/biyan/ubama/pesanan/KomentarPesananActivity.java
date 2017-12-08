@@ -74,10 +74,16 @@ public class KomentarPesananActivity extends AppCompatActivity {
     }
 
     public void getDetailPesanan(){
+        final ProgressDialog loading = new ProgressDialog(KomentarPesananActivity.this);
+        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loading.setMessage("Mohon Menunggu");
+        loading.setIndeterminate(true);
+        loading.show();
         String url = UrlUbama.PESANAN_FORM_KOMENTAR+idPesanan;
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                loading.dismiss();
                 pesanan = new Gson().fromJson(response.toString(), Pesanan.class);
                 Adapter adapter = new FormKomentarAdapter(KomentarPesananActivity.this, pesanan.detail_pesanan);
                 gridView.setAdapter((ListAdapter) adapter);
@@ -85,6 +91,7 @@ public class KomentarPesananActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                loading.dismiss();
                 Log.e("Error Volley", error.toString());
             }
         }) {
@@ -156,7 +163,7 @@ public class KomentarPesananActivity extends AppCompatActivity {
             isiKomentar = (TextView) convertView.findViewById(R.id.isi_komentar);
             simpan = (Button) convertView.findViewById(R.id.simpan);
             if(detailPesananList.get(position).barang_jasa.gambar.size()>0){
-                Picasso.with(context).load(UrlUbama.URL_IMAGE+detailPesananList.get(position).barang_jasa.gambar.get(0).url_gambar).error(R.drawable.ic_error_image).into(imageBarang);
+                Picasso.with(context).load(UrlUbama.URL_IMAGE+detailPesananList.get(position).barang_jasa.gambar.get(0).url_gambar).error(R.drawable.ic_error_image).fit().into(imageBarang);
             }
             namaBarang.setText(detailPesananList.get(position).barang_jasa.nama);
             if(detailPesananList.get(position).komentar==null){

@@ -105,7 +105,7 @@ public class TokoActivity extends AppCompatActivity {
                 loading.dismiss();
                 toko = new Gson().fromJson(response.toString(), Toko.class);
                 if(!toko.url_profile.equals("")){
-                    Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE+toko.url_profile).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).into(imageToko);
+                    Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE+toko.url_profile).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).fit().into(imageToko);
                 } else{
                     imageToko.setImageResource(R.drawable.ic_error_image);
                 }

@@ -60,7 +60,7 @@ public class FeedTokoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         recyclerFeed.setLayoutManager(layoutManagerFeed);
         adapterFeed = new FeedItemAdapter(feedList.get(position).barang_jasa);
         recyclerFeed.setAdapter(adapterFeed);
-        Picasso.with(context).load(UrlUbama.URL_IMAGE + feedList.get(position).url_profile).into(imageToko);
+        Picasso.with(context).load(UrlUbama.URL_IMAGE + feedList.get(position).url_profile).fit().into(imageToko);
         namaToko.setText(feedList.get(position).nama);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

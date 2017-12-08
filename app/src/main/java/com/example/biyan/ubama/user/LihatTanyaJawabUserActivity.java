@@ -95,13 +95,13 @@ public class LihatTanyaJawabUserActivity extends AppCompatActivity {
                 loading.dismiss();
                 tanyaJawab = new Gson().fromJson(response.toString(), TanyaJawab.class);
                 if (tanyaJawab.barang_jasa.gambar.size() > 0) {
-                    Picasso.with(LihatTanyaJawabUserActivity.this).load(UrlUbama.URL_IMAGE + tanyaJawab.barang_jasa.gambar.get(0).url_gambar).into(gambarBarang);
+                    Picasso.with(LihatTanyaJawabUserActivity.this).load(UrlUbama.URL_IMAGE + tanyaJawab.barang_jasa.gambar.get(0).url_gambar).fit().into(gambarBarang);
                 } else {
                     gambarBarang.setImageResource(R.drawable.ic_error_image);
                 }
                 namaBarang.setText(tanyaJawab.barang_jasa.nama);
                 if (!tanyaJawab.penanya.url_profile.equals("")) {
-                    Picasso.with(LihatTanyaJawabUserActivity.this).load(UrlUbama.URL_IMAGE + tanyaJawab.penanya.url_profile).into(imagePenanya);
+                    Picasso.with(LihatTanyaJawabUserActivity.this).load(UrlUbama.URL_IMAGE + tanyaJawab.penanya.url_profile).fit().into(imagePenanya);
                 } else {
                     imagePenanya.setImageResource(R.drawable.ic_error_image);
                 }
@@ -122,7 +122,7 @@ public class LihatTanyaJawabUserActivity extends AppCompatActivity {
                     jawaban.setVisibility(View.VISIBLE);
                     waktuJawab.setVisibility(View.VISIBLE);
                     if (!tanyaJawab.barang_jasa.toko.url_profile.equals("")) {
-                        Picasso.with(LihatTanyaJawabUserActivity.this).load(UrlUbama.URL_IMAGE + tanyaJawab.barang_jasa.toko.url_profile).into(imageToko);
+                        Picasso.with(LihatTanyaJawabUserActivity.this).load(UrlUbama.URL_IMAGE + tanyaJawab.barang_jasa.toko.url_profile).fit().into(imageToko);
                     } else {
                         imageToko.setImageResource(R.drawable.ic_error_image);
                     }

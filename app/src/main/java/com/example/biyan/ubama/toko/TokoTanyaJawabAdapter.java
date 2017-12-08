@@ -70,13 +70,13 @@ public class TokoTanyaJawabAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy HH:mm");
         Date date = null;
         if(tanyaJawabList.get(position).barang_jasa.gambar.size()>0){
-            Picasso.with(context).load(UrlUbama.URL_IMAGE+tanyaJawabList.get(position).barang_jasa.gambar.get(0).url_gambar).into(imageBarang);
+            Picasso.with(context).load(UrlUbama.URL_IMAGE+tanyaJawabList.get(position).barang_jasa.gambar.get(0).url_gambar).fit().into(imageBarang);
         }
         else{
             imageBarang.setImageResource(R.drawable.ic_error_image);
         }
         if(!tanyaJawabList.get(position).penanya.url_profile.equals("")){
-            Picasso.with(context).load(UrlUbama.URL_IMAGE+tanyaJawabList.get(position).penanya.url_profile).into(imagePenanya);
+            Picasso.with(context).load(UrlUbama.URL_IMAGE+tanyaJawabList.get(position).penanya.url_profile).fit().into(imagePenanya);
         }
         else{
             imagePenanya.setImageResource(R.drawable.ic_error_image);

@@ -87,7 +87,7 @@ public class TokoUserActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 toko = new Gson().fromJson(response.toString(), Toko.class);
-                Picasso.with(TokoUserActivity.this).load(UrlUbama.URL_IMAGE + toko.url_profile).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).into(imageToko);
+                Picasso.with(TokoUserActivity.this).load(UrlUbama.URL_IMAGE + toko.url_profile).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).fit().into(imageToko);
                 namaToko.setText(toko.nama);
                 namaPemilik.setText(toko.pemilik.user.name);
             }

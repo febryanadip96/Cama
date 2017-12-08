@@ -54,7 +54,7 @@ public class DetailPesananItemAdapter extends RecyclerView.Adapter<RecyclerView.
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         imageBarang = (ImageView) holder.itemView.findViewById(R.id.image_barang);
         if (detailPesananList.get(position).barang_jasa.gambar.size() > 0) {
-            Picasso.with(context).load(UrlUbama.URL_IMAGE + detailPesananList.get(position).barang_jasa.gambar.get(0).url_gambar).into(imageBarang);
+            Picasso.with(context).load(UrlUbama.URL_IMAGE + detailPesananList.get(position).barang_jasa.gambar.get(0).url_gambar).fit().into(imageBarang);
         }
         namaBarang = (TextView) holder.itemView.findViewById(R.id.nama_barang);
         hargaBarang = (TextView) holder.itemView.findViewById(R.id.harga_barang);

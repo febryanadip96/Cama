@@ -140,7 +140,7 @@ public class TokoPengaturanActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 loading.dismiss();
                 toko = new Gson().fromJson(response.toString(), Toko.class);
-                Picasso.with(TokoPengaturanActivity.this).load(UrlUbama.URL_IMAGE + toko.url_profile).into(imageToko);
+                Picasso.with(TokoPengaturanActivity.this).load(UrlUbama.URL_IMAGE + toko.url_profile).fit().into(imageToko);
                 namaToko.setText(toko.nama);
                 if (toko.lewati == 1) {
                     editNamaToko.setVisibility(View.VISIBLE);

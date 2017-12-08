@@ -54,7 +54,7 @@ public class FeedItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         hargaBarang = (TextView) holder.itemView.findViewById(R.id.harga_barang);
 
         if (!feedBarangJasaList.get(position).gambar.isEmpty()) {
-            Picasso.with(context).load(UrlUbama.URL_IMAGE + feedBarangJasaList.get(position).gambar.get(0).url_gambar).fit().error(R.drawable.ic_error_image).into(imageBarang);
+            Picasso.with(context).load(UrlUbama.URL_IMAGE + feedBarangJasaList.get(position).gambar.get(0).url_gambar).fit().error(R.drawable.ic_error_image).fit().into(imageBarang);
         } else {
             imageBarang.setImageResource(R.drawable.ic_error_image);
         }

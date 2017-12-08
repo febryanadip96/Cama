@@ -174,7 +174,7 @@ public class BarangJasaActivity extends AppCompatActivity {
                 }
                 kondisiBarang.setText(barangJasa.baruBekas);
                 if (!barangJasa.toko.url_profile.isEmpty()) {
-                    Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE + barangJasa.toko.url_profile).into(imageToko);
+                    Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE + barangJasa.toko.url_profile).fit().into(imageToko);
                 }
                 namaToko.setText(barangJasa.toko.nama);
                 namaPemilik.setText(barangJasa.toko.pemilik.user.name);

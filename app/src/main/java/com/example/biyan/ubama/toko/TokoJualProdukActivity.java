@@ -129,6 +129,15 @@ public class TokoJualProdukActivity extends AppCompatActivity {
         setContentView(R.layout.activity_toko_jual_produk);
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                //
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        PERMISSION_REQUEST_READ_STORAGE);
+            }
+        }
         queue = Volley.newRequestQueue(this);
         minimalPembelian.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -234,7 +243,10 @@ public class TokoJualProdukActivity extends AppCompatActivity {
         switch (requestCode) {
             case PERMISSION_REQUEST_READ_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    startGallery();
+                    //
+                }
+                else {
+                    finish();
                 }
                 return;
             }
@@ -257,19 +269,7 @@ public class TokoJualProdukActivity extends AppCompatActivity {
                 pilih = 4;
                 break;
         }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        PERMISSION_REQUEST_READ_STORAGE);
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        PERMISSION_REQUEST_READ_STORAGE);
-            }
-        } else {
-            startGallery();
-        }
+        startGallery();
     }
 
     public void startGallery() {

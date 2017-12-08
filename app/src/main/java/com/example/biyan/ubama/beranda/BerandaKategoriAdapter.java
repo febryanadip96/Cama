@@ -48,7 +48,7 @@ public class BerandaKategoriAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         imageKategori = (ImageView) holder.itemView.findViewById(R.id.image_kategori);
         namaKategori = (TextView) holder.itemView.findViewById(R.id.nama_kategori);
-        Picasso.with(context).load(UrlUbama.URL_IMAGE + kategoriList.get(position).url_gambar).into(imageKategori);
+        Picasso.with(context).load(UrlUbama.URL_IMAGE + kategoriList.get(position).url_gambar).fit().into(imageKategori);
         namaKategori.setText(kategoriList.get(position).nama);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
