@@ -6,10 +6,8 @@
     android:layout_height="match_parent"
     tools:context="com.example.biyan.ubama.pesanan.KomentarPesananActivity">
 
-    <GridView
-        android:id="@+id/grid_view"
-        android:numColumns="1"
-        android:verticalSpacing="16dp"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

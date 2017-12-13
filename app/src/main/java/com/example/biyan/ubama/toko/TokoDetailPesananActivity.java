@@ -173,30 +173,35 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
                     tolakPesanan.setVisibility(View.VISIBLE);
                     layoutHubungi.setVisibility(View.VISIBLE);
                     layoutTombol.setVisibility(View.VISIBLE);
+                    map.setVisibility(View.VISIBLE);
                 } else if (pesanan.status.equals("Selesai")) {
                     layoutDitolak.setVisibility(View.GONE);
                     terimaPesanan.setVisibility(View.GONE);
                     tolakPesanan.setVisibility(View.GONE);
-                    layoutHubungi.setVisibility(View.GONE);
+                    layoutHubungi.setVisibility(View.VISIBLE);
                     layoutTombol.setVisibility(View.GONE);
+                    map.setVisibility(View.GONE);
                 } else if (pesanan.status.equals("Ditolak")) {
                     layoutDitolak.setVisibility(View.VISIBLE);
                     terimaPesanan.setVisibility(View.GONE);
                     tolakPesanan.setVisibility(View.GONE);
                     layoutHubungi.setVisibility(View.GONE);
                     layoutTombol.setVisibility(View.GONE);
+                    map.setVisibility(View.GONE);
                 } else if(pesanan.status.equals("Batal")){
                     layoutDitolak.setVisibility(View.GONE);
                     terimaPesanan.setVisibility(View.GONE);
                     tolakPesanan.setVisibility(View.GONE);
                     layoutHubungi.setVisibility(View.GONE);
                     layoutTombol.setVisibility(View.GONE);
+                    map.setVisibility(View.GONE);
                 } else {
                     layoutDitolak.setVisibility(View.GONE);
                     terimaPesanan.setVisibility(View.VISIBLE);
                     tolakPesanan.setVisibility(View.VISIBLE);
                     layoutHubungi.setVisibility(View.VISIBLE);
                     layoutTombol.setVisibility(View.VISIBLE);
+                    map.setVisibility(View.VISIBLE);
                 }
             }
         }, new Response.ErrorListener() {

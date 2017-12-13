@@ -1,9 +1,10 @@
-package com.example.biyan.ubama.beranda;
+package com.example.biyan.ubama.toko;
 
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +22,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
 import com.example.biyan.ubama.UrlUbama;
 import com.example.biyan.ubama.UserToken;
-import com.example.biyan.ubama.models.Feed;
+import com.example.biyan.ubama.models.Pesanan;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -35,26 +36,28 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FeedFragment extends Fragment {
+public class TokoPesananBatalFragment extends Fragment {
+
+
     @BindView(R.id.recycler)
     RecyclerView recycler;
+    @BindView(R.id.swiperefresh)
+    SwipeRefreshLayout swiperefresh;
     @BindView(R.id.empty)
     TextView empty;
     Unbinder unbinder;
 
+    List<Pesanan> pesananList;
+    RequestQueue queue;
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layoutManager;
-    List<Feed> feedList;
-    RequestQueue queue;
 
-    public static FeedFragment newInstance() {
-        // Required empty public constructor
-        FeedFragment feedFragment = new FeedFragment();
-        return feedFragment;
+    public static TokoPesananBatalFragment newInstance() {
+        TokoPesananBatalFragment tokoPesananBatalFragment = new TokoPesananBatalFragment();
+        return tokoPesananBatalFragment;
     }
 
 
@@ -62,40 +65,44 @@ public class FeedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_feed, container, false);
-        unbinder = ButterKnife.bind(this, rootView);
-        queue = Volley.newRequestQueue(getActivity());
-        layoutManager = new GridLayoutManager(getActivity(), 1);
+        View view = inflater.inflate(R.layout.fragment_toko_pesanan_batal, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        queue = Volley.newRequestQueue(getContext());
+        layoutManager = new LinearLayoutManager(getContext());
         recycler.setLayoutManager(layoutManager);
-        recycler.setAdapter(adapter);
-        getFeed();
-        return rootView;
+        swiperefresh.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        getPesananBatal();
+                    }
+                }
+        );
+        getPesananBatal();
+        return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getFeed();
-    }
-
-    public void getFeed() {
-        String url = UrlUbama.USER_FEED;
+    public void getPesananBatal(){
+        String url = UrlUbama.USER_TOKO_PESANAN_BATAL;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                feedList = new Gson().fromJson(response.toString(), new TypeToken<List<Feed>>() {
+                swiperefresh.setRefreshing(false);
+                pesananList = new Gson().fromJson(response.toString(), new TypeToken<List<Pesanan>>() {
                 }.getType());
-                adapter = new FeedTokoAdapter(feedList);
+                adapter = new TokoPesananAdapter(pesananList);
                 recycler.setAdapter(adapter);
-                if (!(feedList.size() > 0)) {
-                    empty.setVisibility(View.VISIBLE);
+                if (!(pesananList.size() > 0)) {
+                    swiperefresh.setVisibility(View.GONE);
                     recycler.setVisibility(View.GONE);
+                    empty.setVisibility(View.VISIBLE);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Error Volley", error.toString());
+                swiperefresh.setRefreshing(false);
+                Log.e("Error Volley ", error.toString());
                 return;
             }
         }) {

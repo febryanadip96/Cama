@@ -88,14 +88,16 @@ public class TokoPesananActivity extends AppCompatActivity {
                 return TokoPesananDiprosesFragment.newInstance();
             } else if (position == 2) {
                 return TokoPesananSelesaiFragment.newInstance();
-            } else {
+            } else if(position == 3){
                 return TokoPesananDitolakFragment.newInstance();
+            } else{
+                return TokoPesananBatalFragment.newInstance();
             }
         }
 
         @Override
         public int getCount() {
-            return 4;
+            return 5;
         }
 
         @Override
@@ -106,8 +108,10 @@ public class TokoPesananActivity extends AppCompatActivity {
                 return "Proses";
             } else if (position == 2) {
                 return "Selesai";
-            } else {
+            } else if(position == 3){
                 return "Ditolak";
+            } else{
+                return "Batal";
             }
         }
     }

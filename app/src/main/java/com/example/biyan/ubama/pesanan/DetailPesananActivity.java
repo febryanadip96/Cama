@@ -157,7 +157,7 @@ public class DetailPesananActivity extends AppCompatActivity {
                 emailPenjual = pesanan.detail_pesanan.get(0).barang_jasa.toko.pemilik.user.email;
 
                 if (pesanan.status.equals("Selesai")) {
-                    layoutHubungi.setVisibility(View.GONE);
+                    layoutHubungi.setVisibility(View.VISIBLE);
                     layoutDitolak.setVisibility(View.GONE);
                     selesai.setVisibility(View.GONE);
                     batal.setVisibility(View.GONE);
@@ -175,7 +175,7 @@ public class DetailPesananActivity extends AppCompatActivity {
                     layoutDitolak.setVisibility(View.GONE);
                     beriKomentar.setVisibility(View.GONE);
                     selesai.setVisibility(View.VISIBLE);
-                    batal.setVisibility(View.VISIBLE);
+                    batal.setVisibility(View.GONE);
                     layoutTombol.setVisibility(View.VISIBLE);
                 }else if(pesanan.status.equals("Batal")){
                     layoutHubungi.setVisibility(View.GONE);

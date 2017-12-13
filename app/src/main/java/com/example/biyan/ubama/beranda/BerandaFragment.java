@@ -28,6 +28,8 @@ import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +72,12 @@ public class BerandaFragment extends Fragment {
         layoutManagerFakultas = new GridLayoutManager(getActivity(), 2);
         recyclerKategori.setLayoutManager(layoutManagerKategori);
         recyclerFakultas.setLayoutManager(layoutManagerFakultas);
+        kategoriList = new ArrayList<>();
+        fakultasList = new ArrayList<>();
+        adapterKategori = new BerandaKategoriAdapter(kategoriList);
+        adapterFakultas = new BerandaFakultasAdapter(fakultasList);
+        recyclerKategori.setAdapter(adapterKategori);
+        recyclerFakultas.setAdapter(adapterFakultas);
 
         getKategori();
         getFakultas();
@@ -82,10 +90,10 @@ public class BerandaFragment extends Fragment {
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                kategoriList = new Gson().fromJson(response.toString(), new TypeToken<List<Kategori>>() {
-                }.getType());
-                adapterKategori = new BerandaKategoriAdapter(kategoriList);
-                recyclerKategori.setAdapter(adapterKategori);
+                kategoriList.clear();
+                kategoriList.addAll((Collection<? extends Kategori>) new Gson().fromJson(response.toString(), new TypeToken<List<Kategori>>() {
+                }.getType()));
+                adapterKategori.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -110,10 +118,10 @@ public class BerandaFragment extends Fragment {
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                fakultasList = new Gson().fromJson(response.toString(), new TypeToken<List<Fakultas>>() {
-                }.getType());
-                adapterFakultas = new BerandaFakultasAdapter(fakultasList);
-                recyclerFakultas.setAdapter(adapterFakultas);
+                fakultasList.clear();
+                fakultasList.addAll((Collection<? extends Fakultas>) new Gson().fromJson(response.toString(), new TypeToken<List<Fakultas>>() {
+                }.getType()));
+                adapterFakultas.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
             @Override

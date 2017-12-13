@@ -89,12 +89,15 @@
                     android:id="@+id/layout_nama_produk"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="50"
                     app:errorEnabled="true">
 
                     <EditText
                         android:id="@+id/nama_produk"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:maxLength="50"
                         android:hint="Nama Produk" />
 
                 </android.support.design.widget.TextInputLayout>

@@ -18,8 +18,7 @@
             <ImageView
                 android:id="@+id/image_barang"
                 android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@color/background"/>
+                android:layout_height="80dp"/>
 
             <LinearLayout
                 android:padding="5dp"

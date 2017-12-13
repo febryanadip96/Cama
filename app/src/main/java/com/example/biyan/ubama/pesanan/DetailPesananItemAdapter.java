@@ -23,15 +23,9 @@ import java.util.Locale;
 public class DetailPesananItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     List<Pesanan.Detail_pesanan> detailPesananList;
-    ImageView imageBarang;
-    TextView namaBarang;
-    TextView hargaBarang;
-    TextView catatanPembeli;
-    TextView jumlah;
     Context context;
 
     public DetailPesananItemAdapter(List<Pesanan.Detail_pesanan> detailPesananList) {
-        this.context = context;
         this.detailPesananList = detailPesananList;
     }
 
@@ -52,14 +46,16 @@ public class DetailPesananItemAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        imageBarang = (ImageView) holder.itemView.findViewById(R.id.image_barang);
+        ImageView imageBarang = (ImageView) holder.itemView.findViewById(R.id.image_barang);
         if (detailPesananList.get(position).barang_jasa.gambar.size() > 0) {
             Picasso.with(context).load(UrlUbama.URL_IMAGE + detailPesananList.get(position).barang_jasa.gambar.get(0).url_gambar).fit().into(imageBarang);
+        } else{
+            imageBarang.setImageResource(R.drawable.ic_error_image);
         }
-        namaBarang = (TextView) holder.itemView.findViewById(R.id.nama_barang);
-        hargaBarang = (TextView) holder.itemView.findViewById(R.id.harga_barang);
-        catatanPembeli = (TextView) holder.itemView.findViewById(R.id.catatan_pembeli);
-        jumlah = (TextView) holder.itemView.findViewById(R.id.jumlah);
+        TextView namaBarang = (TextView) holder.itemView.findViewById(R.id.nama_barang);
+        TextView hargaBarang = (TextView) holder.itemView.findViewById(R.id.harga_barang);
+        TextView catatanPembeli = (TextView) holder.itemView.findViewById(R.id.catatan_pembeli);
+        TextView jumlah = (TextView) holder.itemView.findViewById(R.id.jumlah);
         namaBarang.setText(detailPesananList.get(position).barang_jasa.nama);
         NumberFormat currency = NumberFormat.getInstance(Locale.GERMANY);
         hargaBarang.setText(String.valueOf("Rp. " + currency.format(detailPesananList.get(position).harga)).toString());

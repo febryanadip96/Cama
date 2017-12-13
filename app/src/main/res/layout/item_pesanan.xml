@@ -47,6 +47,7 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -55,24 +56,22 @@
                 android:id="@+id/image_barang"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_margin="5dp"
-                android:background="@color/background" />
+                android:layout_margin="5dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
                 android:orientation="vertical">
 
 
                 <TextView
                     android:id="@+id/nama_barang"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:singleLine="true"
                     android:textColor="@android:color/black"
+                    android:textSize="15dp"
                     android:text="Nama Barang" />
 
                 <TextView
@@ -81,8 +80,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="3dp"
                     android:layout_marginTop="5dp"
-                    android:background="@color/colorPrimary"
-                    android:padding="4dp"
+                    android:background="@drawable/border_round_red"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
+                    android:textSize="12sp"
                     android:text="Status"
                     android:textColor="@android:color/white" />
 

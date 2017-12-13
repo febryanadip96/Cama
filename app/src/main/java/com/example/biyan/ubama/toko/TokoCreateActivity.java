@@ -165,26 +165,36 @@ public class TokoCreateActivity extends AppCompatActivity {
             layoutNamaToko.setError("Nama toko harus diisi");
             namaToko.requestFocus();
             return;
+        } else{
+            layoutNamaToko.setError(null);
         }
         if(sloganToko.getText().toString().equals("")){
             layoutSloganToko.setError("Slogan toko harus diisi");
             sloganToko.requestFocus();
             return;
+        } else{
+            layoutSloganToko.setError(null);
         }
         if(deskripsiToko.getText().toString().equals("")){
             layoutDeskripsiToko.setError("Deskripsi toko harus diisi");
             deskripsiToko.requestFocus();
             return;
-        }
-        if(catatanToko.getText().toString().equals("")){
-            layoutCatatanToko.setError("Catatan toko harus diisi");
-            catatanToko.requestFocus();
-            return;
+        } else{
+            layoutDeskripsiToko.setError(null);
         }
         if(alamatToko.getText().toString().equals("")){
             layoutAlamatToko.setError("Alamat toko harus diisi");
             alamatToko.requestFocus();
             return;
+        } else{
+            layoutAlamatToko.setError(null);
+        }
+        if(catatanToko.getText().toString().equals("")){
+            layoutCatatanToko.setError("Catatan toko harus diisi");
+            catatanToko.requestFocus();
+            return;
+        } else{
+            layoutCatatanToko.setError(null);
         }
         simpanDataToko();
     }
@@ -240,6 +250,7 @@ public class TokoCreateActivity extends AppCompatActivity {
         request.addMultipartParam("slogan", "text/plain", sloganToko.getText().toString());
         request.addMultipartParam("catatan_toko", "text/plain", catatanToko.getText().toString());
         request.addMultipartParam("alamat", "text/plain", alamatToko.getText().toString());
+        request.addMultipartParam("lewati", "text/plain", 0 + "");
         request.setRetryPolicy(new DefaultRetryPolicy(
                 30000,
                 0,  // maxNumRetries = 0 means no retry

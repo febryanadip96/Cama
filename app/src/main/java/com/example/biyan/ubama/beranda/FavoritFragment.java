@@ -66,6 +66,7 @@ public class FavoritFragment extends Fragment {
         queue = Volley.newRequestQueue(getActivity());
         layoutManager = new GridLayoutManager(getActivity(), 2);
         recycler.setLayoutManager(layoutManager);
+        recycler.setAdapter(adapter);
         getFavorit();
         return rootView;
     }

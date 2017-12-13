@@ -18,7 +18,6 @@
                 android:layout_height="150dp">
 
                 <ImageView
-                    android:layout_margin="5dp"
                     android:id="@+id/image_barang"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

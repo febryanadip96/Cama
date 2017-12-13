@@ -72,11 +72,7 @@ public class PesananAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             imageBarang.setImageResource(R.drawable.ic_error_image);
         }
         idPesanan.setText(pesananList.get(position).id+"");
-        String itemBarang = "";
-        for (Pesanan.Detail_pesanan itemDetailPesanan:pesananList.get(position).detail_pesanan) {
-            itemBarang += itemDetailPesanan.barang_jasa.nama+System.getProperty("line.separator");
-        }
-        namaBarang.setText(itemBarang);
+        namaBarang.setText(pesananList.get(position).detail_pesanan.get(0).barang_jasa.nama);
         statusPesanan.setText(pesananList.get(position).status.toString());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

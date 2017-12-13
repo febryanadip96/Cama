@@ -21,7 +21,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -91,9 +90,9 @@ public class TokoJualProdukActivity extends AppCompatActivity {
     @BindView(R.id.simpan)
     Button simpan;
     @BindView(R.id.kurang)
-    ImageButton kurang;
+    ImageView kurang;
     @BindView(R.id.tambah)
-    ImageButton tambah;
+    ImageView tambah;
     @BindView(R.id.nama_kategori)
     TextView namaKategori;
     @BindView(R.id.nama_fakultas)
@@ -299,30 +298,40 @@ public class TokoJualProdukActivity extends AppCompatActivity {
         if (namaProduk.getText().toString().equals("")){
             layoutNamaProduk.setError("Nama produk harus diisi");
             return;
+        } else{
+            layoutNamaProduk.setError(null);
         }
         if(hargaProduk.getText().toString().equals("") || hargaProduk.getText().toString().equals("0")){
             layoutHarga.setError("Harga produk tidak valid");
             return;
+        } else{
+            layoutHarga.setError(null);
         }
         if(minimalPembelian.getText().toString().equals("") || minimalPembelian.getText().toString().equals("0")){
             minimalPembelian.setError("Minimal pembelian tidak valid");
+            return;
+        } else{
+            minimalPembelian.setError(null);
+        }
+        if(idSubkategori == 0){
+            Toast.makeText(getApplicationContext(), "Pilihan Kategori tidak valid", Toast.LENGTH_SHORT).show();
             return;
         }
         if(idFakultas == 0){
             Toast.makeText(getApplicationContext(), "Pilihan fakultas tidak valid", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(idSubkategori == 0){
-            Toast.makeText(getApplicationContext(), "Pilihan Kategori tidak valid", Toast.LENGTH_SHORT).show();
-            return;
-        }
         if(deskripsiProduk.getText().toString().equals("")){
             layoutDeskripsiProduk.setError("Deskripsi produk harus diisi");
             return;
+        } else{
+            layoutDeskripsiProduk.setError(null);
         }
         if(catatanPenjual.getText().toString().equals("")){
             layoutCatatanPenjual.setError("Catatan penjual harus diisi");
             return;
+        } else{
+            layoutCatatanPenjual.setError(null);
         }
 
         simpanProduk();
