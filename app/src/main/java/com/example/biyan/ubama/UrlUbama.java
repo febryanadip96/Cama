@@ -6,7 +6,7 @@ package com.example.biyan.ubama;
 
 public final class UrlUbama {
 
-    private final static String IP = "http://192.168.1.115:8000";
+    private final static String IP = "http://192.168.1.201:8000";
 
     private final static String URL_API = IP+"/api/";
 
