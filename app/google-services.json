@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "145985262802",
+    "firebase_url": "https://ubama-ed7c4.firebaseio.com",
+    "project_id": "ubama-ed7c4",
+    "storage_bucket": "ubama-ed7c4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:145985262802:android:9a002a696eb04ab2",
+        "android_client_info": {
+          "package_name": "com.example.biyan.ubama"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "145985262802-8tj79hu3il7696leihm6rpfbhmi3m22q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.biyan.ubama",
+            "certificate_hash": "0f0ee33646af3a7cd7e837cbbe9d71fda560124c"
+          }
+        },
+        {
+          "client_id": "145985262802-qcglu42dutii5l0a3ojn7f9u22nf0toc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxCkhhvEVsdjRgYMtIgpo2emlBrnd4mLg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "145985262802-qcglu42dutii5l0a3ojn7f9u22nf0toc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
