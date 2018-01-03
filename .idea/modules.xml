@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Ubama.iml" filepath="$PROJECT_DIR$/Ubama.iml" />
-      <module fileurl="file://C:\Users\ASUS\Documents\GitHub\Ubama\Ubama.iml" filepath="C:\Users\ASUS\Documents\GitHub\Ubama\Ubama.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\ASUS\Documents\GitHub\Ubama\app\app.iml" filepath="C:\Users\ASUS\Documents\GitHub\Ubama\app\app.iml" />
     </modules>
   </component>
 </project>

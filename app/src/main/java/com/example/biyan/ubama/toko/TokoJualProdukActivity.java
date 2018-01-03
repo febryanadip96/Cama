@@ -61,6 +61,14 @@ public class TokoJualProdukActivity extends AppCompatActivity {
     ImageView image3;
     @BindView(R.id.image4)
     ImageView image4;
+    @BindView(R.id.hapus_image1)
+    ImageView hapusImage1;
+    @BindView(R.id.hapus_image2)
+    ImageView hapusImage2;
+    @BindView(R.id.hapus_image3)
+    ImageView hapusImage3;
+    @BindView(R.id.hapus_image4)
+    ImageView hapusImage4;
     @BindView(R.id.nama_produk)
     EditText namaProduk;
     @BindView(R.id.deskripsi_produk)
@@ -181,6 +189,7 @@ public class TokoJualProdukActivity extends AppCompatActivity {
                             } catch (IOException e) {
                                 Log.i("TAG", "Some exception " + e);
                             }
+                            hapusImage1.setVisibility(View.VISIBLE);
                             break;
                         case 2:
                             imagePath2 = getRealPathFromURI(selectedImage);
@@ -190,6 +199,7 @@ public class TokoJualProdukActivity extends AppCompatActivity {
                             } catch (IOException e) {
                                 Log.i("TAG", "Some exception " + e);
                             }
+                            hapusImage2.setVisibility(View.VISIBLE);
                             break;
                         case 3:
                             imagePath3 = getRealPathFromURI(selectedImage);
@@ -199,6 +209,7 @@ public class TokoJualProdukActivity extends AppCompatActivity {
                             } catch (IOException e) {
                                 Log.i("TAG", "Some exception " + e);
                             }
+                            hapusImage3.setVisibility(View.VISIBLE);
                             break;
                         case 4:
                             imagePath4 = getRealPathFromURI(selectedImage);
@@ -208,6 +219,7 @@ public class TokoJualProdukActivity extends AppCompatActivity {
                             } catch (IOException e) {
                                 Log.i("TAG", "Some exception " + e);
                             }
+                            hapusImage4.setVisibility(View.VISIBLE);
                             break;
                     }
                     break;
@@ -243,8 +255,7 @@ public class TokoJualProdukActivity extends AppCompatActivity {
             case PERMISSION_REQUEST_READ_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //
-                }
-                else {
+                } else {
                     finish();
                 }
                 return;
@@ -291,46 +302,46 @@ public class TokoJualProdukActivity extends AppCompatActivity {
 
     @OnClick(R.id.simpan)
     public void onSimpanClicked() {
-        if(!(!imagePath1.equals("") || !imagePath2.equals("") || !imagePath3.equals("") || !imagePath4.equals(""))){
+        if (!(!imagePath1.equals("") || !imagePath2.equals("") || !imagePath3.equals("") || !imagePath4.equals(""))) {
             Toast.makeText(getApplicationContext(), "Masukkan gambar produk barang minimal 1", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (namaProduk.getText().toString().equals("")){
+        if (namaProduk.getText().toString().equals("")) {
             layoutNamaProduk.setError("Nama produk harus diisi");
             return;
-        } else{
+        } else {
             layoutNamaProduk.setError(null);
         }
-        if(hargaProduk.getText().toString().equals("") || hargaProduk.getText().toString().equals("0")){
+        if (hargaProduk.getText().toString().equals("") || hargaProduk.getText().toString().equals("0")) {
             layoutHarga.setError("Harga produk tidak valid");
             return;
-        } else{
+        } else {
             layoutHarga.setError(null);
         }
-        if(minimalPembelian.getText().toString().equals("") || minimalPembelian.getText().toString().equals("0")){
+        if (minimalPembelian.getText().toString().equals("") || minimalPembelian.getText().toString().equals("0")) {
             minimalPembelian.setError("Minimal pembelian tidak valid");
             return;
-        } else{
+        } else {
             minimalPembelian.setError(null);
         }
-        if(idSubkategori == 0){
+        if (idSubkategori == 0) {
             Toast.makeText(getApplicationContext(), "Pilihan Kategori tidak valid", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(idFakultas == 0){
+        if (idFakultas == 0) {
             Toast.makeText(getApplicationContext(), "Pilihan fakultas tidak valid", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(deskripsiProduk.getText().toString().equals("")){
+        if (deskripsiProduk.getText().toString().equals("")) {
             layoutDeskripsiProduk.setError("Deskripsi produk harus diisi");
             return;
-        } else{
+        } else {
             layoutDeskripsiProduk.setError(null);
         }
-        if(catatanPenjual.getText().toString().equals("")){
+        if (catatanPenjual.getText().toString().equals("")) {
             layoutCatatanPenjual.setError("Catatan penjual harus diisi");
             return;
-        } else{
+        } else {
             layoutCatatanPenjual.setError(null);
         }
 
@@ -436,6 +447,32 @@ public class TokoJualProdukActivity extends AppCompatActivity {
             case R.id.tambah:
                 minimal++;
                 minimalPembelian.setText(minimal + "");
+                break;
+        }
+    }
+
+    @OnClick({R.id.hapus_image1, R.id.hapus_image2, R.id.hapus_image3, R.id.hapus_image4})
+    public void onHapusClicked(View view) {
+        switch (view.getId()) {
+            case R.id.hapus_image1:
+                hapusImage1.setVisibility(View.GONE);
+                imagePath1 = "";
+                image1.setImageResource(R.drawable.ic_add_image);
+                break;
+            case R.id.hapus_image2:
+                hapusImage2.setVisibility(View.GONE);
+                imagePath2 = "";
+                image2.setImageResource(R.drawable.ic_add_image);
+                break;
+            case R.id.hapus_image3:
+                hapusImage3.setVisibility(View.GONE);
+                imagePath3 = "";
+                image3.setImageResource(R.drawable.ic_add_image);
+                break;
+            case R.id.hapus_image4:
+                hapusImage4.setVisibility(View.GONE);
+                imagePath4 = "";
+                image4.setImageResource(R.drawable.ic_add_image);
                 break;
         }
     }
