@@ -1,6 +1,7 @@
 package com.example.biyan.ubama.beranda;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonArrayRequest;
+import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.produk.BarangJasaAdapter;
 import com.example.biyan.ubama.R;
@@ -55,6 +57,8 @@ public class HasilSubkategoriActivity extends AppCompatActivity {
     RequestQueue queue;
     int idSubkategori;
 
+    String orderQuery, sortQuery = "asc", filterQuery;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,22 +85,33 @@ public class HasilSubkategoriActivity extends AppCompatActivity {
     }
 
     public void getBarangJasaSubkategori() {
+        final ProgressDialog loading = new ProgressDialog(this);
+        loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loading.setMessage("Mohon Menunggu");
+        loading.setIndeterminate(true);
+        loading.show();
         String url = UrlUbama.SUBKATEGORI_BARANG_JASA + idSubkategori;
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONArray response) {
-                barangJasaList = new Gson().fromJson(response.toString(), new TypeToken<List<BarangJasa>>() {
+            public void onResponse(String response) {
+                loading.dismiss();
+                barangJasaList = new Gson().fromJson(response, new TypeToken<List<BarangJasa>>() {
                 }.getType());
                 adapter = new BarangJasaAdapter(barangJasaList);
                 recycler.setAdapter(adapter);
                 if (!(barangJasaList.size() > 0)) {
-                    empty.setVisibility(View.VISIBLE);
                     recycler.setVisibility(View.GONE);
+                    empty.setVisibility(View.VISIBLE);
+                }
+                else{
+                    recycler.setVisibility(View.VISIBLE);
+                    empty.setVisibility(View.GONE);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                loading.dismiss();
                 Log.e("Error Volley", error.toString());
             }
         }) {
@@ -107,6 +122,15 @@ public class HasilSubkategoriActivity extends AppCompatActivity {
                 params.put("Accept", "application/json");
                 return params;
             }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("order", orderQuery);
+                params.put("sort", sortQuery);
+                params.put("filter", filterQuery);
+                return params;
+            }
         };
         request.setShouldCache(false);
         queue.add(request);
@@ -114,12 +138,30 @@ public class HasilSubkategoriActivity extends AppCompatActivity {
 
     @OnClick(R.id.sort)
     public void onSortClicked() {
-        final String[] sortArray = {"Paling Sesuai", "Terbaru", "Harga Tertinggi", "Harga Terendah"};
+        final String[] sortArray = {"Tidak Ada", "Terbaru", "Harga Tertinggi", "Harga Terendah"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Urutkan")
                 .setItems(sortArray, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.d("Filter", sortArray[which]);
+                        switch (which){
+                            case 0:
+                                orderQuery = null;
+                                sortQuery = "asc";
+                                break;
+                            case 1:
+                                orderQuery = "created_at";
+                                sortQuery = "desc";
+                                break;
+                            case 2:
+                                orderQuery = "harga";
+                                sortQuery = "desc";
+                                break;
+                            case 3:
+                                orderQuery = "harga";
+                                sortQuery = "asc";
+                                break;
+                        }
+                        getBarangJasaSubkategori();
                     }
                 });
         AlertDialog dialog = builder.create();
@@ -128,12 +170,23 @@ public class HasilSubkategoriActivity extends AppCompatActivity {
 
     @OnClick(R.id.filter)
     public void onFilterClicked() {
-        final String[] filterArray = {"Baru", "Bekas"};
+        final String[] filterArray = {"Semua", "Baru", "Bekas"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Filter")
                 .setItems(filterArray, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.d("Filter",  filterArray[which]);
+                        switch (which){
+                            case 0:
+                                filterQuery = null;
+                                break;
+                            case 1:
+                                filterQuery = "Baru";
+                                break;
+                            case 2:
+                                filterQuery = "Bekas";
+                                break;
+                        }
+                        getBarangJasaSubkategori();
                     }
                 });
         AlertDialog dialog = builder.create();

@@ -90,6 +90,10 @@ public class FavoritFragment extends Fragment {
                     empty.setVisibility(View.VISIBLE);
                     recycler.setVisibility(View.GONE);
                 }
+                else{
+                    recycler.setVisibility(View.VISIBLE);
+                    empty.setVisibility(View.GONE);
+                }
             }
         }, new Response.ErrorListener() {
             @Override

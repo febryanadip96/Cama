@@ -52,7 +52,6 @@ public class HasilPencarianActivity extends AppCompatActivity {
     List<BarangJasa> barangJasaList;
     RequestQueue queue;
 
-
     String query, orderQuery, sortQuery = "asc", filterQuery;
 
 
@@ -112,9 +111,13 @@ public class HasilPencarianActivity extends AppCompatActivity {
                 }.getType());
                 adapter = new BarangJasaAdapter(barangJasaList);
                 recycler.setAdapter(adapter);
-                if(!(barangJasaList.size()>0)){
+                if (!(barangJasaList.size() > 0)) {
                     recycler.setVisibility(View.GONE);
                     empty.setVisibility(View.VISIBLE);
+                }
+                else{
+                    recycler.setVisibility(View.VISIBLE);
+                    empty.setVisibility(View.GONE);
                 }
             }
         }, new Response.ErrorListener() {
@@ -189,10 +192,10 @@ public class HasilPencarianActivity extends AppCompatActivity {
                                 filterQuery = null;
                                 break;
                             case 1:
-                                filterQuery = "baru";
+                                filterQuery = "Baru";
                                 break;
                             case 2:
-                                filterQuery = "bekas";
+                                filterQuery = "Bekas";
                                 break;
                         }
                         cari();
