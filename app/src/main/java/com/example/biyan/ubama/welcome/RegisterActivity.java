@@ -251,6 +251,7 @@ public class RegisterActivity extends AppCompatActivity {
                 30000,
                 0,  // maxNumRetries = 0 means no retry
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        request.setShouldCache(false);
         queue.add(request);
     }
 
