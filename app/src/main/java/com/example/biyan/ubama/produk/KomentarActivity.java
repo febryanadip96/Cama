@@ -103,7 +103,7 @@ public class KomentarActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 if(barangJasa.gambar.size()>0){
-                    Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE+barangJasa.gambar.get(0).url_gambar).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).into(imageBarang);
+                    Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE+barangJasa.gambar.get(0).url_gambar).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).fit().centerInside().into(imageBarang);
                 }
                 else{
                     imageBarang.setImageResource(R.drawable.ic_error_image);

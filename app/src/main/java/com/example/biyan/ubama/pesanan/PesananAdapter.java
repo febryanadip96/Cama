@@ -67,7 +67,7 @@ public class PesananAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         tanggalPesan.setText("Dipesan pada "+outputFormat.format(date));
         if (pesananList.get(position).detail_pesanan.get(0).barang_jasa.gambar.size() > 0) {
             Picasso.with(context).load(UrlUbama.URL_IMAGE + pesananList.get(position).detail_pesanan.get(0).barang_jasa.gambar.get(0).url_gambar)
-                    .fit().centerCrop().into(imageBarang);
+                    .fit().centerInside().into(imageBarang);
         } else {
             imageBarang.setImageResource(R.drawable.ic_error_image);
         }

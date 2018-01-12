@@ -47,7 +47,7 @@ public class BerandaFakultasAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         imageFakultas = (ImageView) holder.itemView.findViewById(R.id.image_fakultas);
         namaFakultas = (TextView) holder.itemView.findViewById(R.id.nama_fakultas);
-        Picasso.with(context).load(UrlUbama.URL_IMAGE + fakultasList.get(position).url_gambar).error(R.drawable.ic_error_image).fit().into(imageFakultas);
+        Picasso.with(context).load(UrlUbama.URL_IMAGE + fakultasList.get(position).url_gambar).error(R.drawable.ic_error_image).fit().centerInside().into(imageFakultas);
         namaFakultas.setText(fakultasList.get(position).nama);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

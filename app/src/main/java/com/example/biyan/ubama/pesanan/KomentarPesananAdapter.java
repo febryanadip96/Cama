@@ -78,7 +78,7 @@ public class KomentarPesananAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         final TextView isiKomentar = (TextView) holder.itemView.findViewById(R.id.isi_komentar);
         final Button simpan = (Button) holder.itemView.findViewById(R.id.simpan);
         if(detailPesananList.get(position).barang_jasa.gambar.size()>0){
-            Picasso.with(context).load(UrlUbama.URL_IMAGE+detailPesananList.get(position).barang_jasa.gambar.get(0).url_gambar).error(R.drawable.ic_error_image).fit().into(imageBarang);
+            Picasso.with(context).load(UrlUbama.URL_IMAGE+detailPesananList.get(position).barang_jasa.gambar.get(0).url_gambar).error(R.drawable.ic_error_image).fit().centerInside().into(imageBarang);
         }
         else{
             imageBarang.setImageResource(R.drawable.ic_error_image);

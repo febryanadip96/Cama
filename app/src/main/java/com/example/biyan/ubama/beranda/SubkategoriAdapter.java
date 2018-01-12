@@ -49,7 +49,7 @@ public class SubkategoriAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         imageSubkategori = (ImageView) holder.itemView.findViewById(R.id.image_subkategori);
         namaSubkategori = (TextView) holder.itemView.findViewById(R.id.nama_subkategori);
         if(subkategoriList.get(position).url_gambar != null){
-            Picasso.with(context).load(UrlUbama.URL_IMAGE+subkategoriList.get(position).url_gambar).fit().into(imageSubkategori);
+            Picasso.with(context).load(UrlUbama.URL_IMAGE+subkategoriList.get(position).url_gambar).fit().centerInside().into(imageSubkategori);
         } else {
             imageSubkategori.setImageResource(R.drawable.ic_error_image);
         }

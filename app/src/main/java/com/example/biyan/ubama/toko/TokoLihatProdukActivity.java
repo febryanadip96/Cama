@@ -103,7 +103,6 @@ public class TokoLihatProdukActivity extends AppCompatActivity {
         Intent intent = getIntent();
         idBarangJasa = intent.getIntExtra("idBarangJasa", 0);
         queue = Volley.newRequestQueue(this);
-        carouselGambar = (CarouselView) findViewById(R.id.carousel_gambar);
         carouselGambar.setPageCount(0);
         carouselGambar.setImageListener(imageListener);
         getDetailBarangJasa();
@@ -220,11 +219,13 @@ public class TokoLihatProdukActivity extends AppCompatActivity {
         @Override
         public void setImageForPosition(int position, ImageView imageView) {
             if (barangJasa.gambar.size() > 0) {
-                Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(position).url_gambar).fit().memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).into(imageView);
+                Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(position).url_gambar)
+                        .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().centerInside().into(imageView);
             }else{
                 imageView.setImageResource(sampleImages[position]);
-                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             }
+            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            imageView.setPadding(5,5,5,5);
         }
     };
 

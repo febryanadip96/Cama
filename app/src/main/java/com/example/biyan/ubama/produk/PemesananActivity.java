@@ -133,7 +133,7 @@ public class PemesananActivity extends AppCompatActivity {
                 }
                 min_pesan = barangJasa.min_pesan;
                 if (barangJasa.gambar.size() > 0) {
-                    Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar).fit().error(R.drawable.ic_error_image).fit().into(imageBarang);
+                    Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar).error(R.drawable.ic_error_image).fit().centerInside().into(imageBarang);
                 }
                 namaBarang.setText(barangJasa.nama);
                 NumberFormat currency = NumberFormat.getInstance(Locale.GERMANY);

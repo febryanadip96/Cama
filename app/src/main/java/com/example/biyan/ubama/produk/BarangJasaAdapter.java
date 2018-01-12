@@ -49,7 +49,7 @@ public class BarangJasaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         TextView namaToko = (TextView) holder.itemView.findViewById(R.id.nama_toko);
 
         if (barangJasaList.get(position).gambar.size() > 0) {
-            Picasso.with(context).load(UrlUbama.URL_IMAGE + barangJasaList.get(position).gambar.get(0).url_gambar).fit().error(R.drawable.ic_error_image).into(imageBarang);
+            Picasso.with(context).load(UrlUbama.URL_IMAGE + barangJasaList.get(position).gambar.get(0).url_gambar).fit().centerInside().error(R.drawable.ic_error_image).into(imageBarang);
         } else {
             imageBarang.setImageResource(R.drawable.ic_error_image);
         }

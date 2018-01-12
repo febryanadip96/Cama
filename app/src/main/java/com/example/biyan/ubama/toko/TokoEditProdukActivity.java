@@ -177,37 +177,37 @@ public class TokoEditProdukActivity extends AppCompatActivity {
                     switch (jumlah) {
                         case 1:
                             Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar)
-                                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().into(image1);
+                                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().centerInside().into(image1);
                             hapusImage1.setVisibility(View.VISIBLE);
                             break;
                         case 2:
                             Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar)
-                                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().into(image1);
+                                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().centerInside().into(image1);
                             Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(1).url_gambar)
-                                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().into(image2);
+                                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().centerInside().into(image2);
                             hapusImage1.setVisibility(View.VISIBLE);
                             hapusImage2.setVisibility(View.VISIBLE);
                             break;
                         case 3:
                             Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar)
-                                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().into(image1);
+                                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().centerInside().into(image1);
                             Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(1).url_gambar)
-                                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().into(image2);
+                                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().centerInside().into(image2);
                             Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(2).url_gambar)
-                                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().into(image3);
+                                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().centerInside().into(image3);
                             hapusImage1.setVisibility(View.VISIBLE);
                             hapusImage2.setVisibility(View.VISIBLE);
                             hapusImage3.setVisibility(View.VISIBLE);
                             break;
                         case 4:
                             Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar)
-                                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().into(image1);
+                                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().centerInside().into(image1);
                             Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(1).url_gambar)
-                                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().into(image2);
+                                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().centerInside().into(image2);
                             Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(2).url_gambar)
-                                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().into(image3);
+                                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().centerInside().into(image3);
                             Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(3).url_gambar)
-                                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().into(image4);
+                                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().centerInside().into(image4);
                             hapusImage1.setVisibility(View.VISIBLE);
                             hapusImage2.setVisibility(View.VISIBLE);
                             hapusImage3.setVisibility(View.VISIBLE);

@@ -21,10 +21,10 @@
                 android:id="@+id/carousel_gambar"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                app:fillColor="#FFFFFFFF"
-                app:pageColor="#00000000"
+                app:fillColor="@color/colorPrimary"
+                app:pageColor="#FFFFFFFF"
                 app:radius="6dp"
-                app:slideInterval="3000"
+                app:slideInterval="5000"
                 app:strokeColor="#FF777777"
                 app:strokeWidth="1dp"/>
 

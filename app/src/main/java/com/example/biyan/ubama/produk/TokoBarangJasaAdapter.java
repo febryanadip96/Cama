@@ -54,7 +54,7 @@ public class TokoBarangJasaAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         hargaBarang = (TextView) holder.itemView.findViewById(R.id.harga_barang);
 
         if (!tokoBarangJasaList.get(position).gambar.isEmpty()) {
-            Picasso.with(context).load(UrlUbama.URL_IMAGE + tokoBarangJasaList.get(position).gambar.get(0).url_gambar).fit().error(R.drawable.ic_error_image).fit().into(imageBarang);
+            Picasso.with(context).load(UrlUbama.URL_IMAGE + tokoBarangJasaList.get(position).gambar.get(0).url_gambar).fit().centerInside().error(R.drawable.ic_error_image).fit().centerInside().into(imageBarang);
         } else {
             imageBarang.setImageResource(R.drawable.ic_error_image);
         }
