@@ -226,13 +226,11 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("Error Volley ", error.toString());
-                try {
-                    if (error instanceof AuthFailureError) {
-                        finish();
-                    }
-
-                } catch (Exception e) {
-                    Log.e("Error Volley ", e.toString());
+                if (error instanceof AuthFailureError) {
+                    Toast.makeText(getApplicationContext(),error.toString(), Toast.LENGTH_SHORT).show();
+                    Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
+                    startActivity(welcomeIntent);
+                    finish();
                 }
             }
         }){

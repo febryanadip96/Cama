@@ -56,6 +56,8 @@ public class TokoJawabPertanyaanActivity extends AppCompatActivity {
     TextView namaPenanya;
     @BindView(R.id.pertanyaan)
     TextView pertanyaan;
+    @BindView(R.id.layout_jawaban)
+    LinearLayout layoutJawaban;
     @BindView(R.id.image_toko)
     CircleImageView imageToko;
     @BindView(R.id.waktu_jawab)
@@ -131,10 +133,7 @@ public class TokoJawabPertanyaanActivity extends AppCompatActivity {
                 }
                 waktuTanya.setText(outputFormat.format(date));
                 if (tanyaJawab.jawaban != null) {
-                    imageToko.setVisibility(View.VISIBLE);
-                    namaToko.setVisibility(View.VISIBLE);
-                    jawaban.setVisibility(View.VISIBLE);
-                    waktuJawab.setVisibility(View.VISIBLE);
+                    layoutJawaban.setVisibility(View.VISIBLE);
                     if (!tanyaJawab.barang_jasa.toko.url_profile.equals("")) {
                         Picasso.with(TokoJawabPertanyaanActivity.this).load(UrlUbama.URL_IMAGE + tanyaJawab.barang_jasa.toko.url_profile).fit().into(imageToko);
                     } else {
@@ -150,10 +149,7 @@ public class TokoJawabPertanyaanActivity extends AppCompatActivity {
                     waktuJawab.setText(outputFormat.format(date));
                     layoutJawab.setVisibility(View.GONE);
                 } else {
-                    imageToko.setVisibility(View.GONE);
-                    namaToko.setVisibility(View.GONE);
-                    jawaban.setVisibility(View.GONE);
-                    waktuJawab.setVisibility(View.GONE);
+                    layoutJawaban.setVisibility(View.GONE);
                 }
             }
         }, new Response.ErrorListener() {
@@ -177,15 +173,15 @@ public class TokoJawabPertanyaanActivity extends AppCompatActivity {
 
     @OnClick(R.id.kirim)
     public void onKirimClicked() {
-        if(isiJawaban.getText().toString().equals("")){
+        if (isiJawaban.getText().toString().equals("")) {
             isiJawaban.requestFocus();
-            Toast.makeText(TokoJawabPertanyaanActivity.this,"Isi jawaban Anda", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TokoJawabPertanyaanActivity.this, "Isi jawaban Anda", Toast.LENGTH_SHORT).show();
             return;
         }
         kirimJawaban();
     }
 
-    public void kirimJawaban(){
+    public void kirimJawaban() {
         String url = UrlUbama.USER_TOKO_JAWAB_TANYA_JAWAB + idTanyaJawab;
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -193,7 +189,7 @@ public class TokoJawabPertanyaanActivity extends AppCompatActivity {
                 try {
                     JSONObject hasil = new JSONObject(response);
                     Boolean tersimpan = hasil.getBoolean("tersimpan");
-                    if(tersimpan){
+                    if (tersimpan) {
                         getDataTanyaJawab();
                     }
                 } catch (JSONException e) {

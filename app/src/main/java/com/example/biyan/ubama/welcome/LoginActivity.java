@@ -128,6 +128,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 loadingLogin.dismiss();
                 Log.e("Error Volley", error.toString());
+                if (error instanceof AuthFailureError) {
+                    Toast.makeText(getApplicationContext(), "Email atau password Anda salah", Toast.LENGTH_SHORT).show();
+                }
             }
         }) {
             @Override
