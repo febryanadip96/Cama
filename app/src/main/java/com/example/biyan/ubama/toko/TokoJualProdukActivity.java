@@ -161,6 +161,23 @@ public class TokoJualProdukActivity extends AppCompatActivity {
                 }
             }
         });
+
+        jenis.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == R.id.jasa){
+                    baru.setChecked(true);
+                    for(int i = 0; i < kondisi.getChildCount(); i++){
+                        (kondisi.getChildAt(i)).setEnabled(false);
+                    }
+                }
+                else{
+                    for(int i = 0; i < kondisi.getChildCount(); i++){
+                        (kondisi.getChildAt(i)).setEnabled(true);
+                    }
+                }
+            }
+        });
     }
 
     @Override

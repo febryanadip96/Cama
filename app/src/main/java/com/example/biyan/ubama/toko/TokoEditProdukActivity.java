@@ -140,16 +140,60 @@ public class TokoEditProdukActivity extends AppCompatActivity {
 
     int baruBekas = 1, jenisProduk = 1;
 
+    boolean hapusGambar1 =false, hapusGambar2=false, hapusGambar3=false, hapusGambar4=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toko_edit_produk);
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                //
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        PERMISSION_REQUEST_READ_STORAGE);
+            }
+        }
         Intent intent = getIntent();
         idBarangJasa = intent.getIntExtra("idBarangJasa", 0);
         queue = Volley.newRequestQueue(this);
         getDetailBarangJasa();
+
+        minimalPembelian.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    int tertulis = Integer.parseInt(minimalPembelian.getText().toString()) + 0;
+                    if (tertulis < 1) {
+                        tertulis = 1;
+                        minimalPembelian.setText(tertulis + "");
+                        Toast.makeText(TokoEditProdukActivity.this, "Pemesanan minimal 1", Toast.LENGTH_LONG).show();
+                    } else {
+                        minimalPembelian.setText(tertulis + "");
+                    }
+                }
+            }
+        });
+
+        jenis.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == R.id.jasa){
+                    baru.setChecked(true);
+                    for(int i = 0; i < kondisi.getChildCount(); i++){
+                        (kondisi.getChildAt(i)).setEnabled(false);
+                    }
+                }
+                else{
+                    for(int i = 0; i < kondisi.getChildCount(); i++){
+                        (kondisi.getChildAt(i)).setEnabled(true);
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -279,6 +323,7 @@ public class TokoEditProdukActivity extends AppCompatActivity {
                                 Log.i("TAG", "Some exception " + e);
                             }
                             hapusImage1.setVisibility(View.VISIBLE);
+                            hapusGambar1 = false;
                             break;
                         case 2:
                             imagePath2 = getRealPathFromURI(selectedImage);
@@ -290,6 +335,7 @@ public class TokoEditProdukActivity extends AppCompatActivity {
                                 Log.i("TAG", "Some exception " + e);
                             }
                             hapusImage2.setVisibility(View.VISIBLE);
+                            hapusGambar2 = false;
                             break;
                         case 3:
                             imagePath3 = getRealPathFromURI(selectedImage);
@@ -301,6 +347,7 @@ public class TokoEditProdukActivity extends AppCompatActivity {
                                 Log.i("TAG", "Some exception " + e);
                             }
                             hapusImage3.setVisibility(View.VISIBLE);
+                            hapusGambar3 = false;
                             break;
                         case 4:
                             imagePath4 = getRealPathFromURI(selectedImage);
@@ -312,6 +359,7 @@ public class TokoEditProdukActivity extends AppCompatActivity {
                                 Log.i("TAG", "Some exception " + e);
                             }
                             hapusImage4.setVisibility(View.VISIBLE);
+                            hapusGambar4 =false;
                             break;
                     }
                     break;
@@ -348,7 +396,9 @@ public class TokoEditProdukActivity extends AppCompatActivity {
         switch (requestCode) {
             case PERMISSION_REQUEST_READ_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    startGallery();
+                    //
+                } else {
+                    finish();
                 }
                 return;
             }
@@ -371,19 +421,7 @@ public class TokoEditProdukActivity extends AppCompatActivity {
                 pilih = 4;
                 break;
         }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        PERMISSION_REQUEST_READ_STORAGE);
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        PERMISSION_REQUEST_READ_STORAGE);
-            }
-        } else {
-            startGallery();
-        }
+        startGallery();
     }
 
     public void startGallery() {
@@ -523,6 +561,10 @@ public class TokoEditProdukActivity extends AppCompatActivity {
         if (!imagePath4.equals("")) {
             request.addFile("gambar4", imagePath4);
         }
+        request.addMultipartParam("hapusGambar1", "text/plain",hapusGambar1+"");
+        request.addMultipartParam("hapusGambar2", "text/plain",hapusGambar2+"");
+        request.addMultipartParam("hapusGambar3", "text/plain",hapusGambar3+"");
+        request.addMultipartParam("hapusGambar4", "text/plain",hapusGambar4+"");
         request.addMultipartParam("nama", "text/plain", namaProduk.getText().toString());
         request.addMultipartParam("harga", "text/plain", hargaProduk.getText().toString());
         request.addMultipartParam("min_pesan", "text/plain", minimalPembelian.getText().toString());
@@ -547,21 +589,25 @@ public class TokoEditProdukActivity extends AppCompatActivity {
                 hapusImage1.setVisibility(View.GONE);
                 imagePath1 = "";
                 image1.setImageResource(R.drawable.ic_add_image);
+                hapusGambar1 = true;
                 break;
             case R.id.hapus_image2:
                 hapusImage2.setVisibility(View.GONE);
                 imagePath2 = "";
                 image2.setImageResource(R.drawable.ic_add_image);
+                hapusGambar2 = true;
                 break;
             case R.id.hapus_image3:
                 hapusImage3.setVisibility(View.GONE);
                 imagePath3 = "";
                 image3.setImageResource(R.drawable.ic_add_image);
+                hapusGambar3 = true;
                 break;
             case R.id.hapus_image4:
                 hapusImage4.setVisibility(View.GONE);
                 imagePath4 = "";
                 image4.setImageResource(R.drawable.ic_add_image);
+                hapusGambar4 = true;
                 break;
         }
     }
