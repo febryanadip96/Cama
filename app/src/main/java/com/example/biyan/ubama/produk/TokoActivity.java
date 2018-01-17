@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
+import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
 import com.example.biyan.ubama.UrlUbama;
@@ -99,11 +100,12 @@ public class TokoActivity extends AppCompatActivity {
         loading.setIndeterminate(true);
         loading.show();
         String url = UrlUbama.TOKO + idToko;
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(String response) {
                 loading.dismiss();
-                toko = new Gson().fromJson(response.toString(), Toko.class);
+                Log.d("Hasil", response);
+                toko = new Gson().fromJson(response, Toko.class);
                 if(!toko.url_profile.equals("")){
                     Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE+toko.url_profile).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).fit().into(imageToko);
                 } else{
@@ -146,6 +148,7 @@ public class TokoActivity extends AppCompatActivity {
                 return params;
             }
         };
+        request.setShouldCache(false);
         queue.add(request);
     }
 
