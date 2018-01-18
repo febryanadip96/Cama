@@ -158,6 +158,7 @@ public class PemesananActivity extends AppCompatActivity {
                 return params;
             }
         };
+        request.setShouldCache(false);
         queue.add(request);
     }
 
