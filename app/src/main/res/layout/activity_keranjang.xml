@@ -7,6 +7,37 @@
     tools:context="com.example.biyan.ubama.keranjang.KeranjangActivity"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/layout_alamat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_round"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_alamat"/>
+
+            <TextView
+                android:id="@+id/alamat"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:text="Alamat"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
@@ -45,14 +76,13 @@
 
         </RelativeLayout>
 
-
         <Button
             android:id="@+id/proses"
             android:background="@color/colorPrimary"
             android:layout_width="match_parent"
-            android:textColor="@android:color/white"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:textColor="@android:color/white"
             android:text="Proses Pesanan"/>
     </LinearLayout>
 
