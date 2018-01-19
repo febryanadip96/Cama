@@ -22,7 +22,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.Pesanan;
 import com.squareup.picasso.Picasso;
@@ -78,7 +78,7 @@ public class KomentarPesananAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         final TextView isiKomentar = (TextView) holder.itemView.findViewById(R.id.isi_komentar);
         final Button simpan = (Button) holder.itemView.findViewById(R.id.simpan);
         if(detailPesananList.get(position).barang_jasa.gambar.size()>0){
-            Picasso.with(context).load(UrlUbama.URL_IMAGE+detailPesananList.get(position).barang_jasa.gambar.get(0).url_gambar).error(R.drawable.ic_error_image).fit().centerInside().into(imageBarang);
+            Picasso.with(context).load(UrlCama.URL_IMAGE+detailPesananList.get(position).barang_jasa.gambar.get(0).url_gambar).error(R.drawable.ic_error_image).fit().centerInside().into(imageBarang);
         }
         else{
             imageBarang.setImageResource(R.drawable.ic_error_image);
@@ -161,7 +161,7 @@ public class KomentarPesananAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     loading.setIndeterminate(true);
                     loading.show();
                     queue = Volley.newRequestQueue(context);
-                    String url = UrlUbama.SIMPAN_KOMENTAR;
+                    String url = UrlCama.SIMPAN_KOMENTAR;
                     StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {

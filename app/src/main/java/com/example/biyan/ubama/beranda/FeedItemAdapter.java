@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.biyan.ubama.produk.BarangJasaActivity;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.models.Feed;
 import com.squareup.picasso.Picasso;
 
@@ -54,7 +54,7 @@ public class FeedItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         hargaBarang = (TextView) holder.itemView.findViewById(R.id.harga_barang);
 
         if (!feedBarangJasaList.get(position).gambar.isEmpty()) {
-            Picasso.with(context).load(UrlUbama.URL_IMAGE + feedBarangJasaList.get(position).gambar.get(0).url_gambar).error(R.drawable.ic_error_image).fit().centerInside().into(imageBarang);
+            Picasso.with(context).load(UrlCama.URL_IMAGE + feedBarangJasaList.get(position).gambar.get(0).url_gambar).error(R.drawable.ic_error_image).fit().centerInside().into(imageBarang);
         } else {
             imageBarang.setImageResource(R.drawable.ic_error_image);
         }

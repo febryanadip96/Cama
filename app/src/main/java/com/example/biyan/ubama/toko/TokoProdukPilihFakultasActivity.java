@@ -22,7 +22,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.Fakultas;
 import com.google.gson.Gson;
@@ -60,7 +60,7 @@ public class TokoProdukPilihFakultasActivity extends AppCompatActivity {
         loading.setIndeterminate(true);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.show();
-        String url = UrlUbama.FAKULTAS;
+        String url = UrlCama.FAKULTAS;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {

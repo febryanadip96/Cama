@@ -33,7 +33,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.SimpleMultiPartRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 
 import org.json.JSONException;
@@ -205,7 +205,7 @@ public class TokoCreateActivity extends AppCompatActivity {
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon menunggu");
         loading.show();
-        String url = UrlUbama.USER_BUAT_TOKO;
+        String url = UrlCama.USER_BUAT_TOKO;
         SimpleMultiPartRequest request = new SimpleMultiPartRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -276,7 +276,7 @@ public class TokoCreateActivity extends AppCompatActivity {
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon menunggu");
         loading.show();
-        String url = UrlUbama.USER_BUAT_TOKO;
+        String url = UrlCama.USER_BUAT_TOKO;
         SimpleMultiPartRequest request = new SimpleMultiPartRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

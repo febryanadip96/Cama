@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.models.Keranjang;
 import com.squareup.picasso.Picasso;
 
@@ -51,7 +51,7 @@ public class KeranjangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         imageToko = (CircleImageView) holder.itemView.findViewById(R.id.image_toko);
         namaToko = (TextView) holder.itemView.findViewById(R.id.nama_toko);
         recyclerItemKeranjang = (RecyclerView) holder.itemView.findViewById(R.id.recycler_item_keranjang);
-        Picasso.with(context).load(UrlUbama.URL_IMAGE+keranjangList.get(position).url_profile).into(imageToko);
+        Picasso.with(context).load(UrlCama.URL_IMAGE+keranjangList.get(position).url_profile).into(imageToko);
         namaToko.setText(keranjangList.get(position).nama);
         layoutManagerItemKeranjang = new LinearLayoutManager(context);
         adapterItemKeranjang = new KeranjangItemAdapter(keranjangList.get(position).barangJasa);

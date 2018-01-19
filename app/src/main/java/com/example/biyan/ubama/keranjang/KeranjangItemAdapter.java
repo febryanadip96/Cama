@@ -20,7 +20,7 @@ import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.Keranjang;
 import com.squareup.picasso.Picasso;
@@ -78,7 +78,7 @@ public class KeranjangItemAdapter extends RecyclerView.Adapter<RecyclerView.View
         catatanPembeli = (TextView) holder.itemView.findViewById(R.id.catatan_pembeli);
         jumlah = (TextView) holder.itemView.findViewById(R.id.jumlah);
         if(barangJasaList.get(position).gambar.size()>0){
-            Picasso.with(context).load(UrlUbama.URL_IMAGE+barangJasaList.get(position).gambar.get(0).url_gambar).into(gambarBarang);
+            Picasso.with(context).load(UrlCama.URL_IMAGE+barangJasaList.get(position).gambar.get(0).url_gambar).into(gambarBarang);
         }
         namaBarang.setText(barangJasaList.get(position).nama);
         NumberFormat currency = NumberFormat.getInstance(Locale.GERMANY);
@@ -119,7 +119,7 @@ public class KeranjangItemAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     private void hapusBarangJasaKeranjang(final int idBarangJasa, final int position) {
         queue = Volley.newRequestQueue(context);
-        String url = UrlUbama.USER_HAPUS_KERANJANG + idBarangJasa;
+        String url = UrlCama.USER_HAPUS_KERANJANG + idBarangJasa;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

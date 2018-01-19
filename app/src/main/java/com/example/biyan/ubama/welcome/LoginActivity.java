@@ -21,7 +21,7 @@ import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.MainActivity;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.messaging.SendToken;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
         Map<String, String> params = new HashMap<String, String>();
         params.put("email", email.getText().toString());
         params.put("password", password.getText().toString());
-        String url = UrlUbama.LOGIN;
+        String url = UrlCama.LOGIN;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

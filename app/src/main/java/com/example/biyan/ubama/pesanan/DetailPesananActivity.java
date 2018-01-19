@@ -25,7 +25,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.Pesanan;
 import com.google.gson.Gson;
@@ -121,7 +121,7 @@ public class DetailPesananActivity extends AppCompatActivity {
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
-        String url = UrlUbama.USER_DETAIL_PESANAN + idPesanan;
+        String url = UrlCama.USER_DETAIL_PESANAN + idPesanan;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -259,7 +259,7 @@ public class DetailPesananActivity extends AppCompatActivity {
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
-        String url = UrlUbama.PESANAN_SELESAI + idPesanan;
+        String url = UrlCama.PESANAN_SELESAI + idPesanan;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -324,7 +324,7 @@ public class DetailPesananActivity extends AppCompatActivity {
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
-        String url = UrlUbama.PESANAN_BATAL + idPesanan;
+        String url = UrlCama.PESANAN_BATAL + idPesanan;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.models.Subkategori;
 import com.squareup.picasso.Picasso;
 
@@ -49,7 +49,7 @@ public class SubkategoriAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         imageSubkategori = (ImageView) holder.itemView.findViewById(R.id.image_subkategori);
         namaSubkategori = (TextView) holder.itemView.findViewById(R.id.nama_subkategori);
         if(subkategoriList.get(position).url_gambar != null){
-            Picasso.with(context).load(UrlUbama.URL_IMAGE+subkategoriList.get(position).url_gambar).fit().centerInside().into(imageSubkategori);
+            Picasso.with(context).load(UrlCama.URL_IMAGE+subkategoriList.get(position).url_gambar).fit().centerInside().into(imageSubkategori);
         } else {
             imageSubkategori.setImageResource(R.drawable.ic_error_image);
         }

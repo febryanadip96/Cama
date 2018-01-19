@@ -21,7 +21,7 @@ import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.Toko;
 import com.google.gson.Gson;
@@ -99,7 +99,7 @@ public class TokoActivity extends AppCompatActivity {
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
-        String url = UrlUbama.TOKO + idToko;
+        String url = UrlCama.TOKO + idToko;
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -107,7 +107,7 @@ public class TokoActivity extends AppCompatActivity {
                 Log.d("Hasil", response);
                 toko = new Gson().fromJson(response, Toko.class);
                 if(!toko.url_profile.equals("")){
-                    Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE+toko.url_profile).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).fit().into(imageToko);
+                    Picasso.with(getApplicationContext()).load(UrlCama.URL_IMAGE+toko.url_profile).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).fit().into(imageToko);
                 } else{
                     imageToko.setImageResource(R.drawable.ic_error_image);
                 }
@@ -153,7 +153,7 @@ public class TokoActivity extends AppCompatActivity {
     }
 
     public void UbahFavoritToko() {
-        String url = UrlUbama.USER_UBAH_FAVORIT_TOKO + idToko;
+        String url = UrlCama.USER_UBAH_FAVORIT_TOKO + idToko;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

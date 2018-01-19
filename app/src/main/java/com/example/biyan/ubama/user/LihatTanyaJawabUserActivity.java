@@ -18,7 +18,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.TanyaJawab;
 import com.google.gson.Gson;
@@ -88,20 +88,20 @@ public class LihatTanyaJawabUserActivity extends AppCompatActivity {
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
         loading.show();
-        String url = UrlUbama.USER_LIHAT_TANYA_JAWAB+idTanyaJawab;
+        String url = UrlCama.USER_LIHAT_TANYA_JAWAB+idTanyaJawab;
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 loading.dismiss();
                 tanyaJawab = new Gson().fromJson(response.toString(), TanyaJawab.class);
                 if (tanyaJawab.barang_jasa.gambar.size() > 0) {
-                    Picasso.with(LihatTanyaJawabUserActivity.this).load(UrlUbama.URL_IMAGE + tanyaJawab.barang_jasa.gambar.get(0).url_gambar).fit().into(gambarBarang);
+                    Picasso.with(LihatTanyaJawabUserActivity.this).load(UrlCama.URL_IMAGE + tanyaJawab.barang_jasa.gambar.get(0).url_gambar).fit().into(gambarBarang);
                 } else {
                     gambarBarang.setImageResource(R.drawable.ic_error_image);
                 }
                 namaBarang.setText(tanyaJawab.barang_jasa.nama);
                 if (!tanyaJawab.penanya.url_profile.equals("")) {
-                    Picasso.with(LihatTanyaJawabUserActivity.this).load(UrlUbama.URL_IMAGE + tanyaJawab.penanya.url_profile).fit().into(imagePenanya);
+                    Picasso.with(LihatTanyaJawabUserActivity.this).load(UrlCama.URL_IMAGE + tanyaJawab.penanya.url_profile).fit().into(imagePenanya);
                 } else {
                     imagePenanya.setImageResource(R.drawable.ic_error_image);
                 }
@@ -122,7 +122,7 @@ public class LihatTanyaJawabUserActivity extends AppCompatActivity {
                     jawaban.setVisibility(View.VISIBLE);
                     waktuJawab.setVisibility(View.VISIBLE);
                     if (!tanyaJawab.barang_jasa.toko.url_profile.equals("")) {
-                        Picasso.with(LihatTanyaJawabUserActivity.this).load(UrlUbama.URL_IMAGE + tanyaJawab.barang_jasa.toko.url_profile).fit().into(imageToko);
+                        Picasso.with(LihatTanyaJawabUserActivity.this).load(UrlCama.URL_IMAGE + tanyaJawab.barang_jasa.toko.url_profile).fit().into(imageToko);
                     } else {
                         imageToko.setImageResource(R.drawable.ic_error_image);
                     }

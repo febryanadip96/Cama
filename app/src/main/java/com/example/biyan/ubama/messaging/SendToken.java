@@ -10,7 +10,7 @@ import com.android.volley.error.AuthFailureError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 
 import org.json.JSONObject;
@@ -28,7 +28,7 @@ public class SendToken {
         RequestQueue queue = Volley.newRequestQueue(context);
         Map<String, String> params = new HashMap<String, String>();
         params.put("token", refreshedToken+"");
-        String url = UrlUbama.USER_SEND_TOKEN;
+        String url = UrlCama.USER_SEND_TOKEN;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

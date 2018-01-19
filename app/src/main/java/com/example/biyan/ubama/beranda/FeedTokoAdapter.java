@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.biyan.ubama.R;
 import com.example.biyan.ubama.produk.TokoActivity;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.models.Feed;
 import com.squareup.picasso.Picasso;
 
@@ -60,7 +60,7 @@ public class FeedTokoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         recyclerFeed.setLayoutManager(layoutManagerFeed);
         adapterFeed = new FeedItemAdapter(feedList.get(position).barang_jasa);
         recyclerFeed.setAdapter(adapterFeed);
-        Picasso.with(context).load(UrlUbama.URL_IMAGE + feedList.get(position).url_profile).fit().into(imageToko);
+        Picasso.with(context).load(UrlCama.URL_IMAGE + feedList.get(position).url_profile).fit().into(imageToko);
         namaToko.setText(feedList.get(position).nama);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

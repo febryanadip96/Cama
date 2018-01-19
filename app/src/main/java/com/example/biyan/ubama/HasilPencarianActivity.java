@@ -101,7 +101,7 @@ public class HasilPencarianActivity extends AppCompatActivity {
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
-        String url = UrlUbama.CARI_BARANG_JASA + query;
+        String url = UrlCama.CARI_BARANG_JASA + query;
         Log.d("cari", query+" "+orderQuery+" "+sortQuery+" "+filterQuery);
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override

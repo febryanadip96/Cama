@@ -23,7 +23,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.keranjang.KeranjangActivity;
 import com.example.biyan.ubama.models.BarangJasa;
@@ -151,7 +151,7 @@ public class BarangJasaActivity extends AppCompatActivity {
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
-        String url = UrlUbama.BARANG_JASA + idBarangJasa;
+        String url = UrlCama.BARANG_JASA + idBarangJasa;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -173,7 +173,7 @@ public class BarangJasaActivity extends AppCompatActivity {
                 }
                 kondisiBarang.setText(barangJasa.baruBekas);
                 if (!barangJasa.toko.url_profile.isEmpty()) {
-                    Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE + barangJasa.toko.url_profile).fit().into(imageToko);
+                    Picasso.with(getApplicationContext()).load(UrlCama.URL_IMAGE + barangJasa.toko.url_profile).fit().into(imageToko);
                 }
                 namaToko.setText(barangJasa.toko.nama);
                 namaPemilik.setText(barangJasa.toko.pemilik.user.name);
@@ -240,7 +240,7 @@ public class BarangJasaActivity extends AppCompatActivity {
         @Override
         public void setImageForPosition(int position, ImageView imageView) {
             if (barangJasa.gambar.size() > 0) {
-                Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(position).url_gambar)
+                Picasso.with(getApplicationContext()).load(UrlCama.URL_IMAGE + barangJasa.gambar.get(position).url_gambar)
                         .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().centerInside().into(imageView);
             } else {
                 imageView.setImageResource(sampleImages[position]);
@@ -252,7 +252,7 @@ public class BarangJasaActivity extends AppCompatActivity {
 
     @OnClick(R.id.favorit_barang)
     public void onFavoritBarangClicked() {
-        String url = UrlUbama.USER_UBAH_FAVORIT + idBarangJasa;
+        String url = UrlCama.USER_UBAH_FAVORIT + idBarangJasa;
         JsonObjectRequest ubahFavoritBarangJasaRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

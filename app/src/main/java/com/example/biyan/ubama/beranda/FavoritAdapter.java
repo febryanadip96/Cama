@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.biyan.ubama.produk.BarangJasaActivity;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.models.Favorit;
 import com.squareup.picasso.Picasso;
 
@@ -61,7 +61,7 @@ public class FavoritAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         namaToko = (TextView) holder.itemView.findViewById(R.id.nama_toko);
 
         if (favoritList.get(position).gambar.size() > 0) {
-            Picasso.with(context).load(UrlUbama.URL_IMAGE + favoritList.get(position).gambar.get(0).url_gambar).fit().centerInside().error(R.drawable.ic_error_image).into(imageBarang);
+            Picasso.with(context).load(UrlCama.URL_IMAGE + favoritList.get(position).gambar.get(0).url_gambar).fit().centerInside().error(R.drawable.ic_error_image).into(imageBarang);
         } else {
             imageBarang.setImageResource(R.drawable.ic_error_image);
         }

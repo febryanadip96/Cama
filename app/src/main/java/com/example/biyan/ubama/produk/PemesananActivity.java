@@ -23,7 +23,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.keranjang.KeranjangActivity;
 import com.example.biyan.ubama.models.BarangJasa;
@@ -121,7 +121,7 @@ public class PemesananActivity extends AppCompatActivity {
         loading.setIndeterminate(true);
         loading.show();
         queue = Volley.newRequestQueue(this);
-        String url = UrlUbama.USER_DATA_PEMESANAN + idBarangJasa;
+        String url = UrlCama.USER_DATA_PEMESANAN + idBarangJasa;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -133,7 +133,7 @@ public class PemesananActivity extends AppCompatActivity {
                 }
                 min_pesan = barangJasa.min_pesan;
                 if (barangJasa.gambar.size() > 0) {
-                    Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar).error(R.drawable.ic_error_image).fit().centerInside().into(imageBarang);
+                    Picasso.with(getApplicationContext()).load(UrlCama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar).error(R.drawable.ic_error_image).fit().centerInside().into(imageBarang);
                 }
                 namaBarang.setText(barangJasa.nama);
                 NumberFormat currency = NumberFormat.getInstance(Locale.GERMANY);
@@ -208,7 +208,7 @@ public class PemesananActivity extends AppCompatActivity {
         params.put("catatan_pembeli", catatanPembeli.getText().toString());
         params.put("barang_jasa_id", idBarangJasa+"");
         params.put("alamat", alamatTujuan.getText().toString());
-        String url = UrlUbama.USER_MASUK_KERANJANG;
+        String url = UrlCama.USER_MASUK_KERANJANG;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

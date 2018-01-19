@@ -22,7 +22,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.BarangJasa;
 import com.google.gson.Gson;
@@ -77,13 +77,13 @@ public class KirimPertanyaanActivity extends AppCompatActivity {
     }
 
     public void getDataBarangJasa() {
-        String url = UrlUbama.BARANG_JASA + idBarangJasa;
+        String url = UrlCama.BARANG_JASA + idBarangJasa;
         final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 barangJasa = new Gson().fromJson(response.toString(), BarangJasa.class);
                 if (barangJasa.gambar.size() > 0) {
-                    Picasso.with(KirimPertanyaanActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar).fit().centerInside().into(imageBarang);
+                    Picasso.with(KirimPertanyaanActivity.this).load(UrlCama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar).fit().centerInside().into(imageBarang);
                 }
                 else{
                     imageBarang.setImageResource(R.drawable.ic_error_image);
@@ -129,7 +129,7 @@ public class KirimPertanyaanActivity extends AppCompatActivity {
         loading.show();
         Map<String, String> params = new HashMap<String, String>();
         params.put("pertanyaan", pertanyaan.getText().toString());
-        String url = UrlUbama.KIRIM_PERTANYAAN_BARANG_JASA + idBarangJasa;
+        String url = UrlCama.KIRIM_PERTANYAAN_BARANG_JASA + idBarangJasa;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

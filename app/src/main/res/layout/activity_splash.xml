@@ -15,24 +15,18 @@
         android:orientation="vertical"
         android:gravity="center">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ubaya_logo"
-            android:layout_gravity="center"/>
-
         <TextView
             android:textSize="60sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="UBAMA"
+            android:text="CAMA"
             android:textColor="@android:color/holo_red_dark"/>
 
         <TextView
             android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="UBAYA MARKETPLACE"
+            android:text="CAMPUS MARKETPLACE"
             android:textColor="@android:color/black"/>
 
     </LinearLayout>

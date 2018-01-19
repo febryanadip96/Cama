@@ -18,7 +18,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.BarangJasa;
 import com.example.biyan.ubama.models.Komentar;
@@ -90,7 +90,7 @@ public class KomentarActivity extends AppCompatActivity {
     }
 
     public void getDataKomentar(){
-        String url = UrlUbama.KOMENTAR_BARANG_JASA+idBarangJasa;
+        String url = UrlCama.KOMENTAR_BARANG_JASA+idBarangJasa;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -103,7 +103,7 @@ public class KomentarActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 if(barangJasa.gambar.size()>0){
-                    Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE+barangJasa.gambar.get(0).url_gambar).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).fit().centerInside().into(imageBarang);
+                    Picasso.with(getApplicationContext()).load(UrlCama.URL_IMAGE+barangJasa.gambar.get(0).url_gambar).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).fit().centerInside().into(imageBarang);
                 }
                 else{
                     imageBarang.setImageResource(R.drawable.ic_error_image);

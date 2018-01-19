@@ -18,7 +18,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 
 import org.json.JSONException;
@@ -79,7 +79,7 @@ public class TokoAlasanDitolakActivity extends AppCompatActivity {
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
-        String url = UrlUbama.USER_TOKO_TOLAK_PESANAN + idPesanan;
+        String url = UrlCama.USER_TOKO_TOLAK_PESANAN + idPesanan;
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

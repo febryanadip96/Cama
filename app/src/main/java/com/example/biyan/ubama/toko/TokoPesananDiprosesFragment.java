@@ -20,7 +20,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.Pesanan;
 import com.google.gson.Gson;
@@ -82,7 +82,7 @@ public class TokoPesananDiprosesFragment extends Fragment {
     }
 
     public void getPesananDiproses() {
-        String url = UrlUbama.USER_TOKO_PESANAN_DIPROSES;
+        String url = UrlCama.USER_TOKO_PESANAN_DIPROSES;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {

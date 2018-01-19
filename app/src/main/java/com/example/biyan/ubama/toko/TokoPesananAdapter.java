@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.models.Pesanan;
 import com.squareup.picasso.Picasso;
 
@@ -57,7 +57,7 @@ public class TokoPesananAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         statusPesanan = (TextView) holder.itemView.findViewById(R.id.status_pesanan);
         idPesanan = (TextView) holder.itemView.findViewById(R.id.id_pesanan);
         tanggalPesan = (TextView) holder.itemView.findViewById(R.id.tanggal_pesan);
-        Picasso.with(context).load(UrlUbama.URL_IMAGE+pesananList.get(position).pemesan.url_profile).into(imagePemesan);
+        Picasso.with(context).load(UrlCama.URL_IMAGE+pesananList.get(position).pemesan.url_profile).into(imagePemesan);
         namaPemesan.setText(pesananList.get(position).pemesan.user.name);
         statusPesanan.setText(pesananList.get(position).status);
         idPesanan.setText(pesananList.get(position).id+"");

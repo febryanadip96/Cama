@@ -18,7 +18,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.TanyaJawab;
 import com.google.gson.Gson;
@@ -70,7 +70,7 @@ public class TanyaJawabUserActivity extends AppCompatActivity {
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon Menunggu");
         loading.show();
-        String url = UrlUbama.USER_TANYA_JAWAB;
+        String url = UrlCama.USER_TANYA_JAWAB;
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

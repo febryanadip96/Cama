@@ -39,7 +39,7 @@ import com.android.volley.request.SimpleMultiPartRequest;
 import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.BarangJasa;
 import com.google.gson.Gson;
@@ -211,7 +211,7 @@ public class TokoEditProdukActivity extends AppCompatActivity {
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
-        String url = UrlUbama.BARANG_JASA + idBarangJasa;
+        String url = UrlCama.BARANG_JASA + idBarangJasa;
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -220,37 +220,37 @@ public class TokoEditProdukActivity extends AppCompatActivity {
                     int jumlah = barangJasa.gambar.size();
                     switch (jumlah) {
                         case 1:
-                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar)
+                            Picasso.with(TokoEditProdukActivity.this).load(UrlCama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar)
                                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().centerInside().into(image1);
                             hapusImage1.setVisibility(View.VISIBLE);
                             break;
                         case 2:
-                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar)
+                            Picasso.with(TokoEditProdukActivity.this).load(UrlCama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar)
                                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().centerInside().into(image1);
-                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(1).url_gambar)
+                            Picasso.with(TokoEditProdukActivity.this).load(UrlCama.URL_IMAGE + barangJasa.gambar.get(1).url_gambar)
                                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().centerInside().into(image2);
                             hapusImage1.setVisibility(View.VISIBLE);
                             hapusImage2.setVisibility(View.VISIBLE);
                             break;
                         case 3:
-                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar)
+                            Picasso.with(TokoEditProdukActivity.this).load(UrlCama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar)
                                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().centerInside().into(image1);
-                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(1).url_gambar)
+                            Picasso.with(TokoEditProdukActivity.this).load(UrlCama.URL_IMAGE + barangJasa.gambar.get(1).url_gambar)
                                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().centerInside().into(image2);
-                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(2).url_gambar)
+                            Picasso.with(TokoEditProdukActivity.this).load(UrlCama.URL_IMAGE + barangJasa.gambar.get(2).url_gambar)
                                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().centerInside().into(image3);
                             hapusImage1.setVisibility(View.VISIBLE);
                             hapusImage2.setVisibility(View.VISIBLE);
                             hapusImage3.setVisibility(View.VISIBLE);
                             break;
                         case 4:
-                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar)
+                            Picasso.with(TokoEditProdukActivity.this).load(UrlCama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar)
                                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().centerInside().into(image1);
-                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(1).url_gambar)
+                            Picasso.with(TokoEditProdukActivity.this).load(UrlCama.URL_IMAGE + barangJasa.gambar.get(1).url_gambar)
                                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().centerInside().into(image2);
-                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(2).url_gambar)
+                            Picasso.with(TokoEditProdukActivity.this).load(UrlCama.URL_IMAGE + barangJasa.gambar.get(2).url_gambar)
                                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().centerInside().into(image3);
-                            Picasso.with(TokoEditProdukActivity.this).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(3).url_gambar)
+                            Picasso.with(TokoEditProdukActivity.this).load(UrlCama.URL_IMAGE + barangJasa.gambar.get(3).url_gambar)
                                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().centerInside().into(image4);
                             hapusImage1.setVisibility(View.VISIBLE);
                             hapusImage2.setVisibility(View.VISIBLE);
@@ -514,7 +514,7 @@ public class TokoEditProdukActivity extends AppCompatActivity {
         } else if (checkedRadioButtonIdJenis == R.id.jasa) {
             jenisProduk = 2;
         }
-        String url = UrlUbama.USER_TOKO_UPDATE_PRODUK + idBarangJasa;
+        String url = UrlCama.USER_TOKO_UPDATE_PRODUK + idBarangJasa;
         SimpleMultiPartRequest request = new SimpleMultiPartRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

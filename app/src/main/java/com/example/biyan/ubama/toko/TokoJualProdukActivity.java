@@ -37,7 +37,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.SimpleMultiPartRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 
 import org.json.JSONException;
@@ -383,7 +383,7 @@ public class TokoJualProdukActivity extends AppCompatActivity {
         } else if (checkedRadioButtonIdJenis == R.id.jasa) {
             jenisProduk = 2;
         }
-        String url = UrlUbama.USER_JUAL_PRODUK;
+        String url = UrlCama.USER_JUAL_PRODUK;
         SimpleMultiPartRequest request = new SimpleMultiPartRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

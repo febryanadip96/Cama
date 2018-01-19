@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,12 +25,11 @@ import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.gps.AlamatActivity;
 import com.example.biyan.ubama.models.Keranjang;
 import com.example.biyan.ubama.models.User;
-import com.example.biyan.ubama.welcome.RegisterActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -48,7 +48,9 @@ import butterknife.OnClick;
 
 public class KeranjangActivity extends AppCompatActivity {
     @BindView(R.id.alamat)
-    TextView alamat;
+    EditText alamat;
+    @BindView(R.id.alamat_map)
+    TextView alamatMap;
     @BindView(R.id.layout_alamat)
     LinearLayout layoutAlamat;
     @BindView(R.id.recycler)
@@ -71,7 +73,6 @@ public class KeranjangActivity extends AppCompatActivity {
     User user;
 
     final static int MAP_REQUEST = 1;
-    String alamat_map;
     double latitude = 0, longitude = 0;
 
     @Override
@@ -85,7 +86,7 @@ public class KeranjangActivity extends AppCompatActivity {
                     latitude = res.getDouble("latitude");
                     longitude = res.getDouble("longitude");
                     alamat.setText(res.getString("alamat_map"));
-                    alamat_map = alamat.getText().toString();
+                    alamatMap.setText(alamat.getText().toString());
                     break;
             }
         }
@@ -104,13 +105,13 @@ public class KeranjangActivity extends AppCompatActivity {
     }
 
     public void getUser() {
-        String url = UrlUbama.USER;
+        String url = UrlCama.USER;
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 user = new Gson().fromJson(response.toString(), User.class);
                 alamat.setText(user.pengguna.alamat);
-                alamat_map = user.pengguna.alamatMap;
+                alamatMap.setText(user.pengguna.alamatMap);
                 latitude = user.pengguna.latitude;
                 longitude = user.pengguna.longitude;
             }
@@ -138,7 +139,7 @@ public class KeranjangActivity extends AppCompatActivity {
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
-        String url = UrlUbama.USER_KERANJANG;
+        String url = UrlCama.USER_KERANJANG;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -209,12 +210,12 @@ public class KeranjangActivity extends AppCompatActivity {
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
-        String url = UrlUbama.USER_PROSES_PESANAN;
+        String url = UrlCama.USER_PROSES_PESANAN;
         Map<String, String> params = new HashMap<>();
         params.put("alamat", alamat.getText().toString());
-        params.put("alamat_map", alamat_map);
-        params.put("latitude", latitude+"");
-        params.put("longitude", longitude+"");
+        params.put("alamat_map", alamatMap.getText().toString());
+        params.put("latitude", latitude + "");
+        params.put("longitude", longitude + "");
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -260,9 +261,9 @@ public class KeranjangActivity extends AppCompatActivity {
         alert.show();
     }
 
-    @OnClick(R.id.alamat)
+    @OnClick(R.id.alamat_map)
     public void onAlamatClicked() {
         Intent intent = new Intent(KeranjangActivity.this, AlamatActivity.class);
-        startActivityForResult(intent,MAP_REQUEST);
+        startActivityForResult(intent, MAP_REQUEST);
     }
 }

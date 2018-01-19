@@ -18,7 +18,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.User;
 import com.google.gson.Gson;
@@ -94,13 +94,13 @@ public class ProfileUserActivity extends AppCompatActivity {
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
-        String url = UrlUbama.USER;
+        String url = UrlCama.USER;
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 loading.dismiss();
                 user = new Gson().fromJson(response.toString(), User.class);
-                Picasso.with(ProfileUserActivity.this).load(UrlUbama.URL_IMAGE+user.pengguna.url_profile).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).fit().into(imageUser);
+                Picasso.with(ProfileUserActivity.this).load(UrlCama.URL_IMAGE+user.pengguna.url_profile).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).fit().into(imageUser);
                 nama.setText(user.name);
                 email.setText(user.email);
                 telepon.setText(user.pengguna.telepon);

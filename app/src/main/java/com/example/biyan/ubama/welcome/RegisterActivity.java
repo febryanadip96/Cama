@@ -25,7 +25,7 @@ import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.gps.AlamatActivity;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -213,7 +213,7 @@ public class RegisterActivity extends AppCompatActivity {
         params.put("latitude", latitude+"");
         params.put("longitude", longitude+"");
 
-        String url = UrlUbama.REGISTER;
+        String url = UrlCama.REGISTER;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

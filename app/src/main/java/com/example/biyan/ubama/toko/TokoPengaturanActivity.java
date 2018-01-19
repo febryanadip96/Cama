@@ -35,7 +35,7 @@ import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.request.SimpleMultiPartRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.Toko;
 import com.google.gson.Gson;
@@ -134,13 +134,13 @@ public class TokoPengaturanActivity extends AppCompatActivity {
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
-        String url = UrlUbama.USER_TOKO;
+        String url = UrlCama.USER_TOKO;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 loading.dismiss();
                 toko = new Gson().fromJson(response.toString(), Toko.class);
-                Picasso.with(TokoPengaturanActivity.this).load(UrlUbama.URL_IMAGE + toko.url_profile).fit().into(imageToko);
+                Picasso.with(TokoPengaturanActivity.this).load(UrlCama.URL_IMAGE + toko.url_profile).fit().into(imageToko);
                 namaToko.setText(toko.nama);
                 if (toko.lewati == 1) {
                     editNamaToko.setVisibility(View.VISIBLE);
@@ -258,7 +258,7 @@ public class TokoPengaturanActivity extends AppCompatActivity {
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.setMessage("Mohon menunggu");
         loading.show();
-        String url = UrlUbama.USER_UPDATE_TOKO;
+        String url = UrlCama.USER_UPDATE_TOKO;
         SimpleMultiPartRequest request = new SimpleMultiPartRequest(Request.Method.PUT, url,
                 new Response.Listener<String>() {
                     @Override

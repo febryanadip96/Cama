@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.models.BarangJasa;
 import com.squareup.picasso.Picasso;
 
@@ -54,7 +54,7 @@ public class TokoProdukAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         namaBarang = (TextView) holder.itemView.findViewById(R.id.nama_barang);
         hargaBarang = (TextView) holder.itemView.findViewById(R.id.harga_barang);
         if(barangJasaList.get(position).gambar.size()>0){
-            Picasso.with(context).load(UrlUbama.URL_IMAGE+barangJasaList.get(position).gambar.get(0).url_gambar).fit().centerInside().into(imageBarang);
+            Picasso.with(context).load(UrlCama.URL_IMAGE+barangJasaList.get(position).gambar.get(0).url_gambar).fit().centerInside().into(imageBarang);
         } else {
             imageBarang.setImageResource(R.drawable.ic_error_image);
         }

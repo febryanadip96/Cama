@@ -199,13 +199,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void isiHeaderUser() {
-        String url = UrlUbama.USER;
+        String url = UrlCama.USER;
         JsonObjectRequest requst = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
                     if(!(response.isNull("name") || response.isNull("email"))){
-                        Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE+response.getJSONObject("pengguna").getString("url_profile")).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).into(imageProfile);
+                        Picasso.with(getApplicationContext()).load(UrlCama.URL_IMAGE+response.getJSONObject("pengguna").getString("url_profile")).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).into(imageProfile);
                         nama.setText(response.getString("name"));
                         email.setText(response.getString("email"));
                     }
@@ -269,7 +269,7 @@ public class MainActivity extends AppCompatActivity
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
-        String url = UrlUbama.LOGOUT;
+        String url = UrlCama.LOGOUT;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -309,7 +309,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void cekToko(){
-        String url = UrlUbama.USER_CEK_TOKO;
+        String url = UrlCama.USER_CEK_TOKO;
         JsonObjectRequest requst = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -345,7 +345,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void cekKeranjang(){
-        String url = UrlUbama.USER_CEK_KERANJANG;
+        String url = UrlCama.USER_CEK_KERANJANG;
         StringRequest requst = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

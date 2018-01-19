@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.models.Fakultas;
 import com.squareup.picasso.Picasso;
 
@@ -47,7 +47,7 @@ public class BerandaFakultasAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         imageFakultas = (ImageView) holder.itemView.findViewById(R.id.image_fakultas);
         namaFakultas = (TextView) holder.itemView.findViewById(R.id.nama_fakultas);
-        Picasso.with(context).load(UrlUbama.URL_IMAGE + fakultasList.get(position).url_gambar).error(R.drawable.ic_error_image).fit().centerInside().into(imageFakultas);
+        Picasso.with(context).load(UrlCama.URL_IMAGE + fakultasList.get(position).url_gambar).error(R.drawable.ic_error_image).fit().centerInside().into(imageFakultas);
         namaFakultas.setText(fakultasList.get(position).nama);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

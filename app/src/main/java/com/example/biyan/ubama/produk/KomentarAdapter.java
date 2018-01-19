@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.models.Komentar;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
@@ -69,7 +69,7 @@ public class KomentarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         star4 = (ImageView) holder.itemView.findViewById(R.id.star_4);
         star5 = (ImageView) holder.itemView.findViewById(R.id.star_5);
         if(!komentarList.get(position).detail_pesanan.pesanan.pemesan.url_profile.equals("")){
-            Picasso.with(context).load(UrlUbama.URL_IMAGE+komentarList.get(position).detail_pesanan.pesanan.pemesan.url_profile).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).into(imagePengguna);
+            Picasso.with(context).load(UrlCama.URL_IMAGE+komentarList.get(position).detail_pesanan.pesanan.pemesan.url_profile).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).into(imagePengguna);
         } else{
             imagePengguna.setImageResource(R.drawable.ic_user);
         }

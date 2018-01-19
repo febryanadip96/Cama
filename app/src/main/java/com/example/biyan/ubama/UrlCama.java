@@ -4,7 +4,7 @@ package com.example.biyan.ubama;
  * Created by Biyan on 10/12/2017.
  */
 
-public final class UrlUbama {
+public final class UrlCama {
 
     private final static String IP = "http://192.168.43.243:8000";
 

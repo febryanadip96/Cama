@@ -23,7 +23,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.BarangJasa;
 import com.example.biyan.ubama.produk.KomentarActivity;
@@ -129,7 +129,7 @@ public class TokoLihatProdukActivity extends AppCompatActivity {
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
-        String url = UrlUbama.USER_TOKO_PRODUK_DETAIL + idBarangJasa;
+        String url = UrlCama.USER_TOKO_PRODUK_DETAIL + idBarangJasa;
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -219,7 +219,7 @@ public class TokoLihatProdukActivity extends AppCompatActivity {
         @Override
         public void setImageForPosition(int position, ImageView imageView) {
             if (barangJasa.gambar.size() > 0) {
-                Picasso.with(getApplicationContext()).load(UrlUbama.URL_IMAGE + barangJasa.gambar.get(position).url_gambar)
+                Picasso.with(getApplicationContext()).load(UrlCama.URL_IMAGE + barangJasa.gambar.get(position).url_gambar)
                         .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE).fit().centerInside().into(imageView);
             }else{
                 imageView.setImageResource(sampleImages[position]);
@@ -260,7 +260,7 @@ public class TokoLihatProdukActivity extends AppCompatActivity {
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
-        String url = UrlUbama.USER_TOKO_HAPUS_PRODUK + idBarangJasa;
+        String url = UrlCama.USER_TOKO_HAPUS_PRODUK + idBarangJasa;
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

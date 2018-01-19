@@ -19,7 +19,7 @@ import com.android.volley.request.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.Fakultas;
 import com.example.biyan.ubama.models.Kategori;
@@ -86,7 +86,7 @@ public class BerandaFragment extends Fragment {
     }
 
     public void getKategori() {
-        String url = UrlUbama.KATEGORI;
+        String url = UrlCama.KATEGORI;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -114,7 +114,7 @@ public class BerandaFragment extends Fragment {
     }
 
     public void getFakultas() {
-        String url = UrlUbama.FAKULTAS;
+        String url = UrlCama.FAKULTAS;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {

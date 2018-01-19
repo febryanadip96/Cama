@@ -22,7 +22,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.Kategori;
 import com.google.gson.Gson;
@@ -74,7 +74,7 @@ public class TokoProdukPilihKategoriActivity extends AppCompatActivity {
         loading.setIndeterminate(true);
         loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         loading.show();
-        String url = UrlUbama.KATEGORI;
+        String url = UrlCama.KATEGORI;
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

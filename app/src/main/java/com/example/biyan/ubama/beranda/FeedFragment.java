@@ -19,7 +19,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.Feed;
 import com.google.gson.Gson;
@@ -79,7 +79,7 @@ public class FeedFragment extends Fragment {
     }
 
     public void getFeed() {
-        String url = UrlUbama.USER_FEED;
+        String url = UrlCama.USER_FEED;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.models.TanyaJawab;
 import com.squareup.picasso.Picasso;
 
@@ -65,7 +65,7 @@ public class TanyaJawabAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHo
         nama_toko = (TextView) holder.itemView.findViewById(R.id.nama_toko);
         jawaban = (TextView) holder.itemView.findViewById(R.id.jawaban);
         waktu_jawab = (TextView) holder.itemView.findViewById(R.id.waktu_jawab);
-        Picasso.with(context).load(UrlUbama.URL_IMAGE+tanyaJawabList.get(position).penanya.url_profile).into(image_penanya);
+        Picasso.with(context).load(UrlCama.URL_IMAGE+tanyaJawabList.get(position).penanya.url_profile).into(image_penanya);
         nama_penanya.setText(tanyaJawabList.get(position).penanya.user.name);
         pertanyaan.setText(tanyaJawabList.get(position).pertanyaan);
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -94,7 +94,7 @@ public class TanyaJawabAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHo
                 e.printStackTrace();
             }
             waktu_jawab.setText(outputFormat.format(date));
-            Picasso.with(context).load(UrlUbama.URL_IMAGE+tanyaJawabList.get(position).barang_jasa.toko.url_profile).into(image_toko);
+            Picasso.with(context).load(UrlCama.URL_IMAGE+tanyaJawabList.get(position).barang_jasa.toko.url_profile).into(image_toko);
         }
     }
 

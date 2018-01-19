@@ -18,7 +18,7 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.Toko;
 import com.google.gson.Gson;
@@ -82,12 +82,12 @@ public class TokoUserActivity extends AppCompatActivity {
     }
 
     public void getTokoUser() {
-        String url = UrlUbama.USER_TOKO;
+        String url = UrlCama.USER_TOKO;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 toko = new Gson().fromJson(response.toString(), Toko.class);
-                Picasso.with(TokoUserActivity.this).load(UrlUbama.URL_IMAGE + toko.url_profile).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).fit().into(imageToko);
+                Picasso.with(TokoUserActivity.this).load(UrlCama.URL_IMAGE + toko.url_profile).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).fit().into(imageToko);
                 namaToko.setText(toko.nama);
                 namaPemilik.setText(toko.pemilik.user.name);
             }

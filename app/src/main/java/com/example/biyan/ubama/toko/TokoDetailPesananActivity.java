@@ -27,7 +27,7 @@ import com.android.volley.request.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biyan.ubama.R;
 import com.example.biyan.ubama.gps.RouteActivity;
-import com.example.biyan.ubama.UrlUbama;
+import com.example.biyan.ubama.UrlCama;
 import com.example.biyan.ubama.UserToken;
 import com.example.biyan.ubama.models.Pesanan;
 import com.google.gson.Gson;
@@ -129,7 +129,7 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
-        String url = UrlUbama.USER_TOKO_PESANAN_DETAIL + idPesanan;
+        String url = UrlCama.USER_TOKO_PESANAN_DETAIL + idPesanan;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -270,7 +270,7 @@ public class TokoDetailPesananActivity extends AppCompatActivity {
         loading.setMessage("Mohon Menunggu");
         loading.setIndeterminate(true);
         loading.show();
-        String url = UrlUbama.USER_TOKO_TERIMA_PESANAN + idPesanan;
+        String url = UrlCama.USER_TOKO_TERIMA_PESANAN + idPesanan;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
