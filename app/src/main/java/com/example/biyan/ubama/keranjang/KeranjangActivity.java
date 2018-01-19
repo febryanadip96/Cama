@@ -85,8 +85,7 @@ public class KeranjangActivity extends AppCompatActivity {
                     res = data.getExtras();
                     latitude = res.getDouble("latitude");
                     longitude = res.getDouble("longitude");
-                    alamat.setText(res.getString("alamat_map"));
-                    alamatMap.setText(alamat.getText().toString());
+                    alamatMap.setText(res.getString("alamat_map"));
                     break;
             }
         }
