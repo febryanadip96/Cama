@@ -57,8 +57,6 @@ public class PemesananActivity extends AppCompatActivity {
     EditText jumlah;
     @BindView(R.id.tambah)
     ImageView tambah;
-    @BindView(R.id.alamat_tujuan)
-    TextView alamatTujuan;
     @BindView(R.id.total_harga)
     TextView totalHarga;
     @BindView(R.id.pesan)
@@ -200,7 +198,6 @@ public class PemesananActivity extends AppCompatActivity {
         params.put("jumlah", jumlah.getText().toString());
         params.put("catatan_pembeli", catatanPembeli.getText().toString());
         params.put("barang_jasa_id", idBarangJasa+"");
-        params.put("alamat", alamatTujuan.getText().toString());
         String url = UrlCama.USER_MASUK_KERANJANG;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
