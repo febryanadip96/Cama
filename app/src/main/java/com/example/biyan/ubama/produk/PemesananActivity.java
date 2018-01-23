@@ -69,7 +69,6 @@ public class PemesananActivity extends AppCompatActivity {
     int idBarangJasa;
     int min_pesan;
     BarangJasa barangJasa;
-    User user;
     RequestQueue queue;
 
     @Override
@@ -125,12 +124,7 @@ public class PemesananActivity extends AppCompatActivity {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                try {
-                    barangJasa = new Gson().fromJson(response.getJSONObject("barangJasa").toString(), BarangJasa.class);
-                    user = new Gson().fromJson(response.getJSONObject("user").toString(), User.class);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                barangJasa = new Gson().fromJson(response.toString(), BarangJasa.class);
                 min_pesan = barangJasa.min_pesan;
                 if (barangJasa.gambar.size() > 0) {
                     Picasso.with(getApplicationContext()).load(UrlCama.URL_IMAGE + barangJasa.gambar.get(0).url_gambar).error(R.drawable.ic_error_image).fit().centerInside().into(imageBarang);
@@ -140,7 +134,6 @@ public class PemesananActivity extends AppCompatActivity {
                 hargaBarang.setText("Rp. " + currency.format(barangJasa.harga));
                 jumlah.setText(barangJasa.min_pesan + "");
                 totalHarga.setText("Rp. " + currency.format(barangJasa.harga * barangJasa.min_pesan));
-                alamatTujuan.setText(user.name + "\n" + user.pengguna.alamat + "\n" + user.pengguna.telepon + "\n");
                 loading.dismiss();
             }
         }, new Response.ErrorListener() {
