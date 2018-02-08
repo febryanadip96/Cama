@@ -6,7 +6,7 @@ package com.example.biyan.ubama;
 
 public final class UrlCama {
 
-    private final static String IP = "http://192.168.43.243:8000";
+    private final static String IP = "http://192.168.1.110:8000";
 
     private final static String URL_API = IP+"/api/";
 
